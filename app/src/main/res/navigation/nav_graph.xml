@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/initialFragment">
+
+    <fragment
+        android:id="@+id/initialFragment"
+        android:name="com.example.iot_generic_control.InitialFragment"
+        android:label="fragment_initial"
+        tools:layout="@layout/fragment_initial" >
+        <action
+            android:id="@+id/action_initialFragment_to_teste"
+            app:destination="@id/teste" />
+    </fragment>
+    <fragment
+        android:id="@+id/teste"
+        android:name="com.example.iot_generic_control.Teste"
+        android:label="fragment_teste"
+        tools:layout="@layout/fragment_teste" />
+</navigation>
