@@ -11,12 +11,13 @@
         android:label="fragment_initial"
         tools:layout="@layout/fragment_initial" >
         <action
-            android:id="@+id/action_initialFragment_to_teste"
-            app:destination="@id/teste" />
+            android:id="@+id/action_initialFragment_to_menuAddDevice"
+            app:destination="@id/menuAddDevice"
+            app:enterAnim="@anim/fragment_fade_enter" />
     </fragment>
     <fragment
-        android:id="@+id/teste"
-        android:name="com.example.iot_generic_control.Teste"
-        android:label="fragment_teste"
-        tools:layout="@layout/fragment_teste" />
+        android:id="@+id/menuAddDevice"
+        android:name="com.example.iot_generic_control.menuAddDevice"
+        android:label="fragment_menu_add_device"
+        tools:layout="@layout/fragment_menu_add_device" />
 </navigation>

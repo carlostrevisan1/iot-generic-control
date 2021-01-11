@@ -5,20 +5,33 @@
     android:layout_height="match_parent"
     tools:context=".InitialFragment">
 
+
+
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimaryDark"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/hello_blank_fragment" />
+
+
         <Button
+            android:id="@+id/botao1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/botao1"
-            android:text="Teste"/>
+            android:text="Teste" />
+
     </LinearLayout>
 
 </FrameLayout>

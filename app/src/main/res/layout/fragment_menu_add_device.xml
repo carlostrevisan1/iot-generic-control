@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".menuAddDevice">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimaryDark"/>
+
+        <EditText
+            android:layout_margin="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome" />
+
+        <EditText
+            android:layout_margin="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descrição" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_margin="2dp"
+                android:layout_width="181dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="IP do Broker" />
+
+            <EditText
+                android:layout_margin="2dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Porta" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/botaoOK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OK"/>
+
+
+
+    </LinearLayout>
+
+</FrameLayout>
