@@ -85,8 +85,10 @@ public class InitialFragment extends Fragment {
                 Log.d("aaaaa", "CLICKEIIIIIIIII");
             }
         });
+
         return view;
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

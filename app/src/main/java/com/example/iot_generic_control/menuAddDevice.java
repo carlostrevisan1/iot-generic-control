@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,6 +78,14 @@ public class menuAddDevice extends Fragment {
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setHasOptionsMenu(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(getActivity(),
+                        R.id.fragment);
+                navController.navigateUp();
+            }
+        });
 
         Button button = view.findViewById(R.id.botaoOK);
         button.setOnClickListener(new View.OnClickListener() {
@@ -88,15 +98,5 @@ public class menuAddDevice extends Fragment {
         return view;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.home:
-                Navigation.findNavController(getView()).navigateUp();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+    
 }
