@@ -1,4 +1,4 @@
-package com.example.iot_generic_control;
+package com.example.iot_generic_control.utils_adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,26 +6,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.iot_generic_control.R;
 
-public class DeviceListViewAdapter extends ArrayAdapter {
-//    private ArrayList<T> pacients;
-    private ArrayList<IOTDevice> devices;
+import java.util.ArrayList;
+
+public class ControlsListViewAdapter extends ArrayAdapter {
+    //    private ArrayList<T> pacients;
+    private ArrayList<String> controls;
     private Context context;
     private int resource;
 
-    public DeviceListViewAdapter(@NonNull Context context, int resource, @NonNull ArrayList<IOTDevice> devices_list) {
-        super(context, resource, devices_list);
+    public ControlsListViewAdapter (@NonNull Context context, int resource, @NonNull ArrayList<String> Controls_list) {
+        super(context, resource, Controls_list);
         this.context = context;
-        this.devices = devices_list;
+        this.controls = Controls_list;
         this.resource = resource;
     }
 
@@ -47,8 +47,8 @@ public class DeviceListViewAdapter extends ArrayAdapter {
         else
             holder = (ViewHolder)convertView.getTag();
 
-        IOTDevice device_data = devices.get(position);
-        holder.name.setText(device_data.getName());
+        String control_data = controls.get(position);
+        holder.name.setText(control_data);
 
 
         return convertView;
@@ -59,3 +59,4 @@ public class DeviceListViewAdapter extends ArrayAdapter {
 
     }
 }
+

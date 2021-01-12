@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/initialFragment"
-        android:name="com.example.iot_generic_control.InitialFragment"
+        android:name="com.example.iot_generic_control.fragments.InitialFragment"
         android:label="fragment_initial"
         tools:layout="@layout/fragment_initial" >
         <action
@@ -20,29 +20,62 @@
     </fragment>
     <fragment
         android:id="@+id/menuAddDevice"
-        android:name="com.example.iot_generic_control.menuAddDeviceFragment"
+        android:name="com.example.iot_generic_control.fragments.menuAddDeviceFragment"
         android:label="fragment_menu_add_device"
         tools:layout="@layout/fragment_menu_add_device" />
     <fragment
         android:id="@+id/deviceControlFragment"
-        android:name="com.example.iot_generic_control.DeviceControlFragment"
+        android:name="com.example.iot_generic_control.fragments.DeviceControlFragment"
         android:label="fragment_device_control"
         tools:layout="@layout/fragment_device_control" >
+        <action
+            android:id="@+id/editOrControlAction"
+            app:destination="@id/editOrCreateControlFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newButtonFragment"
+        android:name="com.example.iot_generic_control.fragments.NewButtonFragment"
+        android:label="fragment_new_button"
+        tools:layout="@layout/fragment_new_button" />
+    <dialog
+        android:id="@+id/featureDialogTeste"
+        android:name="com.example.iot_generic_control.utils_adapters.FeatureDialog"
+        android:label="FeatureDialogTeste" >
+        <action
+            android:id="@+id/newButtonAction"
+            app:destination="@id/newButtonFragment" />
+        <action
+            android:id="@+id/newSliderAction"
+            app:destination="@id/newSliderFragment" />
+        <action
+            android:id="@+id/newToggleButtonAction"
+            app:destination="@id/newToggleButtonFragment" />
+        <action
+            android:id="@+id/newSendTextAction"
+            app:destination="@id/newSendTextFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/editOrCreateControlFragment"
+        android:name="com.example.iot_generic_control.fragments.EditOrCreateControlFragment"
+        android:label="fragment_edit_or_create_control"
+        tools:layout="@layout/fragment_edit_or_create_control" >
         <action
             android:id="@+id/featureDialogAction"
             app:destination="@id/featureDialogTeste" />
     </fragment>
     <fragment
-        android:id="@+id/newButtonFragment"
-        android:name="com.example.iot_generic_control.NewButtonFragment"
-        android:label="fragment_new_button"
-        tools:layout="@layout/fragment_new_button" />
-    <dialog
-        android:id="@+id/featureDialogTeste"
-        android:name="com.example.iot_generic_control.FeatureDialog"
-        android:label="FeatureDialogTeste" >
-        <action
-            android:id="@+id/newButtonAction"
-            app:destination="@id/newButtonFragment" />
-    </dialog>
+        android:id="@+id/newSliderFragment"
+        android:name="com.example.iot_generic_control.fragments.NewSliderFragment"
+        android:label="fragment_new_slider"
+        tools:layout="@layout/fragment_new_slider" />
+    <fragment
+        android:id="@+id/newToggleButtonFragment"
+        android:name="com.example.iot_generic_control.fragments.NewToggleButtonFragment"
+        android:label="fragment_new_toggle_button"
+        tools:layout="@layout/fragment_new_toggle_button" />
+    <fragment
+        android:id="@+id/newSendTextFragment"
+        android:name="com.example.iot_generic_control.fragments.NewSendTextFragment"
+        android:label="fragment_new_send_text"
+        tools:layout="@layout/fragment_new_send_text" />
 </navigation>

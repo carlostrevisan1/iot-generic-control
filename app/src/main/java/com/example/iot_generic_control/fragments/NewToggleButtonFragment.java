@@ -1,4 +1,4 @@
-package com.example.iot_generic_control;
+package com.example.iot_generic_control.fragments;
 
 import android.os.Bundle;
 
@@ -8,15 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.iot_generic_control.R;
 
-public class NewButtonFragment extends Fragment {
 
-    public NewButtonFragment() {
+public class NewToggleButtonFragment extends Fragment {
+
+    public NewToggleButtonFragment() {
         // Required empty public constructor
     }
 
-    public static NewButtonFragment newInstance(String param1, String param2) {
-        NewButtonFragment fragment = new NewButtonFragment();
+
+    public static NewToggleButtonFragment newInstance(String param1, String param2) {
+        NewToggleButtonFragment fragment = new NewToggleButtonFragment();
         return fragment;
     }
 
@@ -29,7 +32,6 @@ public class NewButtonFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_new_button, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_new_toggle_button, container, false);
     }
 }

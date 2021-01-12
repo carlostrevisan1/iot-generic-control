@@ -1,28 +1,28 @@
-package com.example.iot_generic_control;
+package com.example.iot_generic_control.fragments;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.provider.ContactsContract;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
+import com.example.iot_generic_control.R;
+import com.example.iot_generic_control.classes.IOTDevice;
+import com.example.iot_generic_control.viewmodels.DeviceViewModel;
 
 public class DeviceControlFragment extends Fragment {
 
-
+    IOTDevice device;
     public DeviceControlFragment() {
         // Required empty public constructor
     }
@@ -36,14 +36,13 @@ public class DeviceControlFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View view = inflater.inflate(R.layout.fragment_device_control, container, false);
+        View view = inflater.inflate(R.layout.fragment_device_control, container, false);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -58,6 +57,11 @@ public class DeviceControlFragment extends Fragment {
             }
         });
 
+        DeviceViewModel model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
+        device = model.getDevice().getValue();
+        toolbar.setTitle(device.getName());
+
+
        return view;
     }
     @Override
@@ -71,7 +75,7 @@ public class DeviceControlFragment extends Fragment {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.plus_button:
-                Navigation.findNavController(getView()).navigate(R.id.featureDialogAction);
+                Navigation.findNavController(getView()).navigate(R.id.editOrControlAction);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

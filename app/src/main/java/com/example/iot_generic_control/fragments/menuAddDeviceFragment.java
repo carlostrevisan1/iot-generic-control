@@ -1,4 +1,4 @@
-package com.example.iot_generic_control;
+package com.example.iot_generic_control.fragments;
 
 import android.os.Bundle;
 
@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.iot_generic_control.R;
 
 
 public class menuAddDeviceFragment extends Fragment {
