@@ -20,17 +20,11 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimaryDark"/>
 
-        <TextView
+        <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_height="250dp"
+            android:id="@+id/devices_list"/>
 
-
-        <Button
-            android:id="@+id/botao1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Teste" />
 
     </LinearLayout>
 

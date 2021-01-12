@@ -14,10 +14,35 @@
             android:id="@+id/action_initialFragment_to_menuAddDevice"
             app:destination="@id/menuAddDevice"
             app:enterAnim="@anim/fragment_fade_enter" />
+        <action
+            android:id="@+id/action_initialFragment_to_deviceControlFragment"
+            app:destination="@id/deviceControlFragment" />
     </fragment>
     <fragment
         android:id="@+id/menuAddDevice"
-        android:name="com.example.iot_generic_control.menuAddDevice"
+        android:name="com.example.iot_generic_control.menuAddDeviceFragment"
         android:label="fragment_menu_add_device"
         tools:layout="@layout/fragment_menu_add_device" />
+    <fragment
+        android:id="@+id/deviceControlFragment"
+        android:name="com.example.iot_generic_control.DeviceControlFragment"
+        android:label="fragment_device_control"
+        tools:layout="@layout/fragment_device_control" >
+        <action
+            android:id="@+id/featureDialogAction"
+            app:destination="@id/featureDialogTeste" />
+    </fragment>
+    <fragment
+        android:id="@+id/newButtonFragment"
+        android:name="com.example.iot_generic_control.NewButtonFragment"
+        android:label="fragment_new_button"
+        tools:layout="@layout/fragment_new_button" />
+    <dialog
+        android:id="@+id/featureDialogTeste"
+        android:name="com.example.iot_generic_control.FeatureDialog"
+        android:label="FeatureDialogTeste" >
+        <action
+            android:id="@+id/newButtonAction"
+            app:destination="@id/newButtonFragment" />
+    </dialog>
 </navigation>

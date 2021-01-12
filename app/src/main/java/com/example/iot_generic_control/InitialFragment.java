@@ -2,65 +2,38 @@ package com.example.iot_generic_control;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 
 public class InitialFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    DeviceListViewAdapter customAdapter;
+    private ListView devicesListView;
+    ArrayList<IOTDevice> devicesList = new ArrayList<>();
     public InitialFragment() {
         // Required empty public constructor
-
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment InitialFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static InitialFragment newInstance(String param1, String param2) {
-        InitialFragment fragment = new InitialFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
+        devicesList.add(new IOTDevice("Carlos", "Dispositivo BRABO", "192.168.0.0", "8080"));
     }
 
     @Override
@@ -70,21 +43,39 @@ public class InitialFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_initial, container, false);
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        devicesListView = view.findViewById(R.id.devices_list);
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar();
-
         setHasOptionsMenu(true);
 
-        Button a = view.findViewById(R.id.botao1);
-        a.setOnClickListener(new View.OnClickListener() {
+        customAdapter = new DeviceListViewAdapter(getContext(), R.layout.devices_list_layout, devicesList);
+        devicesListView.setAdapter(customAdapter);
+
+        devicesListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
-            public void onClick(View v) {
-                //Navigation.findNavController(getView()).navigate(R.id.action_initialFragment_to_teste);
-                Log.d("aaaaa", "CLICKEIIIIIIIII");
+            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+                MenuInflater inflater = getActivity().getMenuInflater();
+                inflater.inflate(R.menu.device_list_hold_menu, menu);
             }
         });
+
+        devicesListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Navigation.findNavController(getView()).navigate(R.id.action_initialFragment_to_deviceControlFragment);
+            }
+        });
+//        Button a = view.findViewById(R.id.botao1);
+//        a.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //Navigation.findNavController(getView()).navigate(R.id.action_initialFragment_to_teste);
+//
+//            }
+//        });
 
         return view;
     }
@@ -100,7 +91,7 @@ public class InitialFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.action_adicionar:
+            case R.id.plus_button:
                 Navigation.findNavController(getView()).navigate(R.id.action_initialFragment_to_menuAddDevice);
                 return true;
             default:
@@ -108,8 +99,16 @@ public class InitialFragment extends Fragment {
         }
     }
 
-    public void Teste(){
-
-
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.delete_item:
+                devicesList.remove(info.position);
+                customAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }
