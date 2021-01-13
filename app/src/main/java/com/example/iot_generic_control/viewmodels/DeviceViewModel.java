@@ -14,11 +14,15 @@ import java.util.ArrayList;
 public class DeviceViewModel extends ViewModel {
     MutableLiveData<IOTDevice> device = new MutableLiveData<>();
     MutableLiveData<ArrayList<BaseFeature> >base = new MutableLiveData<>();
-    ArrayList<BaseFeature> teste = new ArrayList<>();
+
 
     public void setDevice(IOTDevice device){
         this.device.setValue(device);
-        updateFeatures();
+
+    }
+    public void setFeatures(ArrayList<BaseFeature> featuresList){
+
+        this.base.setValue(featuresList);
     }
     public LiveData<IOTDevice> getDevice(){
         return device;
@@ -27,12 +31,5 @@ public class DeviceViewModel extends ViewModel {
     public LiveData<ArrayList<BaseFeature>> getFeatures(){
         return base;
     }
-    public void updateFeatures(){
-        teste.clear();
-        ButtonFeature botao = new ButtonFeature("teste", "teste", 1,1,"ola");
-        SendTextFeature send = new SendTextFeature("teste2", "teste", 1,1,"ola");
-        teste.add(botao);
-        teste.add(send);
-        base.setValue(teste);
-    }
+
 }
