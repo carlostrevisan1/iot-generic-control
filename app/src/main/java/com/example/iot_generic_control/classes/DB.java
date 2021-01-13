@@ -57,7 +57,6 @@ public class DB extends SQLiteOpenHelper{
         cursor.close();
         return devices;
     }
-    //TERMINAR:
     public ArrayList<BaseFeature> selectAllFeatures(){
         SQLiteDatabase db;
         Cursor cursor;
@@ -68,6 +67,10 @@ public class DB extends SQLiteOpenHelper{
         cursor = db.query("device", columns, null, null, null, null, "id");
         while (cursor.moveToNext()){
             type = cursor.getString(cursor.getColumnIndex("tyoe"));
+            switch (type){
+                case "button":
+                    ButtonFeature feat = new ButtonFeature(cursor.getString(cursor.getColumnIndex("name")), )
+            }
             /*devices.add(new IOTDevice(cursor.getString(cursor.getColumnIndex("name")), cursor.getString(cursor.getColumnIndex("desc")),
                     cursor.getString(cursor.getColumnIndex("ip_address")), cursor.getString(cursor.getColumnIndex("port")),
                     cursor.getInt(cursor.getColumnIndex("id"))));*/
