@@ -23,13 +23,15 @@
             android:layout_margin="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome" />
+            android:hint="Nome"
+            android:id="@+id/device_name"/>
 
         <EditText
             android:layout_margin="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Descrição" />
+            android:hint="Descrição"
+            android:id="@+id/device_desc"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,18 +44,20 @@
                 android:layout_width="181dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="IP do Broker" />
+                android:hint="IP do Broker"
+                android:id="@+id/device_broker"/>
 
             <EditText
                 android:layout_margin="2dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Porta" />
+                android:hint="Porta"
+                android:id="@+id/device_port"/>
         </LinearLayout>
 
         <Button
-            android:id="@+id/botaoOK"
+            android:id="@+id/ok_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="OK"/>

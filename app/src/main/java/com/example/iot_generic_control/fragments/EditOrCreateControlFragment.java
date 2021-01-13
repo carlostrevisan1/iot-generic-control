@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -14,11 +15,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.example.iot_generic_control.R;
+import com.example.iot_generic_control.classes.BaseFeature;
+import com.example.iot_generic_control.classes.IOTDevice;
 import com.example.iot_generic_control.utils_adapters.ControlsListViewAdapter;
 import com.example.iot_generic_control.utils_adapters.DeviceListViewAdapter;
+import com.example.iot_generic_control.viewmodels.DeviceViewModel;
 
 import java.util.ArrayList;
 
@@ -26,23 +31,20 @@ import java.util.ArrayList;
 public class EditOrCreateControlFragment extends Fragment {
 
     private ListView controlsListView;
-    private ArrayList<String> controlsList = new ArrayList<>();
+    private ArrayList<BaseFeature> controlsList = new ArrayList<>();
     private ControlsListViewAdapter controlAdapter;
+    DeviceViewModel model;
+    IOTDevice  device;
 
     public EditOrCreateControlFragment() {
         // Required empty public constructor
     }
 
-    public static EditOrCreateControlFragment newInstance(String param1, String param2) {
-        EditOrCreateControlFragment fragment = new EditOrCreateControlFragment();
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        controlsList.add("Buton de Teste");
-        controlsList.add("Buton de Teste2");
+
     }
 
     @Override
@@ -63,10 +65,16 @@ public class EditOrCreateControlFragment extends Fragment {
                 navController.navigateUp();
             }
         });
+        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
+        controlsList = model.getFeatures().getValue();
+        device = model.getDevice().getValue();
+        toolbar.setTitle(device.getName() + " - Edit Mode");
+
 
         controlsListView = view.findViewById(R.id.controls_list);
-        controlAdapter = new ControlsListViewAdapter(getContext(), R.layout.devices_list_layout, controlsList);
+        controlAdapter = new ControlsListViewAdapter(requireContext(), R.layout.devices_list_layout, controlsList);
         controlsListView.setAdapter(controlAdapter);
+
 
 
        return view;
@@ -80,12 +88,10 @@ public class EditOrCreateControlFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.plus_button:
-                Navigation.findNavController(getView()).navigate(R.id.featureDialogAction);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.plus_button) {
+            Navigation.findNavController(requireView()).navigate(R.id.featureDialogAction);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 }

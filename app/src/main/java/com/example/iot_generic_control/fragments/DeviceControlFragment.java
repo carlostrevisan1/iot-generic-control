@@ -15,22 +15,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.iot_generic_control.R;
 import com.example.iot_generic_control.classes.IOTDevice;
 import com.example.iot_generic_control.viewmodels.DeviceViewModel;
 
+import java.util.ArrayList;
+
 public class DeviceControlFragment extends Fragment {
 
     IOTDevice device;
+    DeviceViewModel model;
     public DeviceControlFragment() {
-        // Required empty public constructor
-    }
-
-    public static DeviceControlFragment newInstance(String param1, String param2) {
-        DeviceControlFragment fragment = new DeviceControlFragment();
-
-        return fragment;
     }
 
     @Override
@@ -43,6 +42,7 @@ public class DeviceControlFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_device_control, container, false);
+
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -51,15 +51,45 @@ public class DeviceControlFragment extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavController navController = Navigation.findNavController(getActivity(),
+                NavController navController = Navigation.findNavController(requireActivity(),
                         R.id.fragment);
                 navController.navigateUp();
             }
         });
 
-        DeviceViewModel model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
+        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
         device = model.getDevice().getValue();
         toolbar.setTitle(device.getName());
+        //the layout on which you are working
+
+        final LinearLayout layout = (LinearLayout) view.findViewById(R.id.controlLinearLayout);
+
+        Button btnTag = new Button(requireActivity());
+        btnTag.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        btnTag.setText("Button");
+
+        Button btn2 = new Button(requireActivity());
+        btn2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        btn2.setText("Bot");
+
+        ArrayList<Button> listBota = new ArrayList<>();
+
+        listBota.add(btnTag);
+        listBota.add(btn2);
+
+        for (final Button b: listBota) {
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(requireContext(), b.getText(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            layout.addView(b);
+        }
+        //add button to the layout
+
+
+        //set the properties for button
 
 
        return view;
@@ -73,12 +103,10 @@ public class DeviceControlFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.plus_button:
-                Navigation.findNavController(getView()).navigate(R.id.editOrControlAction);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.plus_button) {
+            Navigation.findNavController(requireView()).navigate(R.id.editOrControlAction);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_initialFragment_to_deviceControlFragment"
             app:destination="@id/deviceControlFragment" />
+        <action
+            android:id="@+id/initialToEditAction"
+            app:destination="@id/editOrCreateControlFragment" />
     </fragment>
     <fragment
         android:id="@+id/menuAddDevice"
