@@ -26,6 +26,7 @@
             android:id="@+id/devices_list"/>
 
 
+
     </LinearLayout>
 
 </FrameLayout>

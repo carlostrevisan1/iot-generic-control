@@ -34,7 +34,6 @@ import java.util.Objects;
 public class InitialFragment extends Fragment {
 
     DeviceListViewAdapter customAdapter;
-    private ListView devicesListView;
     ArrayList<IOTDevice> devicesList = new ArrayList<>();
     DeviceViewModel model;
 
@@ -61,7 +60,7 @@ public class InitialFragment extends Fragment {
         activity.getSupportActionBar();
         setHasOptionsMenu(true);
 
-        devicesListView = view.findViewById(R.id.devices_list);
+        ListView devicesListView = view.findViewById(R.id.devices_list);
         customAdapter = new DeviceListViewAdapter(requireContext(), R.layout.devices_list_layout, devicesList);
         devicesListView.setAdapter(customAdapter);
 
@@ -93,7 +92,6 @@ public class InitialFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         if (item.getItemId() == R.id.plus_button) {
             Navigation.findNavController(requireView()).navigate(R.id.action_initialFragment_to_menuAddDevice);
             return true;
