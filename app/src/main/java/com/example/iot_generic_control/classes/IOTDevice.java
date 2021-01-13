@@ -18,6 +18,13 @@ public class IOTDevice {
         this.id = id;
 
     }
+    public IOTDevice(String name, String desc, String brokerIP, String brokerPort) {
+        this.name = name;
+        this.desc = desc;
+        this.brokerIP = brokerIP;
+        this.brokerPort = brokerPort;
+
+    }
 
     public int getId() { return id; }
 
