@@ -13,16 +13,16 @@ import androidx.annotation.Nullable;
 
 
 import com.example.iot_generic_control.R;
+import com.example.iot_generic_control.classes.BaseFeature;
 
 import java.util.ArrayList;
 
 public class ControlsListViewAdapter extends ArrayAdapter {
-    //    private ArrayList<T> pacients;
-    private ArrayList<String> controls;
+    private ArrayList<BaseFeature> controls;
     private Context context;
     private int resource;
 
-    public ControlsListViewAdapter (@NonNull Context context, int resource, @NonNull ArrayList<String> Controls_list) {
+    public ControlsListViewAdapter (@NonNull Context context, int resource, @NonNull ArrayList<BaseFeature> Controls_list) {
         super(context, resource, Controls_list);
         this.context = context;
         this.controls = Controls_list;
@@ -47,8 +47,8 @@ public class ControlsListViewAdapter extends ArrayAdapter {
         else
             holder = (ViewHolder)convertView.getTag();
 
-        String control_data = controls.get(position);
-        holder.name.setText(control_data);
+        BaseFeature control_data = controls.get(position);
+        holder.name.setText(control_data.getName());
 
 
         return convertView;
