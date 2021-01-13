@@ -20,7 +20,7 @@ public class SliderFeature extends BaseFeature {
     int startRange;
     int lastRange;
 
-    public SliderFeature(String name, String topic, int id, int device_id, int start, int last,String type) {
+    public SliderFeature(String name, String topic, int id, int device_id, int start, int last, String type) {
         super(name, topic, id, device_id,type);
         this.startRange = start;
         this.lastRange = last;
