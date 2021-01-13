@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.transition.Slide;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -78,52 +80,106 @@ public class DeviceControlFragment extends Fragment {
         toolbar.setTitle(device.getName());
 
         final LinearLayout layout = (LinearLayout) view.findViewById(R.id.controlLinearLayout);
-        for (BaseFeature feature: featuresList
+        for (final BaseFeature feature: featuresList
              ) {
             switch (feature.getType()){
                 case "button":
-                    Button b = new Button(requireActivity());
-                    b.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    b.setText(feature.getName());
-                    layout.addView(b);
-
+                    setupButton(new Button(requireActivity()), (ButtonFeature) feature, layout);
                     break;
                 case "sendText":
-                    EditText t = new EditText(requireActivity());
-                    t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    t.setId(View.generateViewId());
-                    Button bu = new Button(requireActivity());
-                    bu.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    bu.setText(feature.getName());
-                    layout.addView(t);
-                    layout.addView(bu);
-
+                    setupSendText(new EditText(requireActivity()), new Button(requireActivity()), (SendTextFeature) feature, layout);
                     break;
                 case "slider":
-                    SliderFeature slider = (SliderFeature) feature;
-                    SeekBar s = new SeekBar(requireActivity());
-                    s.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    s.setMin(slider.getStartRange());
-                    s.setMax(slider.getLastRange());
-                    layout.addView(s);
+                    setupSlider(new SeekBar(requireActivity()), (SliderFeature) feature, layout);
                     break;
                 case "toggleButton":
-                    ToggleButtonFeature toggle = (ToggleButtonFeature) feature;
-                    ToggleButton to = new ToggleButton(requireActivity());
-                    to.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    to.setTextOff(toggle.getValueOff());
-                    to.setTextOn((toggle.getValueOn()));
-                    to.setText("0");
-                    layout.addView(to);
+                    setupToggleButton(new ToggleButton(requireActivity()), (ToggleButtonFeature) feature, layout);
                     break;
                 default:
                     break;
             }
-
         }
-
        return view;
     }
+
+    public void setupButton(Button b, final ButtonFeature f, LinearLayout layout){
+        b.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        b.setText(f.getName());
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(requireContext(), f.getValue(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        layout.addView(b);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public void setupSendText(final EditText t, Button b, final SendTextFeature f, LinearLayout layout){
+        t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        t.setId(View.generateViewId());
+        b.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        b.setText(f.getName());
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(requireContext(), t.getText().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        layout.addView(t);
+        layout.addView(b);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setupSlider(SeekBar s, SliderFeature f, LinearLayout layout){
+        final TextView t = new TextView(getActivity());
+        t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        s.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        s.setMin(f.getStartRange());
+        s.setMax(f.getLastRange());
+        s.setProgress(f.getLastRange()/2);
+
+        s.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progressChangedValue = 0;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progressChangedValue = progress;
+                t.setText(Integer.toString(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+               Toast.makeText(requireContext(), Integer.toString(progressChangedValue), Toast.LENGTH_SHORT).show();
+            }
+        });
+        layout.addView(t);
+        layout.addView(s);
+    }
+
+    public void setupToggleButton(ToggleButton t, ToggleButtonFeature f, LinearLayout layout){
+        t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        t.setTextOff(f.getValueOff());
+        t.setTextOn((f.getValueOn()));
+        t.setText("0");
+        t.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToggleButton t = (ToggleButton) v;
+                Toast.makeText(requireContext(), t.getText().toString(), Toast.LENGTH_SHORT);
+
+            }
+        });
+        layout.addView(t);
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.botao_toolbar_inicial, menu);
