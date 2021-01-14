@@ -76,7 +76,7 @@ public class DB extends SQLiteOpenHelper{
         db = this.getReadableDatabase();
         cursor = db.query("feature", columns, null, null, null, null, "id");
         while (cursor.moveToNext()){
-            type = cursor.getString(cursor.getColumnIndex("tyoe"));
+            type = cursor.getString(cursor.getColumnIndex("type"));
             switch (type){
                 case "button":
                     features.add(new ButtonFeature(cursor.getString(cursor.getColumnIndex("name")),

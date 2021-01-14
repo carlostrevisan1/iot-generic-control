@@ -2,6 +2,7 @@ package com.example.iot_generic_control.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -9,12 +10,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
@@ -30,7 +33,6 @@ import java.util.ArrayList;
 
 public class EditOrCreateControlFragment extends Fragment {
 
-    private ListView controlsListView;
     private ArrayList<BaseFeature> controlsList = new ArrayList<>();
     private ControlsListViewAdapter controlAdapter;
     DeviceViewModel model;
@@ -71,9 +73,26 @@ public class EditOrCreateControlFragment extends Fragment {
         toolbar.setTitle(device.getName() + " - Edit Mode");
 
 
-        controlsListView = view.findViewById(R.id.controls_list);
+        ListView controlsListView = view.findViewById(R.id.controls_list);
         controlAdapter = new ControlsListViewAdapter(requireContext(), R.layout.devices_list_layout, controlsList);
         controlsListView.setAdapter(controlAdapter);
+
+        controlsListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override
+            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+                MenuInflater inflater = requireActivity().getMenuInflater();
+                inflater.inflate(R.menu.device_list_hold_menu, menu);
+            }
+        });
+
+        controlsListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+//                Navigation.findNavController(requireView()).navigate(R.id.action_initialFragment_to_deviceControlFragment);
+            }
+        });
 
 
 
@@ -93,5 +112,26 @@ public class EditOrCreateControlFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.delete_item:
+                deleteControl();
+                controlsList.remove(info.position);
+                controlAdapter.notifyDataSetChanged();
+                return true;
+            case R.id.edit_item:
+
+//                Navigation.findNavController(requireView()).navigate(R.id.initialToEditAction);
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    public void deleteControl(){
+        //TODO Apagar do DB
     }
 }
