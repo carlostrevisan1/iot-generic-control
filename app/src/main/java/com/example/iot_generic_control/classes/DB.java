@@ -76,7 +76,7 @@ public class DB extends SQLiteOpenHelper{
         db = this.getReadableDatabase();
         cursor = db.query("feature", columns, null, null, null, null, "id");
         while (cursor.moveToNext()){
-            type = cursor.getString(cursor.getColumnIndex("tyoe"));
+            type = cursor.getString(cursor.getColumnIndex("type"));
             switch (type){
                 case "button":
                     features.add(new ButtonFeature(cursor.getString(cursor.getColumnIndex("name")),
@@ -170,7 +170,7 @@ public class DB extends SQLiteOpenHelper{
         db.close();
     }
 
-    public void updateFeature(int id, String name, String topic, String type, String value, int device_id){
+    public void updateFeature(int id, String name, String topic, String type, String value){
         SQLiteDatabase db;
         ContentValues values;
         String where;
@@ -181,7 +181,6 @@ public class DB extends SQLiteOpenHelper{
         values.put("topic", topic);
         values.put("type", type);
         values.put("value", value);
-        values.put("device_id", device_id);
         db.update("feature", values, where, null);
         db.close();
     }
