@@ -15,15 +15,19 @@ public class DB extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE device (\n" +
+        String sql = "PRAGMA foreign_keys = ON ";
+        db.execSQL(sql);
+
+        sql = "CREATE TABLE device (\n" +
                 "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    name VARCHAR(40),\n" +
                 "    desc TEXT,\n" +
                 "    ip_address VARCHAR(25),\n" +
                 "    port VARCHAR(5)\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE feature (\n" +
+                ") ";
+        db.execSQL(sql);
+
+        sql=    "CREATE TABLE feature (\n" +
                 "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    name VARCHAR(50),\n" +
                 "    topic VARCHAR(50),\n" +
@@ -37,7 +41,7 @@ public class DB extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sql = "DROP TABLE IF EXISTS device; DROP TABLE IF EXISTS features;";
+        String sql = "DROP TABLE IF EXISTS device; DROP TABLE IF EXISTS feature;";
         db.execSQL(sql);
         onCreate(db);
     }
@@ -67,7 +71,7 @@ public class DB extends SQLiteOpenHelper{
         String[] columns = {"id", "name", "topic", "type", "value", "device_id"};
         String type;
         db = this.getReadableDatabase();
-        cursor = db.query("device", columns, null, null, null, null, "id");
+        cursor = db.query("feature", columns, null, null, null, null, "id");
         while (cursor.moveToNext()){
             type = cursor.getString(cursor.getColumnIndex("tyoe"));
             switch (type){

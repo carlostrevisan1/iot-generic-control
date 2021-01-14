@@ -1,5 +1,6 @@
 package com.example.iot_generic_control.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -102,6 +103,7 @@ public class DeviceControlFragment extends Fragment {
        return view;
     }
 
+    @SuppressLint("ResourceAsColor")
     public void setupButton(Button b, final ButtonFeature f, LinearLayout layout){
         b.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         b.setText(f.getName());
@@ -164,16 +166,19 @@ public class DeviceControlFragment extends Fragment {
         layout.addView(s);
     }
 
-    public void setupToggleButton(ToggleButton t, ToggleButtonFeature f, LinearLayout layout){
+    public void setupToggleButton(final ToggleButton t, ToggleButtonFeature f, LinearLayout layout){
         t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         t.setTextOff(f.getValueOff());
         t.setTextOn((f.getValueOn()));
         t.setText("0");
+
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToggleButton t = (ToggleButton) v;
-                Toast.makeText(requireContext(), t.getText().toString(), Toast.LENGTH_SHORT);
+                if(t.isChecked()){
+                    Toast.makeText(requireContext(), t.getTextOn(), Toast.LENGTH_SHORT).show();
+
+                }
 
             }
         });
@@ -197,11 +202,16 @@ public class DeviceControlFragment extends Fragment {
     }
 
     public void retrieveFeatures(){
+        featuresList.clear();
         ButtonFeature bteste = new ButtonFeature("Botao", "teste", 1, 2, "teste","button");
+        ButtonFeature bteste2 = new ButtonFeature("Botao", "teste", 1, 2, "teste2","button");
+        ButtonFeature bteste3 = new ButtonFeature("Botao", "teste", 1, 2, "Bis, vc é mto tonto","button");
         SendTextFeature sendteste = new SendTextFeature("EnviarTexto", "teste", 1, 2, "teste", "sendText");
         SliderFeature sliderteste = new SliderFeature("Botao", "teste", 1, 2, 1, 10, "slider");
         ToggleButtonFeature toggleTeste = new ToggleButtonFeature("Togglinho", "teste", 1, 2, "1", "0", "toggleButton");
         featuresList.add(bteste);
+        featuresList.add(bteste2);
+        featuresList.add(bteste3);
         featuresList.add(sendteste);
         featuresList.add(sliderteste);
         featuresList.add(toggleTeste);

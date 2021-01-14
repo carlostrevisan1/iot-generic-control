@@ -21,12 +21,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.iot_generic_control.classes.BaseFeature;
+import com.example.iot_generic_control.classes.DB;
 import com.example.iot_generic_control.utils_adapters.DeviceListViewAdapter;
 import com.example.iot_generic_control.classes.IOTDevice;
 import com.example.iot_generic_control.R;
 import com.example.iot_generic_control.viewmodels.DeviceViewModel;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -43,6 +47,15 @@ public class InitialFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //TODO TESTES COM A CLASSE DO DB
+//        DB db = new DB(requireContext());
+//        db.insertDevice("Teste", "Testando", "192.168.0.120", "2020");
+//        db.insertFeature("Testefea", "topictest", "button", "50",1);
+//        ArrayList<IOTDevice> teste = db.selectAllDevices();
+//        Toast.makeText(requireContext(), teste.get(0).getName(), Toast.LENGTH_SHORT).show();
+//        ArrayList<BaseFeature> teste2 = db.selectAllFeatures();
+//        Toast.makeText(requireContext(), teste2.get(0).getName(), Toast.LENGTH_SHORT).show();
+
         retrieveDevices();
     }
 
