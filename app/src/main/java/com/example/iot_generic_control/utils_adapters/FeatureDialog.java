@@ -8,26 +8,34 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.iot_generic_control.R;
+import com.example.iot_generic_control.viewmodels.DeviceViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class FeatureDialog extends BottomSheetDialogFragment {
+
+    DeviceViewModel model;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.features_types_dialog, container, false);
+        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
+        model.setEdit(false);
         Button new_button = view.findViewById(R.id.new_button);
         Button new_slider = view.findViewById(R.id.new_slider);
         Button new_toggle = view.findViewById(R.id.new_toggle);
         Button new_send_text = view.findViewById(R.id.new_send);
+
         new_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                NavController nav = Navigation.findNavController(getActivity(), R.id.fragment);
+                NavController nav = Navigation.findNavController(requireActivity(), R.id.fragment);
                 nav.navigate(R.id.newButtonAction);
             }
         });
@@ -35,7 +43,7 @@ public class FeatureDialog extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
 
-                NavController nav = Navigation.findNavController(getActivity(), R.id.fragment);
+                NavController nav = Navigation.findNavController(requireActivity(), R.id.fragment);
                 nav.navigate(R.id.newSliderAction);
             }
         });
@@ -43,7 +51,7 @@ public class FeatureDialog extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
 
-                NavController nav = Navigation.findNavController(getActivity(), R.id.fragment);
+                NavController nav = Navigation.findNavController(requireActivity(), R.id.fragment);
                 nav.navigate(R.id.newToggleButtonAction);
             }
         });
@@ -51,7 +59,7 @@ public class FeatureDialog extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
 
-                NavController nav = Navigation.findNavController(getActivity(), R.id.fragment);
+                NavController nav = Navigation.findNavController(requireActivity(), R.id.fragment);
                 nav.navigate(R.id.newSendTextAction);
             }
         });

@@ -40,6 +40,7 @@ public class InitialFragment extends Fragment {
     DeviceListViewAdapter customAdapter;
     ArrayList<IOTDevice> devicesList = new ArrayList<>();
     DeviceViewModel model;
+    DB db = new DB(requireContext());
 
     public InitialFragment() {
         // Required empty public constructor
@@ -73,6 +74,7 @@ public class InitialFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_initial, container, false);
 
         model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
+        model.setDb(db);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         assert activity != null;
