@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.iot_generic_control.classes.BaseFeature;
 import com.example.iot_generic_control.classes.DB;
+import com.example.iot_generic_control.classes.MQTT;
 import com.example.iot_generic_control.utils_adapters.DeviceListViewAdapter;
 import com.example.iot_generic_control.classes.IOTDevice;
 import com.example.iot_generic_control.R;
@@ -62,8 +63,6 @@ public class InitialFragment extends Fragment {
 //        Log.d("CCCCCCCCC", teste2.get(0).getName());
 //        db.updateDevice(teste.get(0).getId(), "Corno",teste.get(0).getDesc(),teste.get(0).getBrokerIP(), teste.get(0).getBrokerPort());
 //        db.updateFeature(teste2.get(0).getId(),teste2.get(0).getName(),teste2.get(0).getTopic(), teste2.get(0).getType(), "AA",teste2.get(0).getDevice_id());
-
-
         retrieveDevices();
     }
 

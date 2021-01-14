@@ -67,14 +67,14 @@ public class DB extends SQLiteOpenHelper{
         return devices;
     }
 
-    public ArrayList<BaseFeature> selectAllFeatures(){
+    public ArrayList<BaseFeature> selectAllFeatures(int device_id){
         SQLiteDatabase db;
         Cursor cursor;
         ArrayList<BaseFeature> features = new ArrayList<BaseFeature>();
-        String[] columns = {"id", "name", "topic", "type", "value", "device_id"};
-        String type;
+        String type, query;
         db = this.getReadableDatabase();
-        cursor = db.query("feature", columns, null, null, null, null, "id");
+        query = "SELECT * FROM feature WHERE device_id = ?";
+        cursor = db.rawQuery(query, new String[] {Integer.toString(device_id)});
         while (cursor.moveToNext()){
             type = cursor.getString(cursor.getColumnIndex("type"));
             switch (type){

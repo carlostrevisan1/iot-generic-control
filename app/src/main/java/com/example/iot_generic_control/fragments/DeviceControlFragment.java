@@ -33,6 +33,7 @@ import android.widget.ToggleButton;
 import com.example.iot_generic_control.R;
 import com.example.iot_generic_control.classes.BaseFeature;
 import com.example.iot_generic_control.classes.ButtonFeature;
+import com.example.iot_generic_control.classes.DB;
 import com.example.iot_generic_control.classes.IOTDevice;
 import com.example.iot_generic_control.classes.SendTextFeature;
 import com.example.iot_generic_control.classes.SliderFeature;
@@ -223,30 +224,31 @@ public class DeviceControlFragment extends Fragment {
     }
 
     public void retrieveFeatures(){
+        DB db = new DB(requireContext());
         featuresList.clear();
-        ButtonFeature bteste = new ButtonFeature("Botao", "teste", 1, 2, "teste","button");
-        ButtonFeature bteste2 = new ButtonFeature("Botao", "teste", 1, 2, "teste2","button");
-        ButtonFeature bteste3 = new ButtonFeature("Botao", "teste", 1, 2, "Bis, vc é mto tonto","button");
-        SendTextFeature sendteste = new SendTextFeature("EnviarTexto", "teste", 1, 2, "teste", "sendText");
-        SliderFeature sliderteste = new SliderFeature("Botao", "teste", 1, 2, 1, 10, "slider");
-        ToggleButtonFeature toggleTeste = new ToggleButtonFeature("Togglinho", "teste", 1, 2, "ON", "OFF", "toggleButton");
-        SliderFeature sliderteste2 = new SliderFeature("tt", "teste", 1, 2, 1, 20, "slider");
-        SliderFeature sliderteste3 = new SliderFeature("2222", "teste", 1, 2, 1, 5, "slider");
-        SendTextFeature sendteste2 = new SendTextFeature("EnviarTexto", "teste", 1, 2, "teste", "sendText");
-        SendTextFeature sendteste3 = new SendTextFeature("EnviarTexto", "teste", 1, 2, "teste", "sendText");
-
-
-        featuresList.add(bteste);
-        featuresList.add(bteste2);
-        featuresList.add(bteste3);
-        featuresList.add(sendteste);
-        featuresList.add(sendteste2);
-        featuresList.add(sendteste3);
-        featuresList.add(sliderteste);
-        featuresList.add(sliderteste2);
-        featuresList.add(sliderteste3);
-        featuresList.add(toggleTeste);
+//        ButtonFeature bteste = new ButtonFeature("Botao", "teste", 1, 2, "teste","button");
+//        ButtonFeature bteste2 = new ButtonFeature("Botao", "teste", 1, 2, "teste2","button");
+//        ButtonFeature bteste3 = new ButtonFeature("Botao", "teste", 1, 2, "Bis, vc é mto tonto","button");
+//        SendTextFeature sendteste = new SendTextFeature("EnviarTexto", "teste", 1, 2, "teste", "sendText");
+//        SliderFeature sliderteste = new SliderFeature("Botao", "teste", 1, 2, 1, 10, "slider");
+//        ToggleButtonFeature toggleTeste = new ToggleButtonFeature("Togglinho", "teste", 1, 2, "1", "0", "toggleButton");
+//        SliderFeature sliderteste2 = new SliderFeature("tt", "teste", 1, 2, 1, 20, "slider");
+//        SliderFeature sliderteste3 = new SliderFeature("2222", "teste", 1, 2, 1, 5, "slider");
+//        SendTextFeature sendteste2 = new SendTextFeature("EnviarTexto", "teste", 1, 2, "teste", "sendText");
+//        SendTextFeature sendteste3 = new SendTextFeature("EnviarTexto", "teste", 1, 2, "teste", "sendText");
+//
+//
+//        featuresList.add(bteste);
+//        featuresList.add(bteste2);
+//        featuresList.add(bteste3);
+//        featuresList.add(sendteste);
+//        featuresList.add(sendteste2);
+//        featuresList.add(sendteste3);
+//        featuresList.add(sliderteste);
+//        featuresList.add(sliderteste2);
+//        featuresList.add(sliderteste3);
+//        featuresList.add(toggleTeste);
+        featuresList = db.selectAllFeatures(model.getDevice().getValue().getId());
         model.setFeatures(featuresList);
-        //TODO get features from db
     }
 }
