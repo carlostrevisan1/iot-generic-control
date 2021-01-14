@@ -1,6 +1,8 @@
 package com.example.iot_generic_control.fragments;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -13,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.transition.Slide;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -106,8 +109,12 @@ public class DeviceControlFragment extends Fragment {
 
     @SuppressLint("ResourceAsColor")
     public void setupButton(Button b, final ButtonFeature f, LinearLayout layout){
-        b.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        bLayout.setMargins(10,10,10,10);
+        bLayout.gravity = 1;
+        b.setLayoutParams(bLayout);
         b.setText(f.getName());
+        b.setBackgroundResource(R.drawable.button);
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +130,11 @@ public class DeviceControlFragment extends Fragment {
     public void setupSendText(final EditText t, Button b, final SendTextFeature f, LinearLayout layout){
         t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         t.setId(View.generateViewId());
-        b.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        bLayout.setMargins(10,10,10,10);
+        bLayout.gravity = 1;
+        b.setBackgroundResource(R.drawable.button);
+        b.setLayoutParams(bLayout);
         b.setText(f.getName());
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,17 +179,27 @@ public class DeviceControlFragment extends Fragment {
     }
 
     public void setupToggleButton(final ToggleButton t, ToggleButtonFeature f, LinearLayout layout){
-        t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        bLayout.setMargins(10,10,10,10);
+        bLayout.gravity = 1;
+        t.setLayoutParams(bLayout);
         t.setTextOff(f.getValueOff());
         t.setTextOn((f.getValueOn()));
-        t.setText("0");
+        t.setText("OFF");
+        t.setBackgroundResource(R.drawable.custom_button);
 
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(t.isChecked()){
                     Toast.makeText(requireContext(), t.getTextOn(), Toast.LENGTH_SHORT).show();
-
+                    t.setBackgroundResource(R.drawable.custom_buttton_on);
+                    t.setTextColor(Color.parseColor("#69967d"));
+                }
+                else{
+                    Toast.makeText(requireContext(), t.getTextOff(), Toast.LENGTH_SHORT).show();
+                    t.setBackgroundResource(R.drawable.custom_button);
+                    t.setTextColor(Color.parseColor("#000000"));
                 }
 
             }

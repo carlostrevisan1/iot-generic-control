@@ -24,5 +24,6 @@ public class ToggleButtonFeature extends BaseFeature {
         super(name, topic, id, device_id, type);
         this.valueOn = valueOn;
         this.valueOff = valueOff;
+        
     }
 }
