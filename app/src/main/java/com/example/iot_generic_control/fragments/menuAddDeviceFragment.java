@@ -70,7 +70,7 @@ public class menuAddDeviceFragment extends Fragment {
     }
 
     void saveToDB(IOTDevice newDevice){
-
+        //TODO add device to db
     }
     
 }

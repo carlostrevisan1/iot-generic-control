@@ -209,12 +209,23 @@ public class DeviceControlFragment extends Fragment {
         SendTextFeature sendteste = new SendTextFeature("EnviarTexto", "teste", 1, 2, "teste", "sendText");
         SliderFeature sliderteste = new SliderFeature("Botao", "teste", 1, 2, 1, 10, "slider");
         ToggleButtonFeature toggleTeste = new ToggleButtonFeature("Togglinho", "teste", 1, 2, "1", "0", "toggleButton");
+        SliderFeature sliderteste2 = new SliderFeature("tt", "teste", 1, 2, 1, 20, "slider");
+        SliderFeature sliderteste3 = new SliderFeature("2222", "teste", 1, 2, 1, 5, "slider");
+        SendTextFeature sendteste2 = new SendTextFeature("EnviarTexto", "teste", 1, 2, "teste", "sendText");
+        SendTextFeature sendteste3 = new SendTextFeature("EnviarTexto", "teste", 1, 2, "teste", "sendText");
+
+
         featuresList.add(bteste);
         featuresList.add(bteste2);
         featuresList.add(bteste3);
         featuresList.add(sendteste);
+        featuresList.add(sendteste2);
+        featuresList.add(sendteste3);
         featuresList.add(sliderteste);
+        featuresList.add(sliderteste2);
+        featuresList.add(sliderteste3);
         featuresList.add(toggleTeste);
         model.setFeatures(featuresList);
+        //TODO get features from db
     }
 }
