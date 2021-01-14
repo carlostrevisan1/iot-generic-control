@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.NewButtonFragment">
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="newButtonFragment" />
 
-</FrameLayout>
+    <EditText
+        android:layout_margin="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome"
+        android:id="@+id/button_name"/>
+    <EditText
+        android:layout_margin="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="topico"
+        android:id="@+id/button_topic"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:id="@+id/button_ok_button"/>
+
+
+
+</LinearLayout>
