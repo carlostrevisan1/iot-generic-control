@@ -15,19 +15,17 @@ public class DB extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "PRAGMA foreign_keys = ON ";
-        db.execSQL(sql);
+        String pragma_sql = "PRAGMA foreign_keys = ON ";
 
-        sql = "CREATE TABLE device (\n" +
+        String device_sql = "CREATE TABLE device (\n" +
                 "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    name VARCHAR(40),\n" +
                 "    desc TEXT,\n" +
                 "    ip_address VARCHAR(25),\n" +
                 "    port VARCHAR(5)\n" +
                 ") ";
-        db.execSQL(sql);
 
-        sql=    "CREATE TABLE feature (\n" +
+        String feat_sql = "CREATE TABLE feature (\n" +
                 "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    name VARCHAR(50),\n" +
                 "    topic VARCHAR(50),\n" +
@@ -36,12 +34,17 @@ public class DB extends SQLiteOpenHelper{
                 "    device_id INTEGER,\n" +
                 "    FOREIGN KEY (device_id) REFERENCES device (id) ON DELETE CASCADE ON UPDATE CASCADE\n" +
                 ");";
-        db.execSQL(sql);
+
+        db.execSQL(pragma_sql);
+        db.execSQL(device_sql);
+        db.execSQL(feat_sql);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sql = "DROP TABLE IF EXISTS device; DROP TABLE IF EXISTS feature;";
+        String sql = "DROP TABLE IF EXISTS device;";
+        db.execSQL(sql);
+        sql = "DROP TABLE IF EXISTS feature;";
         db.execSQL(sql);
         onCreate(db);
     }
