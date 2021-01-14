@@ -248,7 +248,7 @@ public class DeviceControlFragment extends Fragment {
 //        featuresList.add(sliderteste2);
 //        featuresList.add(sliderteste3);
 //        featuresList.add(toggleTeste);
-        featuresList = db.selectAllFeatures();
+        featuresList = db.selectAllFeatures(model.getDevice().getValue().getId());
         model.setFeatures(featuresList);
     }
 }
