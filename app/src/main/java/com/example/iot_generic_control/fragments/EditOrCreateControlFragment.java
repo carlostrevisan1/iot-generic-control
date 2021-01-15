@@ -42,11 +42,9 @@ public class EditOrCreateControlFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -62,13 +60,13 @@ public class EditOrCreateControlFragment extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavController navController = Navigation.findNavController(getActivity(),
+                NavController navController = Navigation.findNavController(requireActivity(),
                         R.id.fragment);
                 navController.navigateUp();
             }
         });
         model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
-        controlsList = model.getFeatures().getValue();
+        controlsList = model.getDb().getValue().selectAllFeatures();
         device = model.getDevice().getValue();
         toolbar.setTitle(device.getName() + " - Edit Mode");
 
@@ -89,7 +87,7 @@ public class EditOrCreateControlFragment extends Fragment {
         controlsListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                editClick(position);
 //                Navigation.findNavController(requireView()).navigate(R.id.action_initialFragment_to_deviceControlFragment);
             }
         });
@@ -119,19 +117,46 @@ public class EditOrCreateControlFragment extends Fragment {
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.delete_item:
-                deleteControl();
+                deleteControl(info.position);
                 controlsList.remove(info.position);
+                model.setFeatures(controlsList);
                 controlAdapter.notifyDataSetChanged();
                 return true;
             case R.id.edit_item:
-
+                editClick(info.position);
 //                Navigation.findNavController(requireView()).navigate(R.id.initialToEditAction);
             default:
                 return super.onContextItemSelected(item);
         }
     }
 
-    public void deleteControl(){
+    public void editClick(Integer position){
+        model.setEdit(true);
+        Bundle bundle = new Bundle();
+        switch (controlsList.get(position).getType()){
+            case "button":
+                bundle.putInt("position", position);
+                Navigation.findNavController(requireView()).navigate(R.id.editButtonAction, bundle);
+                break;
+            case "sendText":
+                bundle.putInt("position", position);
+                Navigation.findNavController(requireView()).navigate(R.id.editSendTextAction, bundle);
+                break;
+            case "slider":
+                bundle.putInt("position", position);
+                Navigation.findNavController(requireView()).navigate(R.id.editSliderAction, bundle);
+                break;
+            case "toggleButton":
+                bundle.putInt("position", position);
+                Navigation.findNavController(requireView()).navigate(R.id.editToggleButtonAction, bundle);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void deleteControl(int position){
+        model.getDb().getValue().deleteFrom("feature", controlsList.get(position).getId());
         //TODO Apagar do DB
     }
 }

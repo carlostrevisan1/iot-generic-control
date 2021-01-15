@@ -65,6 +65,18 @@
         <action
             android:id="@+id/featureDialogAction"
             app:destination="@id/featureDialogTeste" />
+        <action
+            android:id="@+id/editButtonAction"
+            app:destination="@id/newButtonFragment" />
+        <action
+            android:id="@+id/editSliderAction"
+            app:destination="@id/newSliderFragment" />
+        <action
+            android:id="@+id/editToggleButtonAction"
+            app:destination="@id/newToggleButtonFragment" />
+        <action
+            android:id="@+id/editSendTextAction"
+            app:destination="@id/newSendTextFragment" />
     </fragment>
     <fragment
         android:id="@+id/newSliderFragment"
