@@ -41,7 +41,7 @@ public class InitialFragment extends Fragment {
     DeviceListViewAdapter customAdapter;
     ArrayList<IOTDevice> devicesList = new ArrayList<>();
     DeviceViewModel model;
-    DB db = new DB(requireContext());
+    DB db;
 
     public InitialFragment() {
         // Required empty public constructor
@@ -73,6 +73,7 @@ public class InitialFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_initial, container, false);
 
         model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
+        db = new DB(requireContext());
         model.setDb(db);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -138,7 +139,7 @@ public class InitialFragment extends Fragment {
     }
 
     public void retrieveDevices(){
-        devicesList.add(new IOTDevice("Carlos", "Dispositivo BRABO", "192.168.0.0", "8080", 0));
+        devicesList.add(new IOTDevice("Carlos", "Dispositivo BRABO", "192.168.0.17", "2080", 0));
         devicesList.add(new IOTDevice("Carleeeeeos", "Dispositivo BRABO", "192.168.0.0", "8080", 1));
         devicesList.add(new IOTDevice("ee", "Dispositivo BRABO", "192.168.0.0", "8080", 2));
         //TODO pegar disp do db

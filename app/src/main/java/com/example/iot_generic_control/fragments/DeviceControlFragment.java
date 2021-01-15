@@ -2,7 +2,7 @@ package com.example.iot_generic_control.fragments;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+
 import android.os.Build;
 import android.os.Bundle;
 
@@ -14,8 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.transition.Slide;
-import android.view.Gravity;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,26 +34,33 @@ import com.example.iot_generic_control.classes.BaseFeature;
 import com.example.iot_generic_control.classes.ButtonFeature;
 import com.example.iot_generic_control.classes.DB;
 import com.example.iot_generic_control.classes.IOTDevice;
+import com.example.iot_generic_control.classes.MQTT;
 import com.example.iot_generic_control.classes.SendTextFeature;
 import com.example.iot_generic_control.classes.SliderFeature;
 import com.example.iot_generic_control.classes.ToggleButtonFeature;
 import com.example.iot_generic_control.viewmodels.DeviceViewModel;
 
+
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+
 
 public class DeviceControlFragment extends Fragment {
 
     IOTDevice device;
     DeviceViewModel model;
     ArrayList<BaseFeature> featuresList = new ArrayList<>();
+    MQTT mqtt;
+
+
     public DeviceControlFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
     }
 
 
@@ -80,6 +86,16 @@ public class DeviceControlFragment extends Fragment {
         });
 
         model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
+
+
+        mqtt = new MQTT(
+                requireContext(),
+                "tcp://" + model.getDevice().getValue().getBrokerIP() + ":" + model.getDevice().getValue().getBrokerPort(),
+                model.getDevice().getValue().getName());
+
+
+
+
         retrieveFeatures();
         device = model.getDevice().getValue();
         toolbar.setTitle(device.getName());
@@ -120,6 +136,7 @@ public class DeviceControlFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(requireContext(), f.getValue(), Toast.LENGTH_SHORT).show();
+
             }
         });
 

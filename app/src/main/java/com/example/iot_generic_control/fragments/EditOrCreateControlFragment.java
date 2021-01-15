@@ -66,7 +66,7 @@ public class EditOrCreateControlFragment extends Fragment {
             }
         });
         model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
-        controlsList = model.getDb().getValue().selectAllFeatures();
+        controlsList = model.getDb().getValue().selectAllFeatures(model.getDevice().getValue().getId());
         device = model.getDevice().getValue();
         toolbar.setTitle(device.getName() + " - Edit Mode");
 
