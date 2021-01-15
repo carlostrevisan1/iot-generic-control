@@ -45,7 +45,7 @@ public class NewButtonFragment extends Fragment {
         final EditText value = view.findViewById(R.id.button_value);
         Button b = view.findViewById(R.id.button_ok_button);
         model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
-        controlsList = model.getFeatures().getValue();
+        controlsList = model.getDb().getValue().selectAllFeatures(model.getDevice().getValue().getId());
 
         if(model.getEdit().getValue()){
             Bundle pos = getArguments();
@@ -65,10 +65,10 @@ public class NewButtonFragment extends Fragment {
                 //TODO update viewmodel list
                 if(model.getEdit().getValue()){
 
-                   // saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "button", valueValue);
+                   saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "button", valueValue);
                 }
                 else{
-                    //saveNewButtonToDB(buttonName, topicName, valueValue, "button");
+                    saveNewButtonToDB(buttonName, topicName, valueValue, "button");
 
                 }
                 Navigation.findNavController(requireView()).navigateUp();

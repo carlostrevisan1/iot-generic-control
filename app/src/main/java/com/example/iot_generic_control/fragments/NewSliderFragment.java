@@ -44,7 +44,7 @@ public class NewSliderFragment extends Fragment {
         final EditText value2 = view.findViewById(R.id.slider_range2);
         Button b = view.findViewById(R.id.slider_ok);
         model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
-        controlsList = model.getFeatures().getValue();
+        controlsList = model.getDb().getValue().selectAllFeatures(model.getDevice().getValue().getId());
 
         if(model.getEdit().getValue()){
             Bundle pos = getArguments();
@@ -66,10 +66,10 @@ public class NewSliderFragment extends Fragment {
                 //TODO update viewmodel list
                 if(model.getEdit().getValue()){
 
-                   // saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "slider", valueStart + ";" + valueLast);
+                    saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "slider", valueStart + ";" + valueLast);
                 }
                 else{
-                    //saveNewButtonToDB(buttonName, topicName, valueStart, valueLast);
+                    saveNewButtonToDB(buttonName, topicName, valueStart, valueLast);
 
                 }
                 Navigation.findNavController(requireView()).navigateUp();

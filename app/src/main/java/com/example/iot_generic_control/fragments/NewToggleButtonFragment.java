@@ -74,10 +74,10 @@ public class NewToggleButtonFragment extends Fragment {
                 String valueOn = value2.getText().toString();
                 //TODO update viewmodel list
                 if(model.getEdit().getValue()){
-                    //saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "toggleButton", valueOff + ";" + valueOn);
+                    saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "toggleButton", valueOff + ";" + valueOn);
                 }
                 else{
-                    //saveNewButtonToDB(buttonName, topicName, valueOff, valueOn, "toggleButton");
+                    saveNewButtonToDB(buttonName, topicName, valueOff, valueOn, "toggleButton");
 
                 }
                 Navigation.findNavController(requireView()).navigateUp();

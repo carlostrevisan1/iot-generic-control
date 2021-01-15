@@ -61,10 +61,10 @@ public class NewSendTextFragment extends Fragment {
                 //TODO update viewmodel list
                 if(model.getEdit().getValue()){
 
-                    //saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "sendText");
+                    saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "sendText");
                 }
                 else{
-                    //saveNewButtonToDB(buttonName, topicName, "sendTet");
+                    saveNewButtonToDB(buttonName, topicName, "sendText");
 
                 }
                 Navigation.findNavController(requireView()).navigateUp();

@@ -49,21 +49,8 @@ public class InitialFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO TESTES COM A CLASSE DO DB
-//        DB db = new DB(requireContext());
-//        Long a = db.insertDevice("Teste", "Testando", "192.168.0.120", "2020");
-//        Long b = db.insertFeature("Testefea", "topictest", "button", "50",1);
-//        Log.d("AAAAAAAAAAAAAA", a.toString());
-//        Log.d("BBBBBBBBBBBBB", b.toString());
-//        ArrayList<IOTDevice> teste = db.selectAllDevices();
-//        Toast.makeText(requireContext(), teste.get(0).getName(), Toast.LENGTH_SHORT).show();
-//        Log.d("CCCCCCCCC", teste.get(0).getName());
-//        ArrayList<BaseFeature> teste2 = db.selectAllFeatures();
-//        Toast.makeText(requireContext(), teste2.get(0).getName(), Toast.LENGTH_SHORT).show();
-//        Log.d("CCCCCCCCC", teste2.get(0).getName());
-//        db.updateDevice(teste.get(0).getId(), "Corno",teste.get(0).getDesc(),teste.get(0).getBrokerIP(), teste.get(0).getBrokerPort());
-//        db.updateFeature(teste2.get(0).getId(),teste2.get(0).getName(),teste2.get(0).getTopic(), teste2.get(0).getType(), "AA",teste2.get(0).getDevice_id());
-        retrieveDevices();
+
+
     }
 
     @Override
@@ -75,9 +62,10 @@ public class InitialFragment extends Fragment {
         model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
         db = new DB(requireContext());
         model.setDb(db);
+        retrieveDevices();
+
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        assert activity != null;
+        AppCompatActivity activity = (AppCompatActivity) requireActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar();
         setHasOptionsMenu(true);
@@ -89,7 +77,6 @@ public class InitialFragment extends Fragment {
         devicesListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
                 MenuInflater inflater = requireActivity().getMenuInflater();
                 inflater.inflate(R.menu.device_list_hold_menu, menu);
             }
@@ -128,7 +115,7 @@ public class InitialFragment extends Fragment {
             case R.id.delete_item:
                 devicesList.remove(info.position);
                 customAdapter.notifyDataSetChanged();
-                deleteDevice();
+                deleteDevice(info.position);
                 return true;
             case R.id.edit_item:
                 notifyViewModel(devicesList.get(info.position));
@@ -139,18 +126,16 @@ public class InitialFragment extends Fragment {
     }
 
     public void retrieveDevices(){
-        devicesList.add(new IOTDevice("Carlos", "Dispositivo BRABO", "192.168.0.17", "2080", 0));
-        devicesList.add(new IOTDevice("Carleeeeeos", "Dispositivo BRABO", "192.168.0.0", "8080", 1));
-        devicesList.add(new IOTDevice("ee", "Dispositivo BRABO", "192.168.0.0", "8080", 2));
-        //TODO pegar disp do db
+
+        devicesList = model.getDb().getValue().selectAllDevices();
     }
 
     private void notifyViewModel(IOTDevice newDevice) {
         model.setDevice(newDevice);
     }
 
-    public void deleteDevice(){
-        //TODO apagarr device do db
+    public void deleteDevice(Integer pos){
+        model.getDb().getValue().deleteFrom("device", pos );
     }
 
 }

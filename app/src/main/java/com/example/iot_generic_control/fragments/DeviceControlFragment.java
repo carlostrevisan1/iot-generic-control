@@ -58,9 +58,7 @@ public class DeviceControlFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
     }
 
 
@@ -70,6 +68,9 @@ public class DeviceControlFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_device_control, container, false);
+        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
+        device = model.getDevice().getValue();
+        retrieveFeatures();
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -84,21 +85,13 @@ public class DeviceControlFragment extends Fragment {
                 navController.navigateUp();
             }
         });
-
-        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
-
+        toolbar.setTitle(device.getName());
 
         mqtt = new MQTT(
                 requireContext(),
-                "tcp://" + model.getDevice().getValue().getBrokerIP() + ":" + model.getDevice().getValue().getBrokerPort(),
-                model.getDevice().getValue().getName());
+                "tcp://" + device.getBrokerIP() + ":" + device.getBrokerPort(),
+                device.getName());
 
-
-
-
-        retrieveFeatures();
-        device = model.getDevice().getValue();
-        toolbar.setTitle(device.getName());
 
         final LinearLayout layout = (LinearLayout) view.findViewById(R.id.controlLinearLayout);
         for (final BaseFeature feature: featuresList
@@ -136,6 +129,7 @@ public class DeviceControlFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(requireContext(), f.getValue(), Toast.LENGTH_SHORT).show();
+                mqtt.publishMessage(f.getTopic(), f.getValue());
 
             }
         });
@@ -157,6 +151,9 @@ public class DeviceControlFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(requireContext(), t.getText().toString(), Toast.LENGTH_SHORT).show();
+                mqtt.publishMessage(f.getTopic(), t.getText().toString());
+
+
             }
         });
         layout.addView(t);
@@ -164,7 +161,7 @@ public class DeviceControlFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void setupSlider(SeekBar s, SliderFeature f, LinearLayout layout){
+    public void setupSlider(SeekBar s, final SliderFeature f, LinearLayout layout){
         final TextView t = new TextView(getActivity());
         t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         s.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -189,20 +186,21 @@ public class DeviceControlFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                Toast.makeText(requireContext(), Integer.toString(progressChangedValue), Toast.LENGTH_SHORT).show();
+                mqtt.publishMessage(f.getTopic(), Integer.toString(progressChangedValue));
+
             }
         });
         layout.addView(t);
         layout.addView(s);
     }
 
-    public void setupToggleButton(final ToggleButton t, ToggleButtonFeature f, LinearLayout layout){
+    public void setupToggleButton(final ToggleButton t, final ToggleButtonFeature f, LinearLayout layout){
         LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         bLayout.setMargins(10,10,10,10);
         bLayout.gravity = 1;
         t.setLayoutParams(bLayout);
         t.setTextOff(f.getValueOff());
         t.setTextOn((f.getValueOn()));
-        t.setText("OFF");
         t.setBackgroundResource(R.drawable.custom_button);
 
         t.setOnClickListener(new View.OnClickListener() {
@@ -212,11 +210,14 @@ public class DeviceControlFragment extends Fragment {
                     Toast.makeText(requireContext(), t.getTextOn(), Toast.LENGTH_SHORT).show();
                     t.setBackgroundResource(R.drawable.custom_buttton_on);
                     t.setTextColor(Color.parseColor("#69967d"));
+                    mqtt.publishMessage(f.getTopic(), f.getValueOn());
                 }
                 else{
                     Toast.makeText(requireContext(), t.getTextOff(), Toast.LENGTH_SHORT).show();
                     t.setBackgroundResource(R.drawable.custom_button);
                     t.setTextColor(Color.parseColor("#000000"));
+                    mqtt.publishMessage(f.getTopic(), f.getValueOff());
+
                 }
 
             }
@@ -241,31 +242,8 @@ public class DeviceControlFragment extends Fragment {
     }
 
     public void retrieveFeatures(){
-        DB db = new DB(requireContext());
         featuresList.clear();
-//        ButtonFeature bteste = new ButtonFeature("Botao", "teste", 1, 2, "teste","button");
-//        ButtonFeature bteste2 = new ButtonFeature("Botao", "teste", 1, 2, "teste2","button");
-//        ButtonFeature bteste3 = new ButtonFeature("Botao", "teste", 1, 2, "Bis, vc é mto tonto","button");
-//        SendTextFeature sendteste = new SendTextFeature("EnviarTexto", "teste", 1, 2, "teste", "sendText");
-//        SliderFeature sliderteste = new SliderFeature("Botao", "teste", 1, 2, 1, 10, "slider");
-//        ToggleButtonFeature toggleTeste = new ToggleButtonFeature("Togglinho", "teste", 1, 2, "1", "0", "toggleButton");
-//        SliderFeature sliderteste2 = new SliderFeature("tt", "teste", 1, 2, 1, 20, "slider");
-//        SliderFeature sliderteste3 = new SliderFeature("2222", "teste", 1, 2, 1, 5, "slider");
-//        SendTextFeature sendteste2 = new SendTextFeature("EnviarTexto", "teste", 1, 2, "teste", "sendText");
-//        SendTextFeature sendteste3 = new SendTextFeature("EnviarTexto", "teste", 1, 2, "teste", "sendText");
-//
-//
-//        featuresList.add(bteste);
-//        featuresList.add(bteste2);
-//        featuresList.add(bteste3);
-//        featuresList.add(sendteste);
-//        featuresList.add(sendteste2);
-//        featuresList.add(sendteste3);
-//        featuresList.add(sliderteste);
-//        featuresList.add(sliderteste2);
-//        featuresList.add(sliderteste3);
-//        featuresList.add(toggleTeste);
-        featuresList = db.selectAllFeatures(model.getDevice().getValue().getId());
+        featuresList = model.getDb().getValue().selectAllFeatures(model.getDevice().getValue().getId());
         model.setFeatures(featuresList);
     }
 }

@@ -36,7 +36,8 @@ public class EditOrCreateControlFragment extends Fragment {
     private ArrayList<BaseFeature> controlsList = new ArrayList<>();
     private ControlsListViewAdapter controlAdapter;
     DeviceViewModel model;
-    IOTDevice  device;
+    IOTDevice device;
+
 
     public EditOrCreateControlFragment() {
         // Required empty public constructor
@@ -52,6 +53,10 @@ public class EditOrCreateControlFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_or_create_control, container, false);
+        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
+        device = model.getDevice().getValue();
+        controlsList = model.getDb().getValue().selectAllFeatures(device.getId());
+
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -65,10 +70,8 @@ public class EditOrCreateControlFragment extends Fragment {
                 navController.navigateUp();
             }
         });
-        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
-        controlsList = model.getDb().getValue().selectAllFeatures(model.getDevice().getValue().getId());
-        device = model.getDevice().getValue();
         toolbar.setTitle(device.getName() + " - Edit Mode");
+
 
 
         ListView controlsListView = view.findViewById(R.id.controls_list);
@@ -117,14 +120,10 @@ public class EditOrCreateControlFragment extends Fragment {
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.delete_item:
-                deleteControl(info.position);
-                controlsList.remove(info.position);
-                model.setFeatures(controlsList);
-                controlAdapter.notifyDataSetChanged();
+                deleteControlFeature(info.position);
                 return true;
             case R.id.edit_item:
                 editClick(info.position);
-//                Navigation.findNavController(requireView()).navigate(R.id.initialToEditAction);
             default:
                 return super.onContextItemSelected(item);
         }
@@ -155,8 +154,11 @@ public class EditOrCreateControlFragment extends Fragment {
         }
     }
 
-    public void deleteControl(int position){
+    public void deleteControlFeature(int position){
         model.getDb().getValue().deleteFrom("feature", controlsList.get(position).getId());
+        controlsList = model.getDb().getValue().selectAllFeatures(device.getId());
+        model.setFeatures(controlsList);
+        controlAdapter.notifyDataSetChanged();
         //TODO Apagar do DB
     }
 }

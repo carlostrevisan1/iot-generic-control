@@ -28,6 +28,7 @@ import com.example.iot_generic_control.viewmodels.DeviceViewModel;
 public class menuAddDeviceFragment extends Fragment {
 
     Button ok;
+    DeviceViewModel model;
     public menuAddDeviceFragment() {
 
     }
@@ -42,11 +43,12 @@ public class menuAddDeviceFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_menu_add_device, container, false);
+        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
+
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         setHasOptionsMenu(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,9 +75,9 @@ public class menuAddDeviceFragment extends Fragment {
     }
 
     void saveToDB(IOTDevice newDevice){
-        //TODO add device to db
-        DB database = new DB(requireContext());
-        database.insertDevice(newDevice.getName(), newDevice.getDesc(), newDevice.getBrokerIP(), newDevice.getBrokerPort());
+
+
+        model.getDb().getValue().insertDevice(newDevice.getName(), newDevice.getDesc(), newDevice.getBrokerIP(), newDevice.getBrokerPort());
 
     }
     
