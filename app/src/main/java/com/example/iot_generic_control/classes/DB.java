@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class DB extends SQLiteOpenHelper{
 
+
     public DB(Context context){
         super(context, "iot_manager.db", null , 1);
     }
