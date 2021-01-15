@@ -19,12 +19,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.iot_generic_control.R;
+import com.example.iot_generic_control.classes.DB;
 import com.example.iot_generic_control.classes.IOTDevice;
 import com.example.iot_generic_control.viewmodels.DeviceViewModel;
 
 
+
 public class menuAddDeviceFragment extends Fragment {
 
+    Button ok;
     public menuAddDeviceFragment() {
 
     }
@@ -71,6 +74,9 @@ public class menuAddDeviceFragment extends Fragment {
 
     void saveToDB(IOTDevice newDevice){
         //TODO add device to db
+        DB database = new DB(requireContext());
+        database.insertDevice(newDevice.getName(), newDevice.getDesc(), newDevice.getBrokerIP(), newDevice.getBrokerPort());
+
     }
     
 }
