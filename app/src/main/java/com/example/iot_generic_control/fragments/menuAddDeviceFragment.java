@@ -75,8 +75,6 @@ public class menuAddDeviceFragment extends Fragment {
     }
 
     void saveToDB(IOTDevice newDevice){
-
-
         model.getDb().getValue().insertDevice(newDevice.getName(), newDevice.getDesc(), newDevice.getBrokerIP(), newDevice.getBrokerPort());
 
     }

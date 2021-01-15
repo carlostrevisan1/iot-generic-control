@@ -49,8 +49,6 @@ public class InitialFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -113,9 +111,9 @@ public class InitialFragment extends Fragment {
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.delete_item:
+                deleteDevice(info.position);
                 devicesList.remove(info.position);
                 customAdapter.notifyDataSetChanged();
-                deleteDevice(info.position);
                 return true;
             case R.id.edit_item:
                 notifyViewModel(devicesList.get(info.position));
@@ -135,7 +133,7 @@ public class InitialFragment extends Fragment {
     }
 
     public void deleteDevice(Integer pos){
-        model.getDb().getValue().deleteFrom("device", pos );
+        model.getDb().getValue().deleteFrom("device", devicesList.get(pos).getId() );
     }
 
 }

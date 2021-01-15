@@ -156,6 +156,7 @@ public class EditOrCreateControlFragment extends Fragment {
 
     public void deleteControlFeature(int position){
         model.getDb().getValue().deleteFrom("feature", controlsList.get(position).getId());
+        controlsList.remove(position);
         controlsList = model.getDb().getValue().selectAllFeatures(device.getId());
         model.setFeatures(controlsList);
         controlAdapter.notifyDataSetChanged();
