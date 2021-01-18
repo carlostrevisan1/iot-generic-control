@@ -73,7 +73,7 @@ public class EditOrCreateControlFragment extends Fragment {
 
 
         ListView controlsListView = view.findViewById(R.id.controls_list);
-        controlAdapter = new ControlsListViewAdapter(requireContext(), R.layout.devices_list_layout, controlsList);
+        controlAdapter = new ControlsListViewAdapter(requireContext(), R.layout.controls_list_layout, controlsList);
         controlsListView.setAdapter(controlAdapter);
 
         controlsListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {

@@ -51,6 +51,7 @@ public class ControlsListViewAdapter extends ArrayAdapter {
         holder.name.setText(control_data.getName());
 
 
+
         return convertView;
     }
     //Classe auxiliar
