@@ -70,8 +70,8 @@ public class NewToggleButtonFragment extends Fragment {
             public void onClick(View v) {
                 String buttonName = name.getText().toString();
                 String topicName = topic.getText().toString();
-                String valueOff = value1.getText().toString();
-                String valueOn = value2.getText().toString();
+                String valueOff = value2.getText().toString();
+                String valueOn = value1.getText().toString();
                 //TODO update viewmodel list
                 if(model.getEdit().getValue()){
                     saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "toggleButton", valueOff + ";" + valueOn);

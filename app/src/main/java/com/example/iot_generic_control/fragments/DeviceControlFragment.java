@@ -203,52 +203,40 @@ public class DeviceControlFragment extends Fragment {
         layout.addView(s);
     }
 
-<<<<<<< HEAD
-    public void setupToggleButton(final Switch t, ToggleButtonFeature f, LinearLayout layout){
+
+    public void setupToggleButton(final Switch t, final ToggleButtonFeature f, LinearLayout layout){
         LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-=======
-    public void setupToggleButton(final ToggleButton t, final ToggleButtonFeature f, LinearLayout layout){
-        LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
->>>>>>> master
+
         bLayout.setMargins(10,10,10,10);
         bLayout.gravity = 0;
         t.setLayoutParams(bLayout);
         t.setTextOff(f.getValueOff());
         t.setTextOn((f.getValueOn()));
-<<<<<<< HEAD
-        //t.setText("OFF");
+        t.setText(f.getValueOff());
         //t.setBackgroundResource(R.drawable.custom_button);
-=======
         t.setBackgroundResource(R.drawable.custom_button);
->>>>>>> master
+
 
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(t.isChecked()){
-                    Toast.makeText(requireContext(), t.getTextOn(), Toast.LENGTH_SHORT).show();
-<<<<<<< HEAD
-                    //t.setText("ON");
-                    //t.setBackgroundResource(R.drawable.custom_buttton_on);
-                    //t.setTextColor(Color.parseColor("#69967d"));
-                }
-                else{
                     Toast.makeText(requireContext(), t.getTextOff(), Toast.LENGTH_SHORT).show();
+                    t.setText(f.getValueOn());
                     //t.setText("OFF");
                     //t.setBackgroundResource(R.drawable.custom_button);
                     //t.setTextColor(Color.parseColor("#000000"));
-=======
                     t.setBackgroundResource(R.drawable.custom_buttton_on);
                     t.setTextColor(Color.parseColor("#69967d"));
                     mqtt.publishMessage(f.getTopic(), f.getValueOn());
                 }
                 else{
                     Toast.makeText(requireContext(), t.getTextOff(), Toast.LENGTH_SHORT).show();
+                    t.setText(f.getValueOff());
                     t.setBackgroundResource(R.drawable.custom_button);
                     t.setTextColor(Color.parseColor("#000000"));
                     mqtt.publishMessage(f.getTopic(), f.getValueOff());
 
->>>>>>> master
                 }
 
             }
@@ -274,8 +262,8 @@ public class DeviceControlFragment extends Fragment {
 
     public void retrieveFeatures(){
         featuresList.clear();
-<<<<<<< HEAD
-        ButtonFeature bteste = new ButtonFeature("", "teste", 1, 2, "teste","button");
+
+        /*ButtonFeature bteste = new ButtonFeature("", "teste", 1, 2, "teste","button");
         ButtonFeature bteste2 = new ButtonFeature("Botao", "teste", 1, 2, "teste2","button");
         ButtonFeature bteste3 = new ButtonFeature("Botao", "teste", 1, 2, "Bis, vc é mto tonto","button");
         SendTextFeature sendteste = new SendTextFeature("Enviar Texto", "teste", 1, 2, "teste", "sendText");
@@ -284,10 +272,10 @@ public class DeviceControlFragment extends Fragment {
         SliderFeature sliderteste2 = new SliderFeature("tt", "teste", 1, 2, 1, 20, "slider");
         SliderFeature sliderteste3 = new SliderFeature("2222", "teste", 1, 2, 1, 5, "slider");
         SendTextFeature sendteste2 = new SendTextFeature("Enviar Texto", "teste", 1, 2, "teste", "sendText");
-        SendTextFeature sendteste3 = new SendTextFeature("Enviar Texto", "teste", 1, 2, "teste", "sendText");
+        SendTextFeature sendteste3 = new SendTextFeature("Enviar Texto", "teste", 1, 2, "teste", "sendText");*/
 
 
-        featuresList.add(bteste);
+       /*featuresList.add(bteste);
         featuresList.add(bteste2);
         featuresList.add(bteste3);
         featuresList.add(sendteste);
@@ -296,10 +284,10 @@ public class DeviceControlFragment extends Fragment {
         featuresList.add(sliderteste);
         featuresList.add(sliderteste2);
         featuresList.add(sliderteste3);
-        featuresList.add(toggleTeste);
-=======
+        featuresList.add(toggleTeste);*/
+
         featuresList = model.getDb().getValue().selectAllFeatures(model.getDevice().getValue().getId());
->>>>>>> master
+
         model.setFeatures(featuresList);
     }
 }
