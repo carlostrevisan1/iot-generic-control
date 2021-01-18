@@ -17,12 +17,20 @@ public class SliderFeature extends BaseFeature {
         this.lastRange = lastRange;
     }
 
+    public String getPrefix() { return prefix; }
+
+    public String getSuffix() { return suffix; }
+
     int startRange;
     int lastRange;
+    String prefix;
+    String suffix;
 
-    public SliderFeature(String name, String topic, int id, int device_id, int start, int last, String type) {
+    public SliderFeature(String name, String topic, int id, int device_id, int start, int last, String type, String prefix, String suffix) {
         super(name, topic, id, device_id,type);
         this.startRange = start;
         this.lastRange = last;
+        this.prefix = prefix;
+        this.suffix = suffix;
     }
 }
