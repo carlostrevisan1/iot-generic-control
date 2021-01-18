@@ -42,6 +42,9 @@ public class DeviceListViewAdapter extends ArrayAdapter {
             holder = new ViewHolder();
 
             holder.name = convertView.findViewById(R.id.device_name);
+            holder.desc = convertView.findViewById(R.id.device1_desc);
+            holder.ip = convertView.findViewById(R.id.device1_ip);
+            holder.port = convertView.findViewById(R.id.device1_port);
 
             convertView.setTag(holder);
         }
@@ -50,13 +53,17 @@ public class DeviceListViewAdapter extends ArrayAdapter {
 
         IOTDevice device_data = devices.get(position);
         holder.name.setText(device_data.getName());
-
+        holder.desc.setText(device_data.getDesc());
+        holder.ip.setText(device_data.getBrokerIP());
+        holder.port.setText(device_data.getBrokerPort());
 
         return convertView;
     }
     //Classe auxiliar
     static class ViewHolder{
         TextView name;
-
+        TextView desc;
+        TextView ip;
+        TextView port;
     }
 }
