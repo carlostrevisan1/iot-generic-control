@@ -2,6 +2,7 @@ package com.example.iot_generic_control.classes;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -23,7 +24,7 @@ public class MQTT {
     /* Obtain the MQTT connection information clientId, username, and password. */
     AiotMqttOption aiotMqttOption = new AiotMqttOption().getMqttOption(PRODUCTKEY, DEVICENAME, DEVICESECRET);
 
-    public MQTT(Context context, String ip_address, String device_name){
+    public MQTT(final Context context, String ip_address, String device_name){
         if (aiotMqttOption == null) {
             Log.d("option_error", "device info error");
         }
@@ -78,7 +79,7 @@ public class MQTT {
         }
     }
 
-    public void publishMessage(String topic, String payload) {
+    public void publishMessage(String topic, final String payload) {
         try {
             if (this.mqtt.isConnected() == false) {
                 this.mqtt.connect();
@@ -91,11 +92,13 @@ public class MQTT {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Log.i("MQTT", "publish succeed! ");
+                    Toast.makeText(context,"Mensagem " + payload + " enviada com sucesso", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     Log.i("MQTT", "publish failed!");
+                    Toast.makeText(context,"Falha ao enviar a mensagem!", Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (MqttException e) {

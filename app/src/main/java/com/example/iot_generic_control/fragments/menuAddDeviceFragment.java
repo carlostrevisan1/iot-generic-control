@@ -82,6 +82,7 @@ public class menuAddDeviceFragment extends Fragment {
                 * o app navega para o fragmento anterior */
                 IOTDevice device = new IOTDevice(name.getText().toString(), desc.getText().toString(), broker.getText().toString(), port.getText().toString());
                 if(model.getEdit().getValue()){
+                    device.setId(model.getDevice().getValue().getId());
                     updateDevice(device);
                 }
                 else{

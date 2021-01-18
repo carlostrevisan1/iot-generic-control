@@ -15,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -127,7 +128,6 @@ public class DeviceControlFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(requireContext(), f.getValue(), Toast.LENGTH_SHORT).show();
                 mqtt.publishMessage(f.getTopic(), f.getValue());
 
             }
@@ -157,10 +157,7 @@ public class DeviceControlFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(requireContext(), t.getText().toString(), Toast.LENGTH_SHORT).show();
                 mqtt.publishMessage(f.getTopic(), t.getText().toString());
-
-
             }
         });
         layout.addView(t);
@@ -170,8 +167,13 @@ public class DeviceControlFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setupSlider(SeekBar s, final SliderFeature f, LinearLayout layout){
         final TextView t = new TextView(getActivity());
-        t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams tLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        tLayout.setMargins(10,10,10,10);
+        tLayout.gravity = Gravity.CENTER;
+        t.setLayoutParams(tLayout);
+        t.setTextSize(19);
         s.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
         s.setMin(f.getStartRange());
         s.setMax(f.getLastRange());
         s.setProgress(f.getLastRange()/2);
@@ -192,9 +194,7 @@ public class DeviceControlFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-               Toast.makeText(requireContext(), Integer.toString(progressChangedValue), Toast.LENGTH_SHORT).show();
                 mqtt.publishMessage(f.getTopic(), Integer.toString(progressChangedValue));
-
             }
         });
         layout.addView(t);
@@ -219,7 +219,6 @@ public class DeviceControlFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(t.isChecked()){
-                    Toast.makeText(requireContext(), t.getTextOff(), Toast.LENGTH_SHORT).show();
                     t.setText(f.getValueOn());
                     //t.setText("OFF");
                     //t.setBackgroundResource(R.drawable.custom_button);
@@ -229,12 +228,10 @@ public class DeviceControlFragment extends Fragment {
                     mqtt.publishMessage(f.getTopic(), f.getValueOn());
                 }
                 else{
-                    Toast.makeText(requireContext(), t.getTextOff(), Toast.LENGTH_SHORT).show();
                     t.setText(f.getValueOff());
                     t.setBackgroundResource(R.drawable.custom_button);
                     t.setTextColor(Color.parseColor("#000000"));
                     mqtt.publishMessage(f.getTopic(), f.getValueOff());
-
                 }
 
             }
