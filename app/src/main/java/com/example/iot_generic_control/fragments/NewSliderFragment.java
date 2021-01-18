@@ -81,10 +81,9 @@ public class NewSliderFragment extends Fragment {
                 String topicName = topic.getText().toString();
                 String valueStart = value1.getText().toString();
                 String valueLast = value2.getText().toString();
-                //TODO update viewmodel list
                 if(model.getEdit().getValue()){
-
-                    saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "slider", valueStart + ";" + valueLast);
+                    saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "slider", valueStart + ";" + valueLast + ";;");
+                    //TODO: no lugar do '";;"' precisará ser trocado por '+ ";" + prefix + ";" + suffix' que deverão ser pegos de input do usuario
                 }
                 else{
                     saveNewButtonToDB(buttonName, topicName, valueStart, valueLast);
@@ -98,7 +97,6 @@ public class NewSliderFragment extends Fragment {
     }
     public void saveEditToDB(int id, String name, String topic, String type, String value){
         model.getDb().getValue().updateFeature(id,name,topic,type,value);
-        //TODO update in the DB and update viewmodel with new information
 
     }
     public void saveNewButtonToDB(String name, String topic, String start, String end){

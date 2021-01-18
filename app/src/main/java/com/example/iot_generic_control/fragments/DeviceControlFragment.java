@@ -179,7 +179,7 @@ public class DeviceControlFragment extends Fragment {
         s.setProgress(f.getLastRange()/2);
 
         s.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progressChangedValue = 0;
+            int progressChangedValue;
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -194,7 +194,8 @@ public class DeviceControlFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mqtt.publishMessage(f.getTopic(), Integer.toString(progressChangedValue));
+                String msg = f.getPrefix() + Integer.toString(progressChangedValue) + f.getSuffix();
+                mqtt.publishMessage(f.getTopic(), msg);
             }
         });
         layout.addView(t);
