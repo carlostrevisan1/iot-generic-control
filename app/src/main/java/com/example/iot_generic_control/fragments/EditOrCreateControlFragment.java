@@ -36,17 +36,16 @@ public class EditOrCreateControlFragment extends Fragment {
     private ArrayList<BaseFeature> controlsList = new ArrayList<>();
     private ControlsListViewAdapter controlAdapter;
     DeviceViewModel model;
-    IOTDevice  device;
+    IOTDevice device;
+
 
     public EditOrCreateControlFragment() {
         // Required empty public constructor
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -54,6 +53,10 @@ public class EditOrCreateControlFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_or_create_control, container, false);
+        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
+        device = model.getDevice().getValue();
+        controlsList = model.getDb().getValue().selectAllFeatures(device.getId());
+
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -62,15 +65,13 @@ public class EditOrCreateControlFragment extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavController navController = Navigation.findNavController(getActivity(),
+                NavController navController = Navigation.findNavController(requireActivity(),
                         R.id.fragment);
                 navController.navigateUp();
             }
         });
-        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
-        controlsList = model.getFeatures().getValue();
-        device = model.getDevice().getValue();
         toolbar.setTitle(device.getName() + " - Edit Mode");
+
 
 
         ListView controlsListView = view.findViewById(R.id.controls_list);
@@ -89,7 +90,7 @@ public class EditOrCreateControlFragment extends Fragment {
         controlsListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                editClick(position);
 //                Navigation.findNavController(requireView()).navigate(R.id.action_initialFragment_to_deviceControlFragment);
             }
         });
@@ -119,19 +120,46 @@ public class EditOrCreateControlFragment extends Fragment {
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.delete_item:
-                deleteControl();
-                controlsList.remove(info.position);
-                controlAdapter.notifyDataSetChanged();
+                deleteControlFeature(info.position);
                 return true;
             case R.id.edit_item:
-
-//                Navigation.findNavController(requireView()).navigate(R.id.initialToEditAction);
+                editClick(info.position);
             default:
                 return super.onContextItemSelected(item);
         }
     }
 
-    public void deleteControl(){
+    public void editClick(Integer position){
+        model.setEdit(true);
+        Bundle bundle = new Bundle();
+        switch (controlsList.get(position).getType()){
+            case "button":
+                bundle.putInt("position", position);
+                Navigation.findNavController(requireView()).navigate(R.id.editButtonAction, bundle);
+                break;
+            case "sendText":
+                bundle.putInt("position", position);
+                Navigation.findNavController(requireView()).navigate(R.id.editSendTextAction, bundle);
+                break;
+            case "slider":
+                bundle.putInt("position", position);
+                Navigation.findNavController(requireView()).navigate(R.id.editSliderAction, bundle);
+                break;
+            case "toggleButton":
+                bundle.putInt("position", position);
+                Navigation.findNavController(requireView()).navigate(R.id.editToggleButtonAction, bundle);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void deleteControlFeature(int position){
+        model.getDb().getValue().deleteFrom("feature", controlsList.get(position).getId());
+        controlsList.remove(position);
+        controlsList = model.getDb().getValue().selectAllFeatures(device.getId());
+        model.setFeatures(controlsList);
+        controlAdapter.notifyDataSetChanged();
         //TODO Apagar do DB
     }
 }

@@ -7,33 +7,29 @@
     android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="newSliderFragment" />
     <EditText
         android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nome"
+        android:hint="Name"
         android:id="@+id/slider_name"/>
     <EditText
         android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="range inicial"
+        android:hint="Initial range"
         android:id="@+id/slider_range1"/>
     <EditText
         android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="range final"
+        android:hint="Final range"
         android:id="@+id/slider_range2"/>
     <EditText
         android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="topico"
+        android:hint="Topic"
         android:id="@+id/slider_topic"/>
     <Button
         android:layout_width="match_parent"

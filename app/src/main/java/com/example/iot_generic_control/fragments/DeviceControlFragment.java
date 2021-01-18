@@ -2,7 +2,7 @@ package com.example.iot_generic_control.fragments;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+
 import android.os.Build;
 import android.os.Bundle;
 
@@ -14,8 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.transition.Slide;
-import android.view.Gravity;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,21 +33,27 @@ import android.widget.ToggleButton;
 import com.example.iot_generic_control.R;
 import com.example.iot_generic_control.classes.BaseFeature;
 import com.example.iot_generic_control.classes.ButtonFeature;
+import com.example.iot_generic_control.classes.DB;
 import com.example.iot_generic_control.classes.IOTDevice;
+import com.example.iot_generic_control.classes.MQTT;
 import com.example.iot_generic_control.classes.SendTextFeature;
 import com.example.iot_generic_control.classes.SliderFeature;
 import com.example.iot_generic_control.classes.ToggleButtonFeature;
 import com.example.iot_generic_control.viewmodels.DeviceViewModel;
 
+
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+
 
 public class DeviceControlFragment extends Fragment {
 
     IOTDevice device;
     DeviceViewModel model;
     ArrayList<BaseFeature> featuresList = new ArrayList<>();
+    MQTT mqtt;
+
+
     public DeviceControlFragment() {
     }
 
@@ -64,6 +69,9 @@ public class DeviceControlFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_device_control, container, false);
+        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
+        device = model.getDevice().getValue();
+        retrieveFeatures();
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -78,11 +86,13 @@ public class DeviceControlFragment extends Fragment {
                 navController.navigateUp();
             }
         });
-
-        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
-        retrieveFeatures();
-        device = model.getDevice().getValue();
         toolbar.setTitle(device.getName());
+
+        mqtt = new MQTT(
+                requireContext(),
+                "tcp://" + device.getBrokerIP() + ":" + device.getBrokerPort(),
+                device.getName());
+
 
         final LinearLayout layout = (LinearLayout) view.findViewById(R.id.controlLinearLayout);
         for (final BaseFeature feature: featuresList
@@ -120,6 +130,8 @@ public class DeviceControlFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(requireContext(), f.getValue(), Toast.LENGTH_SHORT).show();
+                mqtt.publishMessage(f.getTopic(), f.getValue());
+
             }
         });
 
@@ -148,6 +160,9 @@ public class DeviceControlFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(requireContext(), t.getText().toString(), Toast.LENGTH_SHORT).show();
+                mqtt.publishMessage(f.getTopic(), t.getText().toString());
+
+
             }
         });
         layout.addView(t);
@@ -155,7 +170,7 @@ public class DeviceControlFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void setupSlider(SeekBar s, SliderFeature f, LinearLayout layout){
+    public void setupSlider(SeekBar s, final SliderFeature f, LinearLayout layout){
         final TextView t = new TextView(getActivity());
         t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         s.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -180,27 +195,39 @@ public class DeviceControlFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                Toast.makeText(requireContext(), Integer.toString(progressChangedValue), Toast.LENGTH_SHORT).show();
+                mqtt.publishMessage(f.getTopic(), Integer.toString(progressChangedValue));
+
             }
         });
         layout.addView(t);
         layout.addView(s);
     }
 
+<<<<<<< HEAD
     public void setupToggleButton(final Switch t, ToggleButtonFeature f, LinearLayout layout){
         LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+=======
+    public void setupToggleButton(final ToggleButton t, final ToggleButtonFeature f, LinearLayout layout){
+        LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+>>>>>>> master
         bLayout.setMargins(10,10,10,10);
         bLayout.gravity = 0;
         t.setLayoutParams(bLayout);
         t.setTextOff(f.getValueOff());
         t.setTextOn((f.getValueOn()));
+<<<<<<< HEAD
         //t.setText("OFF");
         //t.setBackgroundResource(R.drawable.custom_button);
+=======
+        t.setBackgroundResource(R.drawable.custom_button);
+>>>>>>> master
 
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(t.isChecked()){
                     Toast.makeText(requireContext(), t.getTextOn(), Toast.LENGTH_SHORT).show();
+<<<<<<< HEAD
                     //t.setText("ON");
                     //t.setBackgroundResource(R.drawable.custom_buttton_on);
                     //t.setTextColor(Color.parseColor("#69967d"));
@@ -210,6 +237,18 @@ public class DeviceControlFragment extends Fragment {
                     //t.setText("OFF");
                     //t.setBackgroundResource(R.drawable.custom_button);
                     //t.setTextColor(Color.parseColor("#000000"));
+=======
+                    t.setBackgroundResource(R.drawable.custom_buttton_on);
+                    t.setTextColor(Color.parseColor("#69967d"));
+                    mqtt.publishMessage(f.getTopic(), f.getValueOn());
+                }
+                else{
+                    Toast.makeText(requireContext(), t.getTextOff(), Toast.LENGTH_SHORT).show();
+                    t.setBackgroundResource(R.drawable.custom_button);
+                    t.setTextColor(Color.parseColor("#000000"));
+                    mqtt.publishMessage(f.getTopic(), f.getValueOff());
+
+>>>>>>> master
                 }
 
             }
@@ -219,7 +258,7 @@ public class DeviceControlFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.botao_toolbar_inicial, menu);
+        inflater.inflate(R.menu.botao_engrenagem, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -235,6 +274,7 @@ public class DeviceControlFragment extends Fragment {
 
     public void retrieveFeatures(){
         featuresList.clear();
+<<<<<<< HEAD
         ButtonFeature bteste = new ButtonFeature("", "teste", 1, 2, "teste","button");
         ButtonFeature bteste2 = new ButtonFeature("Botao", "teste", 1, 2, "teste2","button");
         ButtonFeature bteste3 = new ButtonFeature("Botao", "teste", 1, 2, "Bis, vc é mto tonto","button");
@@ -257,7 +297,9 @@ public class DeviceControlFragment extends Fragment {
         featuresList.add(sliderteste2);
         featuresList.add(sliderteste3);
         featuresList.add(toggleTeste);
+=======
+        featuresList = model.getDb().getValue().selectAllFeatures(model.getDevice().getValue().getId());
+>>>>>>> master
         model.setFeatures(featuresList);
-        //TODO get features from db
     }
 }
