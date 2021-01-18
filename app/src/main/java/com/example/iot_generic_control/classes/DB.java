@@ -100,11 +100,26 @@ public class DB extends SQLiteOpenHelper{
                     String[] ranges;
                     values = cursor.getString(cursor.getColumnIndex("value"));
                     ranges = values.split(";");
-                    startRange = Integer.parseInt(ranges[0]);
-                    endRange = Integer.parseInt(ranges[1]);
-                    prefix = ranges[2];
-                    suffix = ranges[3];
-
+                    switch (ranges.length){
+                        case 2:
+                            startRange = Integer.parseInt(ranges[0]);
+                            endRange = Integer.parseInt(ranges[1]);
+                            prefix = "";
+                            suffix = "";
+                            break;
+                        case 3:
+                            startRange = Integer.parseInt(ranges[0]);
+                            endRange = Integer.parseInt(ranges[1]);
+                            prefix = ranges[2];
+                            suffix = "";
+                            break;
+                        case 4:
+                            startRange = Integer.parseInt(ranges[0]);
+                            endRange = Integer.parseInt(ranges[1]);
+                            prefix = ranges[2];
+                            suffix = ranges[3];
+                            break;
+                    }
                     features.add(new SliderFeature(cursor.getString(cursor.getColumnIndex("name")),
                                                    cursor.getString(cursor.getColumnIndex("topic")),
                                                    cursor.getInt(cursor.getColumnIndex("id")),
