@@ -67,13 +67,27 @@ public class menuAddDeviceFragment extends Fragment {
         final EditText desc = view.findViewById(R.id.device_desc);
         final EditText broker  = view.findViewById(R.id.device_broker);
         final EditText port = view.findViewById(R.id.device_port);
+
+        /* Se o valor de Edit for verdadeiro, entao é para carregar os valores do device passado e possibilitando editar, se nao é uma operacao de adicionar um novo device*/
+        if(model.getEdit().getValue()){
+            name.setText(model.getDevice().getValue().getName());
+            desc.setText(model.getDevice().getValue().getDesc());
+            broker.setText(model.getDevice().getValue().getBrokerIP());
+            port.setText(model.getDevice().getValue().getBrokerPort());
+        }
         /* Seta o Listener de click no botao de ok*/
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 /* Pega as informacoes que estao nos elementos carregando uma instancia do objeto IOTDevice que é passado pra uma funcao que o salva no banco e logo apos
                 * o app navega para o fragmento anterior */
-                IOTDevice newDevice = new IOTDevice(name.getText().toString(), desc.getText().toString(), broker.getText().toString(), port.getText().toString());
-                saveToDB(newDevice);
+                IOTDevice device = new IOTDevice(name.getText().toString(), desc.getText().toString(), broker.getText().toString(), port.getText().toString());
+                if(model.getEdit().getValue()){
+                    updateDevice(device);
+                }
+                else{
+                    saveToDB(device);
+                }
+                model.setEdit(false);
                 Navigation.findNavController(requireView()).navigateUp();
             }
         });
@@ -84,6 +98,11 @@ public class menuAddDeviceFragment extends Fragment {
     void saveToDB(IOTDevice newDevice){
         model.getDb().getValue().insertDevice(newDevice.getName(), newDevice.getDesc(), newDevice.getBrokerIP(), newDevice.getBrokerPort());
 
+    }
+
+    /* Atualiza o dispositivo no banco*/
+    void updateDevice(IOTDevice updateDevice){
+        model.getDb().getValue().updateDevice(updateDevice.getId(), updateDevice.getName(), updateDevice.getDesc(), updateDevice.getBrokerIP(), updateDevice.getBrokerPort());
     }
     
 }

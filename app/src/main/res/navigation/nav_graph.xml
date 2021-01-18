@@ -18,10 +18,6 @@
             android:id="@+id/action_initialFragment_to_deviceControlFragment"
             app:destination="@id/deviceControlFragment"
             app:enterAnim="@android:anim/fade_in" />
-        <action
-            android:id="@+id/initialToEditAction"
-            app:destination="@id/editOrCreateControlFragment"
-            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/menuAddDevice"

@@ -55,6 +55,7 @@ public class InitialFragment extends Fragment {
         /* Instancia o banco de dados e seta na view model o banco, para assim ser acessado em todos os fragmentos */
         db = new DB(requireContext());
         model.setDb(db);
+        model.setEdit(false);
         /* Chama a funcao que carrega a lista de dispositivos do banco para a variavel 'devicesList' */
         retrieveDevices();
 
@@ -120,7 +121,7 @@ public class InitialFragment extends Fragment {
                 return true;
             case R.id.edit_item:
                 notifyViewModel(devicesList.get(info.position));
-                Navigation.findNavController(requireView()).navigate(R.id.initialToEditAction);
+                Navigation.findNavController(requireView()).navigate(R.id.action_initialFragment_to_menuAddDevice);
             default:
                 return super.onContextItemSelected(item);
         }
@@ -135,6 +136,7 @@ public class InitialFragment extends Fragment {
     /* Seta o device selecionado dentro da viewModel */
     private void notifyViewModel(IOTDevice newDevice) {
         model.setDevice(newDevice);
+        model.setEdit(true);
     }
 
     /*Deleta o dispositivo na posicao "pos" da lista de dispositivos*/

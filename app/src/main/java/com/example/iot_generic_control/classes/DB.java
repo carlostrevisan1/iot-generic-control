@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -169,6 +170,7 @@ public class DB extends SQLiteOpenHelper{
         values.put("port", port);
         db.update("device", values, where, null);
         db.close();
+
     }
 
     public void updateFeature(int id, String name, String topic, String type, String value){
