@@ -79,7 +79,7 @@ public class MQTT {
         }
     }
 
-    public void publishMessage(String topic, String payload) {
+    public void publishMessage(String topic, final String payload) {
         try {
             if (this.mqtt.isConnected() == false) {
                 this.mqtt.connect();
@@ -92,11 +92,13 @@ public class MQTT {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Log.i("MQTT", "publish succeed! ");
+                    Toast.makeText(context,"Mensagem " + payload + " enviada com sucesso", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     Log.i("MQTT", "publish failed!");
+                    Toast.makeText(context,"Falha ao enviar a mensagem!", Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (MqttException e) {
