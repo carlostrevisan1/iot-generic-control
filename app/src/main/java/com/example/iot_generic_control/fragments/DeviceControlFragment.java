@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -107,7 +108,7 @@ public class DeviceControlFragment extends Fragment {
                     setupSlider(new SeekBar(requireActivity()), (SliderFeature) feature, layout);
                     break;
                 case "toggleButton":
-                    setupToggleButton(new ToggleButton(requireActivity()), (ToggleButtonFeature) feature, layout);
+                    setupToggleButton(new Switch(requireActivity()), (ToggleButtonFeature) feature, layout);
                     break;
                 default:
                     break;
@@ -139,8 +140,16 @@ public class DeviceControlFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void setupSendText(final EditText t, Button b, final SendTextFeature f, LinearLayout layout){
-        t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams editTextLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        editTextLayout.setMargins(10,10,10,10);
+        editTextLayout.gravity = 1;
+        t.setTextSize(22);
+        t.setLayoutParams(editTextLayout);
         t.setId(View.generateViewId());
+        t.setHint("Digite um texto para enviar: ");
+        t.setAlpha(1);
+        t.setBackgroundResource(R.drawable.custom_edittext);
+
         LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         bLayout.setMargins(10,10,10,10);
         bLayout.gravity = 1;
@@ -194,26 +203,36 @@ public class DeviceControlFragment extends Fragment {
         layout.addView(s);
     }
 
-    public void setupToggleButton(final ToggleButton t, final ToggleButtonFeature f, LinearLayout layout){
-        LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+    public void setupToggleButton(final Switch t, final ToggleButtonFeature f, LinearLayout layout){
+        LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
         bLayout.setMargins(10,10,10,10);
-        bLayout.gravity = 1;
+        bLayout.gravity = 0;
         t.setLayoutParams(bLayout);
         t.setTextOff(f.getValueOff());
         t.setTextOn((f.getValueOn()));
+        t.setText(f.getValueOff());
+        //t.setBackgroundResource(R.drawable.custom_button);
         t.setBackgroundResource(R.drawable.custom_button);
+
 
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(t.isChecked()){
-                    Toast.makeText(requireContext(), t.getTextOn(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), t.getTextOff(), Toast.LENGTH_SHORT).show();
+                    t.setText(f.getValueOn());
+                    //t.setText("OFF");
+                    //t.setBackgroundResource(R.drawable.custom_button);
+                    //t.setTextColor(Color.parseColor("#000000"));
                     t.setBackgroundResource(R.drawable.custom_buttton_on);
                     t.setTextColor(Color.parseColor("#69967d"));
                     mqtt.publishMessage(f.getTopic(), f.getValueOn());
                 }
                 else{
                     Toast.makeText(requireContext(), t.getTextOff(), Toast.LENGTH_SHORT).show();
+                    t.setText(f.getValueOff());
                     t.setBackgroundResource(R.drawable.custom_button);
                     t.setTextColor(Color.parseColor("#000000"));
                     mqtt.publishMessage(f.getTopic(), f.getValueOff());
@@ -227,7 +246,7 @@ public class DeviceControlFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.botao_toolbar_inicial, menu);
+        inflater.inflate(R.menu.botao_engrenagem, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -243,7 +262,32 @@ public class DeviceControlFragment extends Fragment {
 
     public void retrieveFeatures(){
         featuresList.clear();
+
+        /*ButtonFeature bteste = new ButtonFeature("", "teste", 1, 2, "teste","button");
+        ButtonFeature bteste2 = new ButtonFeature("Botao", "teste", 1, 2, "teste2","button");
+        ButtonFeature bteste3 = new ButtonFeature("Botao", "teste", 1, 2, "Bis, vc é mto tonto","button");
+        SendTextFeature sendteste = new SendTextFeature("Enviar Texto", "teste", 1, 2, "teste", "sendText");
+        SliderFeature sliderteste = new SliderFeature("Botao", "teste", 1, 2, 1, 10, "slider");
+        ToggleButtonFeature toggleTeste = new ToggleButtonFeature("Togglinho", "teste", 1, 2, "ON", "OFF", "toggleButton");
+        SliderFeature sliderteste2 = new SliderFeature("tt", "teste", 1, 2, 1, 20, "slider");
+        SliderFeature sliderteste3 = new SliderFeature("2222", "teste", 1, 2, 1, 5, "slider");
+        SendTextFeature sendteste2 = new SendTextFeature("Enviar Texto", "teste", 1, 2, "teste", "sendText");
+        SendTextFeature sendteste3 = new SendTextFeature("Enviar Texto", "teste", 1, 2, "teste", "sendText");*/
+
+
+       /*featuresList.add(bteste);
+        featuresList.add(bteste2);
+        featuresList.add(bteste3);
+        featuresList.add(sendteste);
+        featuresList.add(sendteste2);
+        featuresList.add(sendteste3);
+        featuresList.add(sliderteste);
+        featuresList.add(sliderteste2);
+        featuresList.add(sliderteste3);
+        featuresList.add(toggleTeste);*/
+
         featuresList = model.getDb().getValue().selectAllFeatures(model.getDevice().getValue().getId());
+
         model.setFeatures(featuresList);
     }
 }
