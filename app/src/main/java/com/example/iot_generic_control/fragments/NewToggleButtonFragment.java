@@ -2,8 +2,11 @@ package com.example.iot_generic_control.fragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -47,13 +50,28 @@ public class NewToggleButtonFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_toggle_button, container, false);
+        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
+        controlsList = model.getFeatures().getValue();
         final EditText name = view.findViewById(R.id.toggle_button_name);
         final EditText topic = view.findViewById(R.id.toggle_button_topic);
         final EditText value1 = view.findViewById(R.id.toggle_button_valorOff);
         final EditText value2 = view.findViewById(R.id.toggle_button_valorOn);
         Button b = view.findViewById(R.id.toggle_button_ok);
-        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
-        controlsList = model.getFeatures().getValue();
+
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setHasOptionsMenu(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(requireActivity(),
+                        R.id.fragment);
+                navController.navigateUp();
+            }
+        });
+        toolbar.setTitle(model.getDevice().getValue().getName() + " - New Switch Button");
 
         if(model.getEdit().getValue()){
             Bundle pos = getArguments();

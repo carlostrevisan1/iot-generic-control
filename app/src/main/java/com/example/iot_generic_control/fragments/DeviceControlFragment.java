@@ -28,12 +28,10 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.example.iot_generic_control.R;
 import com.example.iot_generic_control.classes.BaseFeature;
 import com.example.iot_generic_control.classes.ButtonFeature;
-import com.example.iot_generic_control.classes.DB;
 import com.example.iot_generic_control.classes.IOTDevice;
 import com.example.iot_generic_control.classes.MQTT;
 import com.example.iot_generic_control.classes.SendTextFeature;
@@ -253,7 +251,7 @@ public class DeviceControlFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        if (item.getItemId() == R.id.plus_button) {
+        if (item.getItemId() == R.id.settings_button) {
             Navigation.findNavController(requireView()).navigate(R.id.editOrControlAction);
             return true;
         }
@@ -262,32 +260,7 @@ public class DeviceControlFragment extends Fragment {
 
     public void retrieveFeatures(){
         featuresList.clear();
-
-        /*ButtonFeature bteste = new ButtonFeature("", "teste", 1, 2, "teste","button");
-        ButtonFeature bteste2 = new ButtonFeature("Botao", "teste", 1, 2, "teste2","button");
-        ButtonFeature bteste3 = new ButtonFeature("Botao", "teste", 1, 2, "Bis, vc é mto tonto","button");
-        SendTextFeature sendteste = new SendTextFeature("Enviar Texto", "teste", 1, 2, "teste", "sendText");
-        SliderFeature sliderteste = new SliderFeature("Botao", "teste", 1, 2, 1, 10, "slider");
-        ToggleButtonFeature toggleTeste = new ToggleButtonFeature("Togglinho", "teste", 1, 2, "ON", "OFF", "toggleButton");
-        SliderFeature sliderteste2 = new SliderFeature("tt", "teste", 1, 2, 1, 20, "slider");
-        SliderFeature sliderteste3 = new SliderFeature("2222", "teste", 1, 2, 1, 5, "slider");
-        SendTextFeature sendteste2 = new SendTextFeature("Enviar Texto", "teste", 1, 2, "teste", "sendText");
-        SendTextFeature sendteste3 = new SendTextFeature("Enviar Texto", "teste", 1, 2, "teste", "sendText");*/
-
-
-       /*featuresList.add(bteste);
-        featuresList.add(bteste2);
-        featuresList.add(bteste3);
-        featuresList.add(sendteste);
-        featuresList.add(sendteste2);
-        featuresList.add(sendteste3);
-        featuresList.add(sliderteste);
-        featuresList.add(sliderteste2);
-        featuresList.add(sliderteste3);
-        featuresList.add(toggleTeste);*/
-
         featuresList = model.getDb().getValue().selectAllFeatures(model.getDevice().getValue().getId());
-
         model.setFeatures(featuresList);
     }
 }

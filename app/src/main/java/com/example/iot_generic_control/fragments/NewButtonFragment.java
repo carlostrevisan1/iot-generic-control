@@ -2,8 +2,11 @@ package com.example.iot_generic_control.fragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -40,12 +43,28 @@ public class NewButtonFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_new_button, container, false);
+        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
+        controlsList = model.getDb().getValue().selectAllFeatures(model.getDevice().getValue().getId());
+
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setHasOptionsMenu(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(requireActivity(),
+                        R.id.fragment);
+                navController.navigateUp();
+            }
+        });
+        toolbar.setTitle(model.getDevice().getValue().getName() + " - New Button");
+
         final EditText name = view.findViewById(R.id.button_name);
         final EditText topic = view.findViewById(R.id.button_topic);
         final EditText value = view.findViewById(R.id.button_value);
         Button b = view.findViewById(R.id.button_ok_button);
-        model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
-        controlsList = model.getDb().getValue().selectAllFeatures(model.getDevice().getValue().getId());
 
         if(model.getEdit().getValue()){
             Bundle pos = getArguments();
