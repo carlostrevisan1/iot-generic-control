@@ -2,8 +2,11 @@ package com.example.iot_generic_control.fragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -44,6 +47,21 @@ public class NewSendTextFragment extends Fragment {
         Button b = view.findViewById(R.id.send_text_ok);
         model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
         controlsList = model.getFeatures().getValue();
+
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setHasOptionsMenu(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(requireActivity(),
+                        R.id.fragment);
+                navController.navigateUp();
+            }
+        });
+        toolbar.setTitle(model.getDevice().getValue().getName() + " - New Text Area");
 
         if(model.getEdit().getValue()){
             Bundle pos = getArguments();

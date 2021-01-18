@@ -16,10 +16,12 @@
             app:enterAnim="@anim/fragment_fade_enter" />
         <action
             android:id="@+id/action_initialFragment_to_deviceControlFragment"
-            app:destination="@id/deviceControlFragment" />
+            app:destination="@id/deviceControlFragment"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/initialToEditAction"
-            app:destination="@id/editOrCreateControlFragment" />
+            app:destination="@id/editOrCreateControlFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/menuAddDevice"
@@ -33,7 +35,8 @@
         tools:layout="@layout/fragment_device_control" >
         <action
             android:id="@+id/editOrControlAction"
-            app:destination="@id/editOrCreateControlFragment" />
+            app:destination="@id/editOrCreateControlFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/newButtonFragment"

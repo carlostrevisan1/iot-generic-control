@@ -18,14 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.example.iot_generic_control.R;
 import com.example.iot_generic_control.classes.BaseFeature;
 import com.example.iot_generic_control.classes.IOTDevice;
 import com.example.iot_generic_control.utils_adapters.ControlsListViewAdapter;
-import com.example.iot_generic_control.utils_adapters.DeviceListViewAdapter;
 import com.example.iot_generic_control.viewmodels.DeviceViewModel;
 
 import java.util.ArrayList;
@@ -108,7 +106,7 @@ public class EditOrCreateControlFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        if (item.getItemId() == R.id.plus_button) {
+        if (item.getItemId() == R.id.settings_button) {
             Navigation.findNavController(requireView()).navigate(R.id.featureDialogAction);
             return true;
         }

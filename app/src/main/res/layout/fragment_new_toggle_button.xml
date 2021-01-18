@@ -7,33 +7,35 @@
     android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="NewToggleButtonFragment" />
+        android:background="?attr/colorPrimaryDark"/>
     <EditText
         android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nome"
+        android:hint="Name"
         android:id="@+id/toggle_button_name"/>
     <EditText
         android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="valor on"
+        android:hint="ON value"
         android:id="@+id/toggle_button_valorOn"/>
     <EditText
         android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="valor off"
+        android:hint="OFF value"
         android:id="@+id/toggle_button_valorOff"/>
     <EditText
         android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="topico"
+        android:hint="Topic"
         android:id="@+id/toggle_button_topic"/>
     <Button
         android:layout_width="match_parent"

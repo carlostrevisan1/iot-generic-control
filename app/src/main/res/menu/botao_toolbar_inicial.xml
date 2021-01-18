@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/plus_button"
+        android:id="@+id/settings_button"
         android:icon="@drawable/addicon"
         android:title="Adicionar"
         app:showAsAction="ifRoom"/>

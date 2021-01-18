@@ -11,17 +11,17 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Slider"
+        android:text="SeekBar"
         android:id="@+id/new_slider"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ToggleButton"
+        android:text="SwitchButton"
         android:id="@+id/new_toggle"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Send Text"
+        android:text="Text Area"
         android:id="@+id/new_send"/>
 
 
