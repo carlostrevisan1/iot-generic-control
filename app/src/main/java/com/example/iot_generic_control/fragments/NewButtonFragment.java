@@ -41,11 +41,12 @@ public class NewButtonFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Infla o layout e carrega a viewmodel e a lista de controles
         View view = inflater.inflate(R.layout.fragment_new_button, container, false);
         model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
         controlsList = model.getDb().getValue().selectAllFeatures(model.getDevice().getValue().getId());
 
+        /* Seta a toolbar e habilita o botao de voltar nela*/
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -61,11 +62,13 @@ public class NewButtonFragment extends Fragment {
         });
         toolbar.setTitle(model.getDevice().getValue().getName() + " - New Button");
 
+        /* Procura na view os elementos que serao utilizados*/
         final EditText name = view.findViewById(R.id.button_name);
         final EditText topic = view.findViewById(R.id.button_topic);
         final EditText value = view.findViewById(R.id.button_value);
         Button b = view.findViewById(R.id.button_ok_button);
 
+        /* Checa se é pra ser uma pagina para editar um controle e assim seta os elementos com os valores ja cadastrados*/
         if(model.getEdit().getValue()){
             Bundle pos = getArguments();
             position = pos.getInt("position");
@@ -78,6 +81,7 @@ public class NewButtonFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /* Pega os valores que estao nas views e salva no bancco*/
                 String buttonName = name.getText().toString();
                 String topicName = topic.getText().toString();
                 String valueValue = value.getText().toString();
@@ -96,11 +100,14 @@ public class NewButtonFragment extends Fragment {
 
         return view;
     }
+    /* Faz um Update de um controle no banco*/
     public void saveEditToDB(int id, String name, String topic, String type, String value){
         model.getDb().getValue().updateFeature(id,name,topic,type,value);
         //TODO update in the DB and update viewmodel with new information
 
     }
+
+    /* Salva um novo controle no banco*/
     public void saveNewButtonToDB(String name, String topic, String value, String type){
         model.getDb().getValue().insertFeature(name, topic, type,value, model.getDevice().getValue().getId());
         //TODO save in the db and update the view model

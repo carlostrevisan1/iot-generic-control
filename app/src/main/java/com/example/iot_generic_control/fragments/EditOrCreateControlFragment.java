@@ -49,12 +49,14 @@ public class EditOrCreateControlFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Infla o layout e o associa a uma variavel
         View view = inflater.inflate(R.layout.fragment_edit_or_create_control, container, false);
+        /* Carrega o viewmodel tambem carregando os valores que estao guardados nele, como device e a lista de controles*/
         model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
         device = model.getDevice().getValue();
         controlsList = model.getDb().getValue().selectAllFeatures(device.getId());
 
+        /* Carrega a toolbar, seta ela no fragmento e habilita o botao de voltar nela, que ao ser clicado volta no fragmento anterior*/
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -70,12 +72,12 @@ public class EditOrCreateControlFragment extends Fragment {
         });
         toolbar.setTitle(device.getName() + " - Edit Mode");
 
-
-
+        /* Puxa a listview para uma variavel e colocando um adapter nela*/
         ListView controlsListView = view.findViewById(R.id.controls_list);
         controlAdapter = new ControlsListViewAdapter(requireContext(), R.layout.controls_list_layout, controlsList);
         controlsListView.setAdapter(controlAdapter);
 
+        /* Atribui um menu de contexto para a listview*/
         controlsListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -85,24 +87,25 @@ public class EditOrCreateControlFragment extends Fragment {
             }
         });
 
+        /* seta o listener para um click em um item da listview*/
         controlsListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 editClick(position);
-//                Navigation.findNavController(requireView()).navigate(R.id.action_initialFragment_to_deviceControlFragment);
             }
         });
-
-
 
        return view;
     }
 
+    /* Infla o botao na toolbar*/
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.botao_toolbar_inicial, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
+    /*Quando o botao da toolbar é clicado essa funcao será disparada*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -113,6 +116,7 @@ public class EditOrCreateControlFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    /*Funcao que trata as opcoes dada pelo menu de contexto da listview*/
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -127,6 +131,7 @@ public class EditOrCreateControlFragment extends Fragment {
         }
     }
 
+    /*Funcao que trata quando o usuario for editar algum controle*/
     public void editClick(Integer position){
         model.setEdit(true);
         Bundle bundle = new Bundle();
@@ -152,6 +157,7 @@ public class EditOrCreateControlFragment extends Fragment {
         }
     }
 
+    /* Funcao que deleta do banco um controle, atualiza a lista e a viewmodel*/
     public void deleteControlFeature(int position){
         model.getDb().getValue().deleteFrom("feature", controlsList.get(position).getId());
         controlsList.remove(position);
