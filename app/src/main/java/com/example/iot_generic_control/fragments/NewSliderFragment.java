@@ -47,6 +47,8 @@ public class NewSliderFragment extends Fragment {
         final EditText topic = view.findViewById(R.id.slider_topic);
         final EditText value1 = view.findViewById(R.id.slider_range1);
         final EditText value2 = view.findViewById(R.id.slider_range2);
+        final EditText prefix = view.findViewById(R.id.prefix);
+        final EditText suffix = view.findViewById(R.id.suffix);
         Button b = view.findViewById(R.id.slider_ok);
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -72,6 +74,8 @@ public class NewSliderFragment extends Fragment {
             topic.setText(sliderSetting.getTopic());
             value1.setText( Integer.toString(sliderSetting.getStartRange()));
             value2.setText( Integer.toString(sliderSetting.getLastRange()));
+            prefix.setText(sliderSetting.getPrefix());
+            suffix.setText(sliderSetting.getSuffix());
         }
 
         b.setOnClickListener(new View.OnClickListener() {
@@ -81,12 +85,14 @@ public class NewSliderFragment extends Fragment {
                 String topicName = topic.getText().toString();
                 String valueStart = value1.getText().toString();
                 String valueLast = value2.getText().toString();
+                String prefixx = prefix.getText().toString();
+                String suffixx = suffix.getText().toString();
                 if(model.getEdit().getValue()){
-                    saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "slider", valueStart, valueLast, "", "");
+                    saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "slider", valueStart, valueLast, prefixx, suffixx);
                     //TODO: no lugar ddas strings vazias passar prefix e suffix que deverão ser pegos de input do usuario
                 }
                 else{
-                    saveNewButtonToDB(buttonName, topicName, valueStart, valueLast, "", "");
+                    saveNewButtonToDB(buttonName, topicName, valueStart, valueLast, prefixx, suffixx);
                 }
                 Navigation.findNavController(requireView()).navigateUp();
             }
