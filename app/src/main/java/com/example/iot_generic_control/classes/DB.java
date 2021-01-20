@@ -14,9 +14,10 @@ public class DB extends SQLiteOpenHelper{
     public DB(Context context){
         super(context, "iot_manager.db", null , 1);
     }
-
+    //Classe de controle do banco de dados, possui funções de criação do banco assim como funçes de CRUD para as duas tabelas do banco
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //Cria o BD e suas tabelas
         String pragma_sql = "PRAGMA foreign_keys = ON ";
 
         String device_sql = "CREATE TABLE device (\n" +
@@ -44,6 +45,7 @@ public class DB extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        //Recria o BD no caso de haver alguma mudança
         String sql = "DROP TABLE IF EXISTS device;";
         db.execSQL(sql);
         sql = "DROP TABLE IF EXISTS feature;";
@@ -52,6 +54,7 @@ public class DB extends SQLiteOpenHelper{
     }
 
     public ArrayList<IOTDevice> selectAllDevices(){
+        //Lê todos as linhas da tabela "device" e as devolve em uma lista de IOTDevice
         SQLiteDatabase db;
         Cursor cursor;
         ArrayList<IOTDevice> devices = new ArrayList<IOTDevice>();
@@ -70,6 +73,7 @@ public class DB extends SQLiteOpenHelper{
     }
 
     public ArrayList<BaseFeature> selectAllFeatures(int device_id){
+        //Lê todas as linhas da tabela "feature" que possuam device_id igual ao device_id passado á função
         SQLiteDatabase db;
         Cursor cursor;
         ArrayList<BaseFeature> features = new ArrayList<BaseFeature>();
@@ -79,6 +83,7 @@ public class DB extends SQLiteOpenHelper{
         cursor = db.rawQuery(query, new String[] {Integer.toString(device_id)});
         while (cursor.moveToNext()){
             type = cursor.getString(cursor.getColumnIndex("type"));
+            //Existem 4 tipos de features, por isso checamos o tipo antes para saber como continuar
             switch (type){
                 case "button":
                     features.add(new ButtonFeature(cursor.getString(cursor.getColumnIndex("name")),
@@ -99,6 +104,7 @@ public class DB extends SQLiteOpenHelper{
                     String values, prefix, suffix;
                     String[] ranges;
                     values = cursor.getString(cursor.getColumnIndex("value"));
+                    //A coluna "value" é um campo de texto que pode conter multiplas informações separadas por ';', no caso do slider podendo conter até 4 valores
                     ranges = values.split(";");
                     switch (ranges.length){
                         case 3:
@@ -145,6 +151,7 @@ public class DB extends SQLiteOpenHelper{
     }
 
     public long insertDevice(String name, String desc, String ip_address, String port){
+        //Insere uma nova linha na tabela "device"
         SQLiteDatabase db;
         ContentValues values;
         long res;
@@ -160,6 +167,7 @@ public class DB extends SQLiteOpenHelper{
     }
 
     public long insertFeature(String name, String topic, String type, String value, int device_id){
+        //Insere uma nova linha na tabela "feature"
         SQLiteDatabase db;
         ContentValues values;
         long res;
@@ -176,6 +184,7 @@ public class DB extends SQLiteOpenHelper{
     }
 
     public void updateDevice(int id, String name, String desc, String ip_address, String port){
+        //Faz update de uma linha da tabela "device" dado seu ID
         SQLiteDatabase db;
         ContentValues values;
         String where;
@@ -192,6 +201,7 @@ public class DB extends SQLiteOpenHelper{
     }
 
     public void updateFeature(int id, String name, String topic, String type, String value){
+        //Faz update de uma linha da tabela "feature"
         SQLiteDatabase db;
         ContentValues values;
         String where;
@@ -207,6 +217,7 @@ public class DB extends SQLiteOpenHelper{
     }
 
     public void deleteFrom(String table, int id){
+        //Deleta uma linha com o id passado da tabela passada em table
         SQLiteDatabase db;
         String where;
         where = "id = " + id;
