@@ -107,12 +107,6 @@ public class DB extends SQLiteOpenHelper{
                     //A coluna "value" é um campo de texto que pode conter multiplas informações separadas por ';', no caso do slider podendo conter até 4 valores
                     ranges = values.split(";");
                     switch (ranges.length){
-                        case 2:
-                            startRange = Integer.parseInt(ranges[0]);
-                            endRange = Integer.parseInt(ranges[1]);
-                            prefix = "";
-                            suffix = "";
-                            break;
                         case 3:
                             startRange = Integer.parseInt(ranges[0]);
                             endRange = Integer.parseInt(ranges[1]);
@@ -124,6 +118,12 @@ public class DB extends SQLiteOpenHelper{
                             endRange = Integer.parseInt(ranges[1]);
                             prefix = ranges[2];
                             suffix = ranges[3];
+                            break;
+                        default:
+                            startRange = Integer.parseInt(ranges[0]);
+                            endRange = Integer.parseInt(ranges[1]);
+                            prefix = "";
+                            suffix = "";
                             break;
                     }
                     features.add(new SliderFeature(cursor.getString(cursor.getColumnIndex("name")),
