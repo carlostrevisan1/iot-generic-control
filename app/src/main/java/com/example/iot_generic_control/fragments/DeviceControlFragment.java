@@ -118,6 +118,7 @@ public class DeviceControlFragment extends Fragment {
 
     @SuppressLint("ResourceAsColor")
     public void setupButton(Button b, final ButtonFeature f, LinearLayout layout){
+        //Prepara a feature "button"
         LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         bLayout.setMargins(10,10,10,10);
         bLayout.gravity = 1;
@@ -128,6 +129,7 @@ public class DeviceControlFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Ao ser clicado um botão envia para seu tópico o seu "value"
                 mqtt.publishMessage(f.getTopic(), f.getValue());
 
             }
@@ -138,6 +140,7 @@ public class DeviceControlFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void setupSendText(final EditText t, Button b, final SendTextFeature f, LinearLayout layout){
+        //Prepara a feature sendText
         LinearLayout.LayoutParams editTextLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         editTextLayout.setMargins(10,10,10,10);
         editTextLayout.gravity = 1;
@@ -157,6 +160,7 @@ public class DeviceControlFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Ao ser clicado envia ao seu tópico o valor digitado
                 mqtt.publishMessage(f.getTopic(), t.getText().toString());
             }
         });
@@ -166,6 +170,7 @@ public class DeviceControlFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setupSlider(SeekBar s, final SliderFeature f, LinearLayout layout){
+        //Prepara a feature "slider"
         final TextView t = new TextView(getActivity());
         LinearLayout.LayoutParams tLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         tLayout.setMargins(10,10,10,10);
@@ -194,6 +199,8 @@ public class DeviceControlFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                //Ao parar de deslizar um "slider" o valor é enviado ao seu tópico, a mensagem será composta da seguinte maneira: "{prefixo}{valor}{sufixo}"
+                //ambos são própios da classe SliderFeature e podem ou não serem vazios
                 String msg = f.getPrefix() + Integer.toString(progressChangedValue) + f.getSuffix();
                 mqtt.publishMessage(f.getTopic(), msg);
             }
@@ -204,6 +211,7 @@ public class DeviceControlFragment extends Fragment {
 
 
     public void setupToggleButton(final Switch t, final ToggleButtonFeature f, LinearLayout layout){
+        //Prepara a feature "toggleButton"
         LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         bLayout.setMargins(10,10,10,10);
@@ -219,6 +227,7 @@ public class DeviceControlFragment extends Fragment {
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Quando é clicado envia a mensagem de acordo com o estado para que foi alterado
                 if(t.isChecked()){
                     t.setText(f.getValueOn());
                     //t.setText("OFF");
