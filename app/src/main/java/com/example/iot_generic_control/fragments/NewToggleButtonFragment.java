@@ -35,12 +35,6 @@ public class NewToggleButtonFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-    public static NewToggleButtonFragment newInstance(String param1, String param2) {
-        NewToggleButtonFragment fragment = new NewToggleButtonFragment();
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,15 +43,19 @@ public class NewToggleButtonFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        /* Infla a view e carrega a viewmodel e a controlList*/
         View view = inflater.inflate(R.layout.fragment_new_toggle_button, container, false);
         model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
         controlsList = model.getFeatures().getValue();
+
+        /* Procura na view os campos de edittext e o botao */
         final EditText name = view.findViewById(R.id.toggle_button_name);
         final EditText topic = view.findViewById(R.id.toggle_button_topic);
         final EditText value1 = view.findViewById(R.id.toggle_button_valorOff);
         final EditText value2 = view.findViewById(R.id.toggle_button_valorOn);
         Button b = view.findViewById(R.id.toggle_button_ok);
 
+        /* Seta a toolbar e habilita o botao de voltar nela*/
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -73,6 +71,8 @@ public class NewToggleButtonFragment extends Fragment {
         });
         toolbar.setTitle(model.getDevice().getValue().getName() + " - New Switch Button");
 
+        /* Verifica se a chamada desse fragmento é de edicao de acordo com o valor da variavel edit dentro da viewmodel, e caso seja
+         * Coloca os valores já conhecidos dentro dos edittext para que seja possivel a edicao*/
         if(model.getEdit().getValue()){
             Bundle pos = getArguments();
             position = pos.getInt("position");
@@ -83,6 +83,7 @@ public class NewToggleButtonFragment extends Fragment {
             value2.setText( buttonSetting.getValueOff());
         }
 
+        /* Seta um listener no botao da view que dependendo se for edicao ou nao, salva um novo Slider ou edita um*/
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,13 +105,14 @@ public class NewToggleButtonFragment extends Fragment {
 
         return view;
     }
+
+    /* De acordo com a instancia de db dentro da viewmodel da um update do controle em questao*/
     public void saveEditToDB(int id, String name, String topic, String type, String value){
         model.getDb().getValue().updateFeature(id,name,topic,type,value);
-        //TODO update in the DB and update viewmodel with new information
-
     }
+
+    /* Salva uma nova feature no db */
     public void saveNewButtonToDB(String name, String topic, String valueOff, String valueOn, String type){
         model.getDb().getValue().insertFeature(name, topic, type,valueOff + ";" + valueOn, model.getDevice().getValue().getId());
-        //TODO save in the db and update the view model
     }
 }
