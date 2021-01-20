@@ -7,22 +7,17 @@ public class IOTDevice {
     String desc;
     String brokerIP;
     String brokerPort;
+    String colour;
     int id;
 
 
-    public IOTDevice(String name, String desc, String brokerIP, String brokerPort, int id) {
+    public IOTDevice(String name, String desc, String brokerIP, String brokerPort, String colour, int id) {
         this.name = name;
         this.desc = desc;
         this.brokerIP = brokerIP;
         this.brokerPort = brokerPort;
+        this.colour = colour;
         this.id = id;
-
-    }
-    public IOTDevice(String name, String desc, String brokerIP, String brokerPort) {
-        this.name = name;
-        this.desc = desc;
-        this.brokerIP = brokerIP;
-        this.brokerPort = brokerPort;
 
     }
 

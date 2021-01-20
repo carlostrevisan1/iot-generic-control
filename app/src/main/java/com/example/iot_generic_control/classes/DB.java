@@ -26,6 +26,7 @@ public class DB extends SQLiteOpenHelper{
                 "    desc TEXT,\n" +
                 "    ip_address VARCHAR(25),\n" +
                 "    port VARCHAR(5)\n" +
+                "    colour VARCHAR(15)\n" +
                 ") ";
 
         String feat_sql = "CREATE TABLE feature (\n" +
@@ -64,7 +65,7 @@ public class DB extends SQLiteOpenHelper{
         while (cursor.moveToNext()){
             devices.add(new IOTDevice(cursor.getString(cursor.getColumnIndex("name")), cursor.getString(cursor.getColumnIndex("desc")),
                                       cursor.getString(cursor.getColumnIndex("ip_address")), cursor.getString(cursor.getColumnIndex("port")),
-                                      cursor.getInt(cursor.getColumnIndex("id"))));
+                                      cursor.getString(cursor.getColumnIndex("colour")), cursor.getInt(cursor.getColumnIndex("id"))));
 
         }
         cursor.close();
@@ -150,7 +151,7 @@ public class DB extends SQLiteOpenHelper{
         return features;
     }
 
-    public long insertDevice(String name, String desc, String ip_address, String port){
+    public long insertDevice(String name, String desc, String ip_address, String port, String colour){
         //Insere uma nova linha na tabela "device"
         SQLiteDatabase db;
         ContentValues values;
@@ -161,6 +162,7 @@ public class DB extends SQLiteOpenHelper{
         values.put("desc", desc);
         values.put("ip_address", ip_address);
         values.put("port", port);
+        values.put("colour", colour);
         res = db.insert("device", null, values);
         db.close();
         return res;
@@ -183,7 +185,7 @@ public class DB extends SQLiteOpenHelper{
         return res;
     }
 
-    public void updateDevice(int id, String name, String desc, String ip_address, String port){
+    public void updateDevice(int id, String name, String desc, String ip_address, String port, String colour){
         //Faz update de uma linha da tabela "device" dado seu ID
         SQLiteDatabase db;
         ContentValues values;
@@ -195,6 +197,7 @@ public class DB extends SQLiteOpenHelper{
         values.put("desc", desc);
         values.put("ip_address", ip_address);
         values.put("port", port);
+        values.put("colour", colour);
         db.update("device", values, where, null);
         db.close();
 

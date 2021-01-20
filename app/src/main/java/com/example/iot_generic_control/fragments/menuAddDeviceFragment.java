@@ -82,11 +82,17 @@ public class menuAddDeviceFragment extends Fragment {
                 * o app navega para o fragmento anterior */
                 IOTDevice device = new IOTDevice(name.getText().toString(), desc.getText().toString(), broker.getText().toString(), port.getText().toString());
                 if(model.getEdit().getValue()){
-                    device.setId(model.getDevice().getValue().getId());
-                    updateDevice(device);
+                    /* Atualiza o dispositivo no banco*/
+//                    device.setId(model.getDevice().getValue().getId());
+//                    updateDevice(device);
+                    model.getDb().getValue().updateDevice(model.getDevice().getValue().getId(), name.getText().toString(), desc.getText().toString(),
+                                                          broker.getText().toString(),  port.getText().toString(), "0,255,255"); //TODO: Pegar input de cor
                 }
                 else{
-                    saveToDB(device);
+                    /*Salva no Banco um Objeto do tipo IOTDevice */
+//                    saveToDB(device);
+                    model.getDb().getValue().insertDevice(name.getText().toString(), desc.getText().toString(), broker.getText().toString(),
+                                                          port.getText().toString(), "0,255,255"); //TODO: Pegar input de cor
                 }
                 model.setEdit(false);
                 Navigation.findNavController(requireView()).navigateUp();
@@ -95,15 +101,15 @@ public class menuAddDeviceFragment extends Fragment {
         return view;
     }
 
-    /*Salva no Banco um Objeto do tipo IOTDevice */
-    void saveToDB(IOTDevice newDevice){
-        model.getDb().getValue().insertDevice(newDevice.getName(), newDevice.getDesc(), newDevice.getBrokerIP(), newDevice.getBrokerPort());
-
-    }
-
-    /* Atualiza o dispositivo no banco*/
-    void updateDevice(IOTDevice updateDevice){
-        model.getDb().getValue().updateDevice(updateDevice.getId(), updateDevice.getName(), updateDevice.getDesc(), updateDevice.getBrokerIP(), updateDevice.getBrokerPort());
-    }
+//    /*Salva no Banco um Objeto do tipo IOTDevice */
+//    void saveToDB(IOTDevice newDevice){
+//        model.getDb().getValue().insertDevice(newDevice.getName(), newDevice.getDesc(), newDevice.getBrokerIP(), newDevice.getBrokerPort());
+//
+//    }
+//
+//    /* Atualiza o dispositivo no banco*/
+//    void updateDevice(IOTDevice updateDevice){
+//        model.getDb().getValue().updateDevice(updateDevice.getId(), updateDevice.getName(), updateDevice.getDesc(), updateDevice.getBrokerIP(), updateDevice.getBrokerPort());
+//    }
     
 }
