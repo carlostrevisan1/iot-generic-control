@@ -21,7 +21,7 @@ public class MQTT {
     String clientId, userName, passWord;
     Context context;
 
-    /* Obtain the MQTT connection information clientId, username, and password. */
+    /* Obtem as informações de conexão do MQTT clientId, username, e password. */
     AiotMqttOption aiotMqttOption = new AiotMqttOption().getMqttOption(PRODUCTKEY, DEVICENAME, DEVICESECRET);
 
     public MQTT(final Context context, String ip_address, String device_name){
@@ -34,7 +34,7 @@ public class MQTT {
             passWord = aiotMqttOption.getPassword();
         }
         this.context = context;
-        /* Create an MqttConnectOptions object and configure the username and password. */
+        /* Cria um objeto MqttConnectOptions e configura o username e password. */
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setUserName(userName);
         mqttConnectOptions.setPassword(passWord.toCharArray());
@@ -56,7 +56,7 @@ public class MQTT {
             }
         });
 
-        /* Establish an MQTT connection */
+        /* Estabelece a conexo MQTT */
         try {
 
             this.mqtt.connect(mqttConnectOptions,context, new IMqttActionListener() {
@@ -80,6 +80,7 @@ public class MQTT {
     }
 
     public void publishMessage(String topic, final String payload) {
+        //Publica mensagem do MQTT
         try {
             if (this.mqtt.isConnected() == false) {
                 this.mqtt.connect();

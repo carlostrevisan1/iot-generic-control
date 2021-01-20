@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+//Classe disponibilizada em: https://www.alibabacloud.com/help/doc-detail/146630.htm para configuração do MQTT
 class AiotMqttOption {
     private String username = "";
     private String password = "";
