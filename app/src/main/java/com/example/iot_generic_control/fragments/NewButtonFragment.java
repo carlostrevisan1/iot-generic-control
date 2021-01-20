@@ -60,7 +60,8 @@ public class NewButtonFragment extends Fragment {
                 navController.navigateUp();
             }
         });
-        toolbar.setTitle(model.getDevice().getValue().getName() + " - New Button");
+
+
 
         /* Procura na view os elementos que serao utilizados*/
         final EditText name = view.findViewById(R.id.button_name);
@@ -72,10 +73,14 @@ public class NewButtonFragment extends Fragment {
         if(model.getEdit().getValue()){
             Bundle pos = getArguments();
             position = pos.getInt("position");
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit Button");
             final ButtonFeature buttonSetting = (ButtonFeature) controlsList.get(position);
             name.setText(buttonSetting.getName());
             topic.setText(buttonSetting.getTopic());
             value.setText( buttonSetting.getValue());
+        }
+        else{
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - New Button");
         }
 
         b.setOnClickListener(new View.OnClickListener() {

@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="5dp">
 
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="76dp"
-        android:layout_height="52dp"
-        app:srcCompat="@drawable/remotecontrol" />
+        android:layout_width="54dp"
+        android:layout_height="58dp"
+        android:src="@drawable/img_control_round" />
 
     <LinearLayout
         android:layout_width="172dp"

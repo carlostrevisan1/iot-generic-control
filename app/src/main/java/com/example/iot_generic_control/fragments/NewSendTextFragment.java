@@ -65,16 +65,20 @@ public class NewSendTextFragment extends Fragment {
                 navController.navigateUp();
             }
         });
-        toolbar.setTitle(model.getDevice().getValue().getName() + " - New Text Area");
+
 
         /* Verifica se a chamada desse fragmento é de edicao de acordo com o valor da variavel edit dentro da viewmodel, e caso seja
         * Coloca os valores já conhecidos dentro dos edittext para que seja possivel a edicao*/
         if(model.getEdit().getValue()){
             Bundle pos = getArguments();
             position = pos.getInt("position");
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit Text Area");
             final SendTextFeature buttonSetting = (SendTextFeature) controlsList.get(position);
             name.setText(buttonSetting.getName());
             topic.setText(buttonSetting.getTopic());
+        }
+        else{
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - New Text Area");
         }
 
         /* Seta um listener no botao da view que dependendo se for edicao ou nao, salva um novo SendText ou edita um*/

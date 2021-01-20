@@ -41,6 +41,8 @@ public class ControlsListViewAdapter extends ArrayAdapter {
             holder = new ViewHolder();
 
             holder.name = convertView.findViewById(R.id.device_name);
+            holder.type = convertView.findViewById(R.id.device_type1);
+            holder.topic = convertView.findViewById(R.id.device_topic1);
 
             convertView.setTag(holder);
         }
@@ -49,7 +51,8 @@ public class ControlsListViewAdapter extends ArrayAdapter {
 
         BaseFeature control_data = controls.get(position);
         holder.name.setText(control_data.getName());
-
+        holder.type.setText(control_data.getType());
+        holder.topic.setText(control_data.getTopic());
 
 
         return convertView;
@@ -57,7 +60,8 @@ public class ControlsListViewAdapter extends ArrayAdapter {
     //Classe auxiliar
     static class ViewHolder{
         TextView name;
-
+        TextView type;
+        TextView topic;
     }
 }
 
