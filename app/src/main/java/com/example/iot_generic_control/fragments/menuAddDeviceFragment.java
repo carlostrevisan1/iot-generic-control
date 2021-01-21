@@ -1,34 +1,38 @@
 package com.example.iot_generic_control.fragments;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.iot_generic_control.R;
-import com.example.iot_generic_control.classes.DB;
-import com.example.iot_generic_control.classes.IOTDevice;
 import com.example.iot_generic_control.viewmodels.DeviceViewModel;
-
+import com.skydoves.colorpickerview.ColorEnvelope;
+import com.skydoves.colorpickerview.ColorPickerDialog;
+import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
 
 
 public class menuAddDeviceFragment extends Fragment {
 
-    Button ok;
+    boolean dialogClosed = false;
     DeviceViewModel model;
     public menuAddDeviceFragment() {
 
@@ -39,12 +43,13 @@ public class menuAddDeviceFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         /* Infla e associa a view a uma variavel, carrega a viewModel para a variavel model*/
-        View view = inflater.inflate(R.layout.fragment_menu_add_device, container, false);
+        final View view = inflater.inflate(R.layout.fragment_menu_add_device, container, false);
         model = new ViewModelProvider(requireActivity()).get(DeviceViewModel.class);
 
         /* Seta a toolbar e configura o botao de voltar para que volte ao fragmento anterior */
@@ -78,6 +83,33 @@ public class menuAddDeviceFragment extends Fragment {
             port.setText(model.getDevice().getValue().getBrokerPort());
             color.setText(model.getDevice().getValue().getColour());
         }
+        // Seta o color picker dialog
+        color.setShowSoftInputOnFocus(false);
+        color.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    new ColorPickerDialog.Builder(requireContext())
+                            .setTitle("Escolha a cor:")
+                            .setPositiveButton("Confirmar", new ColorEnvelopeListener() {
+                                @Override
+                                public void onColorSelected(ColorEnvelope envelope, boolean fromUser) {
+                                    color.setText("#" + envelope.getHexCode());
+                                    dialogClosed = true;
+                                }
+                            })
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .attachBrightnessSlideBar(true)
+                            .setBottomSpace(12)
+                            .show();
+                    }
+            }
+        });
         /* Seta o Listener de click no botao de ok*/
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -106,6 +138,5 @@ public class menuAddDeviceFragment extends Fragment {
         });
         return view;
     }
-
     
 }
