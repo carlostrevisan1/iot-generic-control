@@ -1,5 +1,6 @@
 package com.example.iot_generic_control.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -71,6 +72,8 @@ public class EditOrCreateControlFragment extends Fragment {
             }
         });
         toolbar.setTitle(device.getName() + " - Edit Mode");
+        toolbar.setBackgroundColor(Color.parseColor(device.getColour()));
+
 
         /* Puxa a listview para uma variavel e colocando um adapter nela*/
         ListView controlsListView = view.findViewById(R.id.controls_list);

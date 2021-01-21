@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimaryDark"/>
+            android:background="@color/colorPrimaryDark"/>
 
         <EditText
             android:layout_margin="2dp"

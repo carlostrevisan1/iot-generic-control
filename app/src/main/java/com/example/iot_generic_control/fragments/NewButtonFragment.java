@@ -1,5 +1,6 @@
 package com.example.iot_generic_control.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,14 +61,8 @@ public class NewButtonFragment extends Fragment {
                 navController.navigateUp();
             }
         });
-<<<<<<< HEAD
+        toolbar.setBackgroundColor(Color.parseColor(model.getDevice().getValue().getColour()));
 
-||||||| merged common ancestors
-        toolbar.setTitle(model.getDevice().getValue().getName() + " - New Button");
-=======
-
-
->>>>>>> master
 
         /* Procura na view os elementos que serao utilizados*/
         final EditText name = view.findViewById(R.id.button_name);
@@ -85,9 +80,6 @@ public class NewButtonFragment extends Fragment {
             topic.setText(buttonSetting.getTopic());
             value.setText( buttonSetting.getValue());
             toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit Button");
-        }
-        else{
-            toolbar.setTitle(model.getDevice().getValue().getName() + " - New Button");
         }
         else{
             toolbar.setTitle(model.getDevice().getValue().getName() + " - New Button");

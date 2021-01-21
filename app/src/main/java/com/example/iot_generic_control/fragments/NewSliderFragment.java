@@ -1,5 +1,6 @@
 package com.example.iot_generic_control.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,6 +70,7 @@ public class NewSliderFragment extends Fragment {
                 navController.navigateUp();
             }
         });
+        toolbar.setBackgroundColor(Color.parseColor(model.getDevice().getValue().getColour()));
 
 
         /* Verifica se a chamada desse fragmento é de edicao de acordo com o valor da variavel edit dentro da viewmodel, e caso seja
@@ -84,16 +86,10 @@ public class NewSliderFragment extends Fragment {
             value2.setText( Integer.toString(sliderSetting.getLastRange()));
             prefix.setText(sliderSetting.getPrefix());
             suffix.setText(sliderSetting.getSuffix());
-<<<<<<< HEAD
             toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit SeekBar");
         }
         else{
             toolbar.setTitle(model.getDevice().getValue().getName() + " - New SeekBar");
-||||||| merged common ancestors
-=======
-        }else{
-            toolbar.setTitle(model.getDevice().getValue().getName() + " - New SeekBar");
->>>>>>> master
         }
 
         /* Seta um listener no botao da view que dependendo se for edicao ou nao, salva um novo Slider ou edita um*/

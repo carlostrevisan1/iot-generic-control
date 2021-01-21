@@ -1,5 +1,6 @@
 package com.example.iot_generic_control.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,6 +70,8 @@ public class NewToggleButtonFragment extends Fragment {
                 navController.navigateUp();
             }
         });
+        toolbar.setBackgroundColor(Color.parseColor(model.getDevice().getValue().getColour()));
+
 
 
         /* Verifica se a chamada desse fragmento é de edicao de acordo com o valor da variavel edit dentro da viewmodel, e caso seja
@@ -88,9 +91,7 @@ public class NewToggleButtonFragment extends Fragment {
 
             toolbar.setTitle(model.getDevice().getValue().getName() + " - New Switch Button");
         }
-        else{
-            toolbar.setTitle(model.getDevice().getValue().getName() + " - New Switch Button");
-        }
+
 
         /* Seta um listener no botao da view que dependendo se for edicao ou nao, salva um novo Slider ou edita um*/
         b.setOnClickListener(new View.OnClickListener() {
