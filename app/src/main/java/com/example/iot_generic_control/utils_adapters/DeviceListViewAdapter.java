@@ -2,10 +2,18 @@ package com.example.iot_generic_control.utils_adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,7 +26,7 @@ import com.example.iot_generic_control.R;
 import java.util.ArrayList;
 
 public class DeviceListViewAdapter extends ArrayAdapter {
-//    private ArrayList<T> pacients;
+    //    private ArrayList<T> pacients;
     private ArrayList<IOTDevice> devices;
     private Context context;
     private int resource;
@@ -45,6 +53,7 @@ public class DeviceListViewAdapter extends ArrayAdapter {
             holder.desc = convertView.findViewById(R.id.device1_desc);
             holder.ip = convertView.findViewById(R.id.device1_ip);
             holder.port = convertView.findViewById(R.id.device1_port);
+            holder.img = convertView.findViewById(R.id.imageView);
 
             convertView.setTag(holder);
         }
@@ -56,6 +65,8 @@ public class DeviceListViewAdapter extends ArrayAdapter {
         holder.desc.setText(device_data.getDesc());
         holder.ip.setText(device_data.getBrokerIP());
         holder.port.setText(device_data.getBrokerPort());
+        ColorFilter filter = new LightingColorFilter( Color.parseColor(device_data.getColour()), Color.BLACK);
+        holder.img.getDrawable().setColorFilter(filter);
 
         return convertView;
     }
@@ -65,5 +76,6 @@ public class DeviceListViewAdapter extends ArrayAdapter {
         TextView desc;
         TextView ip;
         TextView port;
+        ImageView img;
     }
 }

@@ -69,7 +69,7 @@ public class NewToggleButtonFragment extends Fragment {
                 navController.navigateUp();
             }
         });
-        toolbar.setTitle(model.getDevice().getValue().getName() + " - New Switch Button");
+
 
         /* Verifica se a chamada desse fragmento é de edicao de acordo com o valor da variavel edit dentro da viewmodel, e caso seja
          * Coloca os valores já conhecidos dentro dos edittext para que seja possivel a edicao*/
@@ -81,6 +81,11 @@ public class NewToggleButtonFragment extends Fragment {
             topic.setText(buttonSetting.getTopic());
             value1.setText( buttonSetting.getValueOn());
             value2.setText( buttonSetting.getValueOff());
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit Switch Button");
+        }
+        else{
+
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - New Switch Button");
         }
 
         /* Seta um listener no botao da view que dependendo se for edicao ou nao, salva um novo Slider ou edita um*/

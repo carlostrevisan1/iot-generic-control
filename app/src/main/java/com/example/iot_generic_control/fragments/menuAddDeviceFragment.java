@@ -67,6 +67,7 @@ public class menuAddDeviceFragment extends Fragment {
         final EditText desc = view.findViewById(R.id.device_desc);
         final EditText broker  = view.findViewById(R.id.device_broker);
         final EditText port = view.findViewById(R.id.device_port);
+        final EditText color = view.findViewById(R.id.device_color);
 
         /* Se o valor de Edit for verdadeiro, entao é para carregar os valores do device passado e possibilitando editar, se nao é uma operacao de adicionar um novo device*/
         if(model.getEdit().getValue()){
@@ -74,25 +75,25 @@ public class menuAddDeviceFragment extends Fragment {
             desc.setText(model.getDevice().getValue().getDesc());
             broker.setText(model.getDevice().getValue().getBrokerIP());
             port.setText(model.getDevice().getValue().getBrokerPort());
+            color.setText(model.getDevice().getValue().getColour());
         }
         /* Seta o Listener de click no botao de ok*/
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                /* Pega as informacoes que estao nos elementos carregando uma instancia do objeto IOTDevice que é passado pra uma funcao que o salva no banco e logo apos
+                /* Pega as informacoes que estao nos elementos que sao salvas no banco e logo apos
                 * o app navega para o fragmento anterior */
-                IOTDevice device = new IOTDevice(name.getText().toString(), desc.getText().toString(), broker.getText().toString(), port.getText().toString());
                 if(model.getEdit().getValue()){
                     /* Atualiza o dispositivo no banco*/
 //                    device.setId(model.getDevice().getValue().getId());
 //                    updateDevice(device);
                     model.getDb().getValue().updateDevice(model.getDevice().getValue().getId(), name.getText().toString(), desc.getText().toString(),
-                                                          broker.getText().toString(),  port.getText().toString(), "0,255,255"); //TODO: Pegar input de cor
+                                                          broker.getText().toString(),  port.getText().toString(), color.getText().toString()); //TODO: Pegar input de cor
                 }
                 else{
                     /*Salva no Banco um Objeto do tipo IOTDevice */
 //                    saveToDB(device);
                     model.getDb().getValue().insertDevice(name.getText().toString(), desc.getText().toString(), broker.getText().toString(),
-                                                          port.getText().toString(), "0,255,255"); //TODO: Pegar input de cor
+                                                          port.getText().toString(), color.getText().toString()); //TODO: Pegar input de cor
                 }
                 model.setEdit(false);
                 Navigation.findNavController(requireView()).navigateUp();

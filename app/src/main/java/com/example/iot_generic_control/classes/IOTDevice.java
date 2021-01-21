@@ -7,6 +7,8 @@ public class IOTDevice {
     String desc;
     String brokerIP;
     String brokerPort;
+
+
     String colour;
     int id;
 
@@ -20,6 +22,9 @@ public class IOTDevice {
         this.id = id;
 
     }
+    public String getColour() { return colour;    }
+
+    public void setColour(String colour) { this.colour = colour; }
 
     public int getId() { return id; }
 

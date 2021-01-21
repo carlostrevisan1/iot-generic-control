@@ -25,7 +25,7 @@ public class DB extends SQLiteOpenHelper{
                 "    name VARCHAR(40),\n" +
                 "    desc TEXT,\n" +
                 "    ip_address VARCHAR(25),\n" +
-                "    port VARCHAR(5)\n" +
+                "    port VARCHAR(5),\n" +
                 "    colour VARCHAR(15)\n" +
                 ") ";
 
@@ -59,7 +59,7 @@ public class DB extends SQLiteOpenHelper{
         SQLiteDatabase db;
         Cursor cursor;
         ArrayList<IOTDevice> devices = new ArrayList<IOTDevice>();
-        String[] columns = {"id", "name", "desc", "ip_address", "port"};
+        String[] columns = {"id", "name", "desc", "ip_address", "port", "colour"};
         db = this.getReadableDatabase();
         cursor = db.query("device", columns, null, null, null, null, "id");
         while (cursor.moveToNext()){
