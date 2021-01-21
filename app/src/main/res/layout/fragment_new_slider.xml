@@ -24,11 +24,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Initial range"
+        android:inputType="number"
         android:id="@+id/slider_range1"/>
     <EditText
         android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="number"
         android:hint="Final range"
         android:id="@+id/slider_range2"/>
     <EditText
@@ -41,13 +43,13 @@
         android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Prefix"
+        android:hint="Prefix (not required)"
         android:id="@+id/prefix"/>
     <EditText
         android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Sufix"
+        android:hint="Sufix (not required)"
         android:id="@+id/suffix"/>
     <Button
         android:layout_width="match_parent"

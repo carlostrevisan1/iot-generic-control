@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.iot_generic_control.R;
@@ -102,15 +103,21 @@ public class NewToggleButtonFragment extends Fragment {
                 String topicName = topic.getText().toString();
                 String valueOff = value2.getText().toString();
                 String valueOn = value1.getText().toString();
-                //TODO update viewmodel list
-                if(model.getEdit().getValue()){
-                    saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "toggleButton", valueOff + ";" + valueOn);
-                }
-                else{
-                    saveNewButtonToDB(buttonName, topicName, valueOff, valueOn, "toggleButton");
 
+                //checa se os campos nao estao nulos e caso estejam mostra um toast indicando o problema
+                if(buttonName.isEmpty() || topicName.isEmpty() ||valueOff.isEmpty()
+                        || valueOn.isEmpty()){
+                    Toast.makeText(requireContext(),R.string.invalid_input, Toast.LENGTH_LONG).show();
                 }
-                Navigation.findNavController(requireView()).navigateUp();
+                else {
+                    if (model.getEdit().getValue()) {
+                        saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "toggleButton", valueOff + ";" + valueOn);
+                    } else {
+                        saveNewButtonToDB(buttonName, topicName, valueOff, valueOn, "toggleButton");
+
+                    }
+                    Navigation.findNavController(requireView()).navigateUp();
+                }
             }
         });
 

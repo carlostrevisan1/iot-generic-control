@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.iot_generic_control.R;
 import com.example.iot_generic_control.classes.BaseFeature;
@@ -106,13 +107,20 @@ public class NewSliderFragment extends Fragment {
                 String valueLast = value2.getText().toString();
                 String prefixx = prefix.getText().toString();
                 String suffixx = suffix.getText().toString();
-                if(model.getEdit().getValue()){
-                    saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "slider", valueStart, valueLast, prefixx, suffixx);
+
+                //checa se os campos nao estao nulos e caso estejam mostra um toast indicando o problema
+                if(buttonName.isEmpty() || topicName.isEmpty() ||valueStart.isEmpty()
+                        || valueLast.isEmpty() || !isBigger(valueLast,valueStart)){
+                    Toast.makeText(requireContext(),R.string.invalid_input, Toast.LENGTH_LONG).show();
                 }
-                else{
-                    saveNewButtonToDB(buttonName, topicName, valueStart, valueLast, prefixx, suffixx);
+                else {
+                    if (model.getEdit().getValue()) {
+                        saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "slider", valueStart, valueLast, prefixx, suffixx);
+                    } else {
+                        saveNewButtonToDB(buttonName, topicName, valueStart, valueLast, prefixx, suffixx);
+                    }
+                    Navigation.findNavController(requireView()).navigateUp();
                 }
-                Navigation.findNavController(requireView()).navigateUp();
             }
         });
 
@@ -128,5 +136,26 @@ public class NewSliderFragment extends Fragment {
     /* Salva uma nova feature no db */
     public void saveNewButtonToDB(String name, String topic, String start, String end, String prefix, String suffix){
         model.getDb().getValue().insertFeature(name, topic, "slider",start + ";" + end + ";" + prefix + ";" + suffix, model.getDevice().getValue().getId());
+    }
+
+    /* Retorna true caso seja um inteiro, e false caso contrario*/
+    boolean isInt(String text){
+        try{
+            Integer.parseInt(text);
+            return true;
+        }
+        catch(NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /* Compara duas strings que possam ser convertidas para inteiro, e retorna true caso a primeira passada como parametro seja maior*/
+    boolean isBigger(String a, String b){
+        if(Integer.parseInt(a) > Integer.parseInt(b)){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

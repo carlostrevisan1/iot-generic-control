@@ -52,7 +52,12 @@ public class ControlsListViewAdapter extends ArrayAdapter {
 
         //Seta os valores no layout
         BaseFeature control_data = controls.get(position);
-        holder.name.setText(control_data.getName());
+        if(control_data.getName().isEmpty()){
+            holder.name.setText("(Null)");
+        }
+        else{
+            holder.name.setText(control_data.getName());
+        }
         holder.type.setText(control_data.getType());
         holder.topic.setText(control_data.getTopic());
 

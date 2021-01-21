@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.iot_generic_control.R;
 import com.example.iot_generic_control.classes.DB;
@@ -82,18 +83,25 @@ public class menuAddDeviceFragment extends Fragment {
             public void onClick(View v) {
                 /* Pega as informacoes que estao nos elementos que sao salvas no banco e logo apos
                 * o app navega para o fragmento anterior */
-                if(model.getEdit().getValue()){
-                    /* Atualiza o dispositivo no banco*/
-                    model.getDb().getValue().updateDevice(model.getDevice().getValue().getId(), name.getText().toString(), desc.getText().toString(),
-                                                          broker.getText().toString(),  port.getText().toString(), color.getText().toString()); //TODO: Pegar input de cor
+                //checa se os campos nao estao nulos e caso estejam mostra um toast indicando o problema
+                if(name.getText().toString().isEmpty() || desc.getText().toString().isEmpty() || desc.getText().toString().isEmpty()
+                        || broker.getText().toString().isEmpty() || port.getText().toString().isEmpty() || color.getText().toString().isEmpty()){
+                    Toast.makeText(requireContext(),R.string.invalid_input, Toast.LENGTH_LONG).show();
                 }
                 else{
-                    /*Salva no Banco um Objeto do tipo IOTDevice */
-                    model.getDb().getValue().insertDevice(name.getText().toString(), desc.getText().toString(), broker.getText().toString(),
-                                                          port.getText().toString(), color.getText().toString()); //TODO: Pegar input de cor
+
+                    if(model.getEdit().getValue()){
+                        /* Atualiza o dispositivo no banco*/
+                        model.getDb().getValue().updateDevice(model.getDevice().getValue().getId(), name.getText().toString(), desc.getText().toString(),
+                                                              broker.getText().toString(),  port.getText().toString(), color.getText().toString());                     }
+                    else{
+                        /*Salva no Banco um Objeto do tipo IOTDevice */
+                        model.getDb().getValue().insertDevice(name.getText().toString(), desc.getText().toString(), broker.getText().toString(),
+                                                              port.getText().toString(), color.getText().toString()); //TODO: Pegar input de cor
+                    }
+                    model.setEdit(false);
+                    Navigation.findNavController(requireView()).navigateUp();
                 }
-                model.setEdit(false);
-                Navigation.findNavController(requireView()).navigateUp();
             }
         });
         return view;

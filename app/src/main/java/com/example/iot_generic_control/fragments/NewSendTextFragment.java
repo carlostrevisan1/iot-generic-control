@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.iot_generic_control.R;
 import com.example.iot_generic_control.classes.BaseFeature;
@@ -97,15 +98,21 @@ public class NewSendTextFragment extends Fragment {
             public void onClick(View v) {
                 String buttonName = name.getText().toString();
                 String topicName = topic.getText().toString();
-                if(model.getEdit().getValue()){
 
-                    saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "sendText");
+                //checa se os campos nao estao nulos e caso estejam mostra um toast indicando o problema
+                if(buttonName.isEmpty() || topicName.isEmpty()){
+                    Toast.makeText(requireContext(),R.string.invalid_input, Toast.LENGTH_LONG).show();
                 }
-                else{
-                    saveNewButtonToDB(buttonName, topicName, "sendText");
+                else {
+                    if (model.getEdit().getValue()) {
 
+                        saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "sendText");
+                    } else {
+                        saveNewButtonToDB(buttonName, topicName, "sendText");
+
+                    }
+                    Navigation.findNavController(requireView()).navigateUp();
                 }
-                Navigation.findNavController(requireView()).navigateUp();
             }
         });
 
