@@ -86,6 +86,7 @@ public class DeviceControlFragment extends Fragment {
             }
         });
         toolbar.setTitle(device.getName());
+        toolbar.setBackgroundColor(Color.parseColor(device.getColour()));
 
         mqtt = new MQTT(
                 requireContext(),

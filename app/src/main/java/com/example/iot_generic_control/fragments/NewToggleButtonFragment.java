@@ -82,6 +82,11 @@ public class NewToggleButtonFragment extends Fragment {
             topic.setText(buttonSetting.getTopic());
             value1.setText( buttonSetting.getValueOn());
             value2.setText( buttonSetting.getValueOff());
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit Switch Button");
+        }
+        else{
+
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - New Switch Button");
         }
         else{
             toolbar.setTitle(model.getDevice().getValue().getName() + " - New Switch Button");

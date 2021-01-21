@@ -60,8 +60,14 @@ public class NewButtonFragment extends Fragment {
                 navController.navigateUp();
             }
         });
+<<<<<<< HEAD
+
+||||||| merged common ancestors
+        toolbar.setTitle(model.getDevice().getValue().getName() + " - New Button");
+=======
 
 
+>>>>>>> master
 
         /* Procura na view os elementos que serao utilizados*/
         final EditText name = view.findViewById(R.id.button_name);
@@ -78,6 +84,10 @@ public class NewButtonFragment extends Fragment {
             name.setText(buttonSetting.getName());
             topic.setText(buttonSetting.getTopic());
             value.setText( buttonSetting.getValue());
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit Button");
+        }
+        else{
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - New Button");
         }
         else{
             toolbar.setTitle(model.getDevice().getValue().getName() + " - New Button");

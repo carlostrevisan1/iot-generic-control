@@ -64,4 +64,3 @@ public class ControlsListViewAdapter extends ArrayAdapter {
         TextView topic;
     }
 }
-
