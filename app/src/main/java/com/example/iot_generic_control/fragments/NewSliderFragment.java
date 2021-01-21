@@ -76,6 +76,7 @@ public class NewSliderFragment extends Fragment {
         if(model.getEdit().getValue()){
             Bundle pos = getArguments();
             position = pos.getInt("position");
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit SeekBar");
             final SliderFeature sliderSetting = (SliderFeature) controlsList.get(position);
             name.setText(sliderSetting.getName());
             topic.setText(sliderSetting.getTopic());
@@ -83,10 +84,16 @@ public class NewSliderFragment extends Fragment {
             value2.setText( Integer.toString(sliderSetting.getLastRange()));
             prefix.setText(sliderSetting.getPrefix());
             suffix.setText(sliderSetting.getSuffix());
+<<<<<<< HEAD
             toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit SeekBar");
         }
         else{
             toolbar.setTitle(model.getDevice().getValue().getName() + " - New SeekBar");
+||||||| merged common ancestors
+=======
+        }else{
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - New SeekBar");
+>>>>>>> master
         }
 
         /* Seta um listener no botao da view que dependendo se for edicao ou nao, salva um novo Slider ou edita um*/

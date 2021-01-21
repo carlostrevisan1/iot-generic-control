@@ -76,6 +76,7 @@ public class NewToggleButtonFragment extends Fragment {
         if(model.getEdit().getValue()){
             Bundle pos = getArguments();
             position = pos.getInt("position");
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit Switch Button");
             final ToggleButtonFeature buttonSetting = (ToggleButtonFeature) controlsList.get(position);
             name.setText(buttonSetting.getName());
             topic.setText(buttonSetting.getTopic());
@@ -85,6 +86,9 @@ public class NewToggleButtonFragment extends Fragment {
         }
         else{
 
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - New Switch Button");
+        }
+        else{
             toolbar.setTitle(model.getDevice().getValue().getName() + " - New Switch Button");
         }
 

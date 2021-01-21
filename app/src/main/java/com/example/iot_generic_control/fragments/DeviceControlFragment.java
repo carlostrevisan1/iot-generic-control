@@ -221,6 +221,7 @@ public class DeviceControlFragment extends Fragment {
         t.setTextOff(f.getValueOff());
         t.setTextOn((f.getValueOn()));
         t.setText(f.getValueOff());
+
         //t.setBackgroundResource(R.drawable.custom_button);
         t.setBackgroundResource(R.drawable.custom_button);
 

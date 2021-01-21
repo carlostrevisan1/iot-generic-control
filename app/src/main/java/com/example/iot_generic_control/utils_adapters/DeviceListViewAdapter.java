@@ -65,8 +65,10 @@ public class DeviceListViewAdapter extends ArrayAdapter {
         holder.desc.setText(device_data.getDesc());
         holder.ip.setText(device_data.getBrokerIP());
         holder.port.setText(device_data.getBrokerPort());
+
         ColorFilter filter = new LightingColorFilter( Color.parseColor(device_data.getColour()), Color.BLACK);
         holder.img.getDrawable().setColorFilter(filter);
+
 
         return convertView;
     }

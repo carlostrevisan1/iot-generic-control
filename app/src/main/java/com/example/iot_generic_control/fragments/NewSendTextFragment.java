@@ -72,10 +72,14 @@ public class NewSendTextFragment extends Fragment {
         if(model.getEdit().getValue()){
             Bundle pos = getArguments();
             position = pos.getInt("position");
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit Text Area");
             final SendTextFeature buttonSetting = (SendTextFeature) controlsList.get(position);
             name.setText(buttonSetting.getName());
             topic.setText(buttonSetting.getTopic());
             toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit Text Area");
+        }
+        else{
+            toolbar.setTitle(model.getDevice().getValue().getName() + " - New Text Area");
         }
         else{
             toolbar.setTitle(model.getDevice().getValue().getName() + " - New Text Area");
