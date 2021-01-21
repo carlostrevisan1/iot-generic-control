@@ -141,7 +141,7 @@ public class DeviceControlFragment extends Fragment {
         bLayout.gravity = 1;
         b.setLayoutParams(bLayout);
         b.setText(f.getName());
-        b.setBackgroundResource(R.drawable.placeholder);
+        b.setBackgroundResource(R.drawable.button_rgb_picker);
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
