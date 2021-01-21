@@ -1,6 +1,7 @@
 package com.example.iot_generic_control.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.graphics.Color;
 
 import android.os.Build;
@@ -9,12 +10,14 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,13 +36,19 @@ import android.widget.Toast;
 import com.example.iot_generic_control.R;
 import com.example.iot_generic_control.classes.BaseFeature;
 import com.example.iot_generic_control.classes.ButtonFeature;
+import com.example.iot_generic_control.classes.ColorPickerFeature;
 import com.example.iot_generic_control.classes.IOTDevice;
 import com.example.iot_generic_control.classes.MQTT;
 import com.example.iot_generic_control.classes.SendTextFeature;
 import com.example.iot_generic_control.classes.SliderFeature;
 import com.example.iot_generic_control.classes.ToggleButtonFeature;
 import com.example.iot_generic_control.viewmodels.DeviceViewModel;
-
+import com.skydoves.colorpickerview.ColorEnvelope;
+import com.skydoves.colorpickerview.ColorPickerDialog;
+import com.skydoves.colorpickerview.ColorPickerView;
+import com.skydoves.colorpickerview.flag.BubbleFlag;
+import com.skydoves.colorpickerview.flag.FlagMode;
+import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
 
 
 import java.util.ArrayList;
@@ -96,6 +105,10 @@ public class DeviceControlFragment extends Fragment {
 
         // De acordo com a Lista de features/controles vai setar na view cada um com suas respectivas caracteristicas
         final LinearLayout layout = (LinearLayout) view.findViewById(R.id.controlLinearLayout);
+        setupColorPicker(new ColorPickerFeature("teste", "teste", 1, 2, "colorPicker","rgb", ",",
+                "rgb/", "/1"), layout);
+        setupColorPicker(new ColorPickerFeature("teste", "teste", 1, 2, "colorPicker","hex", ".",
+                "rgb/", "/2"), layout);
         for (final BaseFeature feature: featuresList
              ) {
             switch (feature.getType()){
@@ -111,12 +124,64 @@ public class DeviceControlFragment extends Fragment {
                 case "toggleButton":
                     setupToggleButton(new Switch(requireActivity()), (ToggleButtonFeature) feature, layout);
                     break;
+                case "colorPicker":
+                    setupColorPicker((ColorPickerFeature)feature, layout);
+                    break;
                 default:
                     break;
             }
         }
        return view;
     }
+
+    public void setupColorPicker(final ColorPickerFeature f, LinearLayout layout){
+        Button b = new Button(requireActivity());
+        LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        bLayout.setMargins(20,20,20,10);
+        bLayout.gravity = 1;
+        b.setLayoutParams(bLayout);
+        b.setText(f.getName());
+        b.setBackgroundResource(R.drawable.placeholder);
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ColorPickerDialog.Builder(requireContext())
+                        .setTitle("Escolha a cor:")
+                        .setPositiveButton("Confirmar", new ColorEnvelopeListener() {
+                            @Override
+                            public void onColorSelected(ColorEnvelope envelope, boolean fromUser) {
+                                String message;
+                                String color = "";
+                                if(f.getColor_system() == "rgb"){
+                                    for(int i = 1; i< envelope.getArgb().length; i++){
+                                        color += envelope.getArgb()[i];
+                                        if(i<3){
+                                            color += f.getSeparator();
+                                        }
+                                    }
+                                    message = f.getPrefix() + color + f.getSuffix();
+                                }
+                                else{
+                                    message = f.getPrefix() + envelope.getHexCode() + f.getSuffix();
+                                }
+                                mqtt.publishMessage(f.getTopic(), message);
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+
+            }
+        });
+
+        layout.addView(b);
+    }
+
 
     public void setupButton(Button b, final ButtonFeature f, LinearLayout layout){
         //Prepara a feature "button"
@@ -180,8 +245,7 @@ public class DeviceControlFragment extends Fragment {
         t.setTextSize(19);
         s.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        s.setMin(f.getStartRange());
-        s.setMax(f.getLastRange());
+        s.setMax(f.getLastRange() - f.getStartRange());
         s.setProgress(f.getLastRange()/2);
 
         s.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -189,8 +253,8 @@ public class DeviceControlFragment extends Fragment {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                progressChangedValue = progress;
-                t.setText(Integer.toString(progress));
+                progressChangedValue = progress + f.getStartRange();
+                t.setText(Integer.toString(progressChangedValue));
             }
 
             @Override
@@ -222,7 +286,7 @@ public class DeviceControlFragment extends Fragment {
 
         //t.setBackgroundResource(R.drawable.custom_button);
         t.setBackgroundResource(R.drawable.custom_button);
-        
+
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
