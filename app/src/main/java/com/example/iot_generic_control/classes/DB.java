@@ -144,6 +144,44 @@ public class DB extends SQLiteOpenHelper{
                                                          cursor.getInt(cursor.getColumnIndex("device_id")),
                                                          onoff[0], onoff[1], type));
                     break;
+                case "colorPicker":
+                    String value;
+                    String[] parameters;
+                    String color_system, sep, cp_prefix, cp_suffix;
+                    value = cursor.getString(cursor.getColumnIndex("value"));
+                    parameters = value.split(";");
+                    switch (parameters.length){
+                        case 2:
+                            color_system = parameters[0];
+                            sep = parameters[1];
+                            cp_prefix = "";
+                            cp_suffix = "";
+                            break;
+                        case 3:
+                            color_system = parameters[0];
+                            sep = parameters[1];
+                            cp_prefix = parameters[2];
+                            cp_suffix = "";
+                            break;
+                        case 4:
+                            color_system = parameters[0];
+                            sep = parameters[1];
+                            cp_prefix = parameters[2];
+                            cp_suffix = parameters[3];
+                            break;
+                        default:
+                            color_system = parameters[0];
+                            sep = "";
+                            cp_prefix = "";
+                            cp_suffix = "";
+                            break;
+                    }
+                    features.add(new ColorPickerFeature(cursor.getString(cursor.getColumnIndex("name")),
+                                                        cursor.getString(cursor.getColumnIndex("topic")),
+                                                        cursor.getInt(cursor.getColumnIndex("id")),
+                                                        cursor.getInt(cursor.getColumnIndex("device_id")), type, color_system, sep, cp_prefix,
+                                                        cp_suffix));
+                    break;
             }
         }
         cursor.close();
