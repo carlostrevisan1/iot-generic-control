@@ -104,8 +104,6 @@ public class menuAddDeviceFragment extends Fragment {
                                     dialog.dismiss();
                                 }
                             })
-                            .attachBrightnessSlideBar(true)
-                            .setBottomSpace(12)
                             .show();
                     }
             }

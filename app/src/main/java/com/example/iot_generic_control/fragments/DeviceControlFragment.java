@@ -121,7 +121,7 @@ public class DeviceControlFragment extends Fragment {
     public void setupButton(Button b, final ButtonFeature f, LinearLayout layout){
         //Prepara a feature "button"
         LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        bLayout.setMargins(10,10,10,10);
+        bLayout.setMargins(20,20,20,10);
         bLayout.gravity = 1;
         b.setLayoutParams(bLayout);
         b.setText(f.getName());
@@ -218,26 +218,21 @@ public class DeviceControlFragment extends Fragment {
         bLayout.setMargins(10,10,10,10);
         bLayout.gravity = 0;
         t.setLayoutParams(bLayout);
-        t.setTextOff(f.getValueOff());
-        t.setTextOn((f.getValueOn()));
-        t.setText(f.getValueOff());
+        t.setText(f.getName());
 
         //t.setBackgroundResource(R.drawable.custom_button);
         t.setBackgroundResource(R.drawable.custom_button);
-
-
+        
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Quando é clicado envia a mensagem de acordo com o estado para que foi alterado
                 if(t.isChecked()){
-                    t.setText(f.getValueOn());
                     t.setBackgroundResource(R.drawable.custom_buttton_on);
                     t.setTextColor(Color.parseColor("#69967d"));
                     mqtt.publishMessage(f.getTopic(), f.getValueOn());
                 }
                 else{
-                    t.setText(f.getValueOff());
                     t.setBackgroundResource(R.drawable.custom_button);
                     t.setTextColor(Color.parseColor("#000000"));
                     mqtt.publishMessage(f.getTopic(), f.getValueOff());
