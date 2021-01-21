@@ -5,7 +5,8 @@ CREATE TABLE device (
     name VARCHAR(40),
     desc TEXT,
     ip_address VARCHAR(25),
-    port VARCHAR(5)
+    port VARCHAR(5),
+    colour VARCHAR(15)
 );
 
 CREATE TABLE feature (
