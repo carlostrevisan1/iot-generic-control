@@ -70,6 +70,7 @@ public class NewSliderFragment extends Fragment {
                 navController.navigateUp();
             }
         });
+        // Seta a cor da toolbar para  a  mesma do device
         toolbar.setBackgroundColor(Color.parseColor(model.getDevice().getValue().getColour()));
 
 
@@ -86,9 +87,12 @@ public class NewSliderFragment extends Fragment {
             value2.setText( Integer.toString(sliderSetting.getLastRange()));
             prefix.setText(sliderSetting.getPrefix());
             suffix.setText(sliderSetting.getSuffix());
+
+            //Seta o titulo da toolbar para o modo de edicao
             toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit SeekBar");
         }
         else{
+            //Seta o titulo da toolbar para o modo de nova feature
             toolbar.setTitle(model.getDevice().getValue().getName() + " - New SeekBar");
         }
 
@@ -104,7 +108,6 @@ public class NewSliderFragment extends Fragment {
                 String suffixx = suffix.getText().toString();
                 if(model.getEdit().getValue()){
                     saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "slider", valueStart, valueLast, prefixx, suffixx);
-                    //TODO: no lugar ddas strings vazias passar prefix e suffix que deverão ser pegos de input do usuario
                 }
                 else{
                     saveNewButtonToDB(buttonName, topicName, valueStart, valueLast, prefixx, suffixx);

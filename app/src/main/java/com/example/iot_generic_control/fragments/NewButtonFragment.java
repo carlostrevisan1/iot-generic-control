@@ -61,6 +61,7 @@ public class NewButtonFragment extends Fragment {
                 navController.navigateUp();
             }
         });
+        // Seta a cor da toolbar para  a  mesma do device
         toolbar.setBackgroundColor(Color.parseColor(model.getDevice().getValue().getColour()));
 
 
@@ -79,12 +80,16 @@ public class NewButtonFragment extends Fragment {
             name.setText(buttonSetting.getName());
             topic.setText(buttonSetting.getTopic());
             value.setText( buttonSetting.getValue());
+
+            //Seta o titulo da toolbar para o modo de edicao
             toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit Button");
         }
         else{
+            //Seta o titulo da toolbar para o modo de nova feature
             toolbar.setTitle(model.getDevice().getValue().getName() + " - New Button");
         }
 
+        /* Seta um listener no botao da view que dependendo se for edicao ou nao, salva um novo Button ou edita um*/
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,13 +115,10 @@ public class NewButtonFragment extends Fragment {
     /* Faz um Update de um controle no banco*/
     public void saveEditToDB(int id, String name, String topic, String type, String value){
         model.getDb().getValue().updateFeature(id,name,topic,type,value);
-        //TODO update in the DB and update viewmodel with new information
-
     }
 
     /* Salva um novo controle no banco*/
     public void saveNewButtonToDB(String name, String topic, String value, String type){
         model.getDb().getValue().insertFeature(name, topic, type,value, model.getDevice().getValue().getId());
-        //TODO save in the db and update the view model
     }
 }

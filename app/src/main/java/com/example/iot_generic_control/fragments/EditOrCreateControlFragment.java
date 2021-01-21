@@ -72,6 +72,8 @@ public class EditOrCreateControlFragment extends Fragment {
             }
         });
         toolbar.setTitle(device.getName() + " - Edit Mode");
+
+        // Seta a cor da toolbar para  a  mesma do device
         toolbar.setBackgroundColor(Color.parseColor(device.getColour()));
 
 

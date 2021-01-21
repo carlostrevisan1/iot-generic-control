@@ -70,9 +70,8 @@ public class NewToggleButtonFragment extends Fragment {
                 navController.navigateUp();
             }
         });
+        // Seta a cor da toolbar para  a  mesma do device
         toolbar.setBackgroundColor(Color.parseColor(model.getDevice().getValue().getColour()));
-
-
 
         /* Verifica se a chamada desse fragmento é de edicao de acordo com o valor da variavel edit dentro da viewmodel, e caso seja
          * Coloca os valores já conhecidos dentro dos edittext para que seja possivel a edicao*/
@@ -85,10 +84,12 @@ public class NewToggleButtonFragment extends Fragment {
             topic.setText(buttonSetting.getTopic());
             value1.setText( buttonSetting.getValueOn());
             value2.setText( buttonSetting.getValueOff());
+
+            //Seta o titulo da toolbar para o modo de edicao
             toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit Switch Button");
         }
         else{
-
+            //Seta o titulo da toolbar para o modo de nova feature
             toolbar.setTitle(model.getDevice().getValue().getName() + " - New Switch Button");
         }
 

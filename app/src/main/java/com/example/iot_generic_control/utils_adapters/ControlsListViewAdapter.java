@@ -36,6 +36,7 @@ public class ControlsListViewAdapter extends ArrayAdapter {
 
         ViewHolder holder;
         if(convertView==null){
+            //Infla o layout para um elemento da lista
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             convertView = inflater.inflate(resource, parent, false);
             holder = new ViewHolder();
@@ -49,6 +50,7 @@ public class ControlsListViewAdapter extends ArrayAdapter {
         else
             holder = (ViewHolder)convertView.getTag();
 
+        //Seta os valores no layout
         BaseFeature control_data = controls.get(position);
         holder.name.setText(control_data.getName());
         holder.type.setText(control_data.getType());

@@ -88,12 +88,13 @@ public class DeviceControlFragment extends Fragment {
         toolbar.setTitle(device.getName());
         toolbar.setBackgroundColor(Color.parseColor(device.getColour()));
 
+        //Instancia a classe que vai lidar com o protocolo mqtt
         mqtt = new MQTT(
                 requireContext(),
                 "tcp://" + device.getBrokerIP() + ":" + device.getBrokerPort(),
                 device.getName());
 
-
+        // De acordo com a Lista de features/controles vai setar na view cada um com suas respectivas caracteristicas
         final LinearLayout layout = (LinearLayout) view.findViewById(R.id.controlLinearLayout);
         for (final BaseFeature feature: featuresList
              ) {
@@ -117,7 +118,6 @@ public class DeviceControlFragment extends Fragment {
        return view;
     }
 
-    @SuppressLint("ResourceAsColor")
     public void setupButton(Button b, final ButtonFeature f, LinearLayout layout){
         //Prepara a feature "button"
         LinearLayout.LayoutParams bLayout = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -232,9 +232,6 @@ public class DeviceControlFragment extends Fragment {
                 //Quando é clicado envia a mensagem de acordo com o estado para que foi alterado
                 if(t.isChecked()){
                     t.setText(f.getValueOn());
-                    //t.setText("OFF");
-                    //t.setBackgroundResource(R.drawable.custom_button);
-                    //t.setTextColor(Color.parseColor("#000000"));
                     t.setBackgroundResource(R.drawable.custom_buttton_on);
                     t.setTextColor(Color.parseColor("#69967d"));
                     mqtt.publishMessage(f.getTopic(), f.getValueOn());
@@ -267,6 +264,7 @@ public class DeviceControlFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    // Pega no banco todas as features de um determinado device
     public void retrieveFeatures(){
         featuresList.clear();
         featuresList = model.getDb().getValue().selectAllFeatures(model.getDevice().getValue().getId());

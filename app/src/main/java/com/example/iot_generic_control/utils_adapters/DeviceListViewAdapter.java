@@ -26,7 +26,6 @@ import com.example.iot_generic_control.R;
 import java.util.ArrayList;
 
 public class DeviceListViewAdapter extends ArrayAdapter {
-    //    private ArrayList<T> pacients;
     private ArrayList<IOTDevice> devices;
     private Context context;
     private int resource;
@@ -45,6 +44,7 @@ public class DeviceListViewAdapter extends ArrayAdapter {
 
         ViewHolder holder;
         if(convertView==null){
+            //Infla o layout para um elemento da lista
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             convertView = inflater.inflate(resource, parent, false);
             holder = new ViewHolder();
@@ -60,12 +60,14 @@ public class DeviceListViewAdapter extends ArrayAdapter {
         else
             holder = (ViewHolder)convertView.getTag();
 
+        //Seta os valores no layout
         IOTDevice device_data = devices.get(position);
         holder.name.setText(device_data.getName());
         holder.desc.setText(device_data.getDesc());
         holder.ip.setText(device_data.getBrokerIP());
         holder.port.setText(device_data.getBrokerPort());
 
+        //Muda cor do icone de acordo com a cor do device
         ColorFilter filter = new LightingColorFilter( Color.parseColor(device_data.getColour()), Color.BLACK);
         holder.img.getDrawable().setColorFilter(filter);
 

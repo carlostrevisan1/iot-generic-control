@@ -66,6 +66,8 @@ public class NewSendTextFragment extends Fragment {
                 navController.navigateUp();
             }
         });
+
+        // Seta a cor da toolbar para  a  mesma do device
         toolbar.setBackgroundColor(Color.parseColor(model.getDevice().getValue().getColour()));
 
 
@@ -79,9 +81,12 @@ public class NewSendTextFragment extends Fragment {
             final SendTextFeature buttonSetting = (SendTextFeature) controlsList.get(position);
             name.setText(buttonSetting.getName());
             topic.setText(buttonSetting.getTopic());
+
+            //Seta o titulo da toolbar para o modo de edicao
             toolbar.setTitle(model.getDevice().getValue().getName() + " - Edit Text Area");
         }
         else{
+            //Seta o titulo da toolbar para o modo de nova feature
             toolbar.setTitle(model.getDevice().getValue().getName() + " - New Text Area");
         }
 
