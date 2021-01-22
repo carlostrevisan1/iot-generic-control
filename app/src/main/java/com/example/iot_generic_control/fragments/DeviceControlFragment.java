@@ -107,7 +107,7 @@ public class DeviceControlFragment extends Fragment {
         final LinearLayout layout = (LinearLayout) view.findViewById(R.id.controlLinearLayout);
         setupColorPicker(new ColorPickerFeature("teste", "teste", 1, 2, "colorPicker","rgb", ",",
                 "rgb/", "/1"), layout);
-        setupColorPicker(new ColorPickerFeature("teste", "teste", 1, 2, "colorPicker","hex", ".",
+        setupColorPicker(new ColorPickerFeature("teste", "teste", 1, 2, "colorPicker","rgb", ".",
                 "rgb/", "/2"), layout);
         for (final BaseFeature feature: featuresList
              ) {

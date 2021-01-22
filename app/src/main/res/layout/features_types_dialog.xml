@@ -23,6 +23,11 @@
         android:layout_height="wrap_content"
         android:text="Text Area"
         android:id="@+id/new_send"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Color Picker"
+        android:id="@+id/new_colorpicker"/>
 
 
 </LinearLayout>
