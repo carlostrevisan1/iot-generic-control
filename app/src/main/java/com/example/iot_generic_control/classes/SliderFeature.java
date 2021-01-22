@@ -1,11 +1,15 @@
 package com.example.iot_generic_control.classes;
 
+//A partir da classe BaseFeature extendida essa classe faz a criação de uma feature do tipo slider feature
 public class SliderFeature extends BaseFeature {
+
+    //Para criar um slider precisa de um inicio, um fim, prefixo e sufixo.
     int startRange;
     int lastRange;
     String prefix;
     String suffix;
 
+    //GET e SET para atribuição de valores
     public void setPrefix(String prefix) {
         this.prefix = prefix;
     }

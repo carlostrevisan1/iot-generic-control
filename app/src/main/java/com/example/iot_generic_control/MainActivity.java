@@ -15,12 +15,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+//Classe utilizada para a criação inicial do aplicativo por isso "Main", uma atividade principal, a primeira.
 public class MainActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Definindo o layout para a atividade
         setContentView(R.layout.activity_main);
     }
 

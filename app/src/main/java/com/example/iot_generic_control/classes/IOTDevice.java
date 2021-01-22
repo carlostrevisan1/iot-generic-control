@@ -2,17 +2,18 @@ package com.example.iot_generic_control.classes;
 
 import android.os.Parcel;
 
+//Classe para a criação de um dispositivo, dentro dos dispositivos terão as features.
 public class IOTDevice {
+
+    //Variaveis para criar um dispositivo novo
     String name;
     String desc;
     String brokerIP;
     String brokerPort;
-
-
     String colour;
     int id;
 
-
+    //Atribuição de valores
     public IOTDevice(String name, String desc, String brokerIP, String brokerPort, String colour, int id) {
         this.name = name;
         this.desc = desc;

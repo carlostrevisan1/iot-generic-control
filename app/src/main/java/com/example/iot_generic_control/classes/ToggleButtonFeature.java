@@ -1,5 +1,6 @@
 package com.example.iot_generic_control.classes;
 
+//A partir da classe BaseFeature extendida essa classe faz a criação de uma feature do tipo toggle feature (um botão de ON e OFF)
 public class ToggleButtonFeature extends BaseFeature {
     public String getValueOn() {
         return valueOn;
@@ -17,6 +18,7 @@ public class ToggleButtonFeature extends BaseFeature {
         this.valueOff = valueOff;
     }
 
+    //Valores de ON e OFF, que podem não necessariamente serem ON/OFF mas também 1/0, etc.
     String valueOn;
     String valueOff;
 

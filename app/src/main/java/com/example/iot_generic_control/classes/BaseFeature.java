@@ -1,13 +1,16 @@
 package com.example.iot_generic_control.classes;
 
+//Classe utilizada para criação de uma feature. Todas as outras features utilizaram esse como base, assim fazendo a extensão da classe.
 public class BaseFeature {
 
+    //Variaveis utilizadas para criar uma feature
     String name;
     String topic;
     String type;
     int id;
     int device_id;
 
+    //Metodos de get e set para atribuir os valores de acordo
     public String getType() {
         return type;
     }

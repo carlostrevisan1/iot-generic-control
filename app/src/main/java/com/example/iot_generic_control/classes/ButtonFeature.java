@@ -1,6 +1,9 @@
 package com.example.iot_generic_control.classes;
 
+//A partir da classe BaseFeature extendida essa classe faz a criação de uma feature do tipo botão.
 public class ButtonFeature extends BaseFeature {
+
+    //Get e set value para atribuir valores
     public String getValue() {
         return value;
     }
