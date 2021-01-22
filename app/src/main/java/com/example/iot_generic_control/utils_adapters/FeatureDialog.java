@@ -33,6 +33,7 @@ public class FeatureDialog extends BottomSheetDialogFragment {
         Button new_slider = view.findViewById(R.id.new_slider);
         Button new_toggle = view.findViewById(R.id.new_toggle);
         Button new_send_text = view.findViewById(R.id.new_send);
+        Button new_color_picker = view.findViewById(R.id.new_colorpicker);
 
         /* Seta os listeners pra cada um dos tipos de botao que quando pressionado irá navegar para os respectivos fragmentos*/
         new_button.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +68,15 @@ public class FeatureDialog extends BottomSheetDialogFragment {
                 nav.navigate(R.id.newSendTextAction);
             }
         });
+        new_color_picker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                NavController nav = Navigation.findNavController(requireActivity(), R.id.fragment);
+                nav.navigate(R.id.newColorPickerAction);
+            }
+        });
+
         return view;
     }
 }

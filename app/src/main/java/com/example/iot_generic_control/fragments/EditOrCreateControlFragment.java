@@ -157,6 +157,10 @@ public class EditOrCreateControlFragment extends Fragment {
                 bundle.putInt("position", position);
                 Navigation.findNavController(requireView()).navigate(R.id.editToggleButtonAction, bundle);
                 break;
+            case "colorPicker":
+                bundle.putInt("position", position);
+                Navigation.findNavController(requireView()).navigate(R.id.editColorPickerAction, bundle);
+                break;
             default:
                 break;
         }

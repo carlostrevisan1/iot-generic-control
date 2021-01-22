@@ -55,6 +55,9 @@
         <action
             android:id="@+id/newSendTextAction"
             app:destination="@id/newSendTextFragment" />
+        <action
+            android:id="@+id/newColorPickerAction"
+            app:destination="@id/newColorPickerFragment" />
     </dialog>
     <fragment
         android:id="@+id/editOrCreateControlFragment"
@@ -76,6 +79,9 @@
         <action
             android:id="@+id/editSendTextAction"
             app:destination="@id/newSendTextFragment" />
+        <action
+            android:id="@+id/editColorPickerAction"
+            app:destination="@id/newColorPickerFragment" />
     </fragment>
     <fragment
         android:id="@+id/newSliderFragment"
@@ -92,4 +98,8 @@
         android:name="com.example.iot_generic_control.fragments.NewSendTextFragment"
         android:label="fragment_new_send_text"
         tools:layout="@layout/fragment_new_send_text" />
+    <fragment
+        android:id="@+id/newColorPickerFragment"
+        android:name="com.example.iot_generic_control.fragments.NewColorPickerFragment"
+        android:label="NewColorPickerFragment" />
 </navigation>

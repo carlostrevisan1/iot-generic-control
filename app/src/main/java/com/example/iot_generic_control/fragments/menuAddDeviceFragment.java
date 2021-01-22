@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,7 +33,6 @@ import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
 
 public class menuAddDeviceFragment extends Fragment {
 
-    boolean dialogClosed = false;
     DeviceViewModel model;
     public menuAddDeviceFragment() {
 
@@ -95,7 +95,6 @@ public class menuAddDeviceFragment extends Fragment {
                                 @Override
                                 public void onColorSelected(ColorEnvelope envelope, boolean fromUser) {
                                     color.setText("#" + envelope.getHexCode());
-                                    dialogClosed = true;
                                 }
                             })
                             .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
