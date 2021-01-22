@@ -105,10 +105,7 @@ public class DeviceControlFragment extends Fragment {
 
         // De acordo com a Lista de features/controles vai setar na view cada um com suas respectivas caracteristicas
         final LinearLayout layout = (LinearLayout) view.findViewById(R.id.controlLinearLayout);
-        setupColorPicker(new ColorPickerFeature("teste", "teste", 1, 2, "colorPicker","rgb", ",",
-                "rgb/", "/1"), layout);
-        setupColorPicker(new ColorPickerFeature("teste", "teste", 1, 2, "colorPicker","rgb", ".",
-                "rgb/", "/2"), layout);
+
         for (final BaseFeature feature: featuresList
              ) {
             switch (feature.getType()){
@@ -146,6 +143,7 @@ public class DeviceControlFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /* Configura o dialog do color picker a ser mostrado, e seta o botao de positivo para que envie a cor selecionada*/
                 new ColorPickerDialog.Builder(requireContext())
                         .setTitle("Escolha a cor:")
                         .setPositiveButton("Confirmar", new ColorEnvelopeListener() {
@@ -153,7 +151,7 @@ public class DeviceControlFragment extends Fragment {
                             public void onColorSelected(ColorEnvelope envelope, boolean fromUser) {
                                 String message;
                                 String color = "";
-                                if(f.getColor_system() == "rgb"){
+                                if(f.getColor_system().equals("RGB")){
                                     for(int i = 1; i< envelope.getArgb().length; i++){
                                         color += envelope.getArgb()[i];
                                         if(i<3){
@@ -174,8 +172,8 @@ public class DeviceControlFragment extends Fragment {
                                 dialog.dismiss();
                             }
                         })
-                        .show();
 
+                        .show();
             }
         });
 
@@ -283,6 +281,7 @@ public class DeviceControlFragment extends Fragment {
         bLayout.gravity = 0;
         t.setLayoutParams(bLayout);
         t.setText(f.getName());
+        bLayout.gravity = Gravity.CENTER;
 
         //t.setBackgroundResource(R.drawable.custom_button);
         t.setBackgroundResource(R.drawable.custom_button);
