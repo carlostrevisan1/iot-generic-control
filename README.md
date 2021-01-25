@@ -9,14 +9,13 @@ Ao iniciar o aplicativo pela primeira vez, temos apenas a opção de cadastrar u
 ![alt text](https://github.com/carlostrevisan1/iot-generic-control/raw/master/imagens_read/tela_inicial.jpg "Logo Title Text 1")  ![alt text](https://github.com/carlostrevisan1/iot-generic-control/raw/master/imagens_read/add_device.jpg "Logo Title Text 1")
 
 
-
 após inserir as informações sobre o aplicativo e os dados necessarios para efetuar a conexão MQTT podemos entrar em sua pagina e adicionar funcinalidades como botões, sliders, color pickers, togglebuttons e inputs de texto
 
 ![alt text](https://github.com/carlostrevisan1/iot-generic-control/raw/master/imagens_read/escolha_botoes.jpg "Logo Title Text 1")
 
-Ao inserir as funcionalidades, escolhemos o sinal que será enviado ao dispositivo conectado, permitindo o controle de funcionalidades a partir do aplicativo de forma simples e prática
+Ao inserir as funcionalidades, escolhemos o sinal que será enviado ao dispositivo conectado, permitindo o controle de funcionalidades a partir do aplicativo de forma simples e prática no campo "value"
 
-IMAGEM 3
+![alt text](https://github.com/carlostrevisan1/iot-generic-control/raw/master/imagens_read/sinal.jpg "Logo Title Text 1")
 
 Abaixo podemos ver um dispositivo com varias funcionalidades cadastradas
 
