@@ -2,7 +2,7 @@
 
 Grupo: André Salera Ribeiro, Carlos Trevisan, Felipe Bis, Ian Degaspari
 
-Aplicativo desenvolvido para a disciplina de desenvolvimento Mobile do curso de engenharia de computacao do IFSP, o objetivo do aplicativo é controlar sistemas integrados com microcontroladores, através de botoes que mandam sinais utilizando uma conexão MQTT, que é um protocolo de conexão leve e eficiente tornando-o ideal para utilizar em comunicação maquina-maquina,, um aplicativo bem nicho para entusiastas da area de IOT, conhecido também como internet das coisas.
+Aplicativo desenvolvido para a disciplina de desenvolvimento Mobile do curso de engenharia de computacao do IFSP, o objetivo do aplicativo é controlar sistemas integrados com microcontroladores, através de diversos botões criados pelo proprios usuário, que mandam um valor também definido pelo usuário utilizando uma conexão MQTT, que é um protocolo de conexão leve e eficiente tornando-o ideal para utilizar em comunicação maquina-maquina,, um aplicativo bem nicho para entusiastas da area de IOT, conhecido também como internet das coisas.
 
 Ao iniciar o aplicativo pela primeira vez, temos apenas a opção de cadastrar um novo dispositivo, como podemos ver abaixo
 
