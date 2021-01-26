@@ -89,6 +89,7 @@ public class menuAddDeviceFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
+                    hideKeyboardFrom(requireContext(), view);
                     new ColorPickerDialog.Builder(requireContext())
                             .setTitle("Escolha a cor:")
                             .setPositiveButton("Confirmar", new ColorEnvelopeListener() {
@@ -134,6 +135,10 @@ public class menuAddDeviceFragment extends Fragment {
             }
         });
         return view;
+    }
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
     
 }
