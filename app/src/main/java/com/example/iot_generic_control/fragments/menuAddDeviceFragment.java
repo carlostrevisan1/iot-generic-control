@@ -89,6 +89,7 @@ public class menuAddDeviceFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
+                    //Esconde o teclado
                     hideKeyboardFrom(requireContext(), view);
                     new ColorPickerDialog.Builder(requireContext())
                             .setTitle("Escolha a cor:")
@@ -136,6 +137,7 @@ public class menuAddDeviceFragment extends Fragment {
         });
         return view;
     }
+    //Funcao que dado um contextto escnde o softkeyboard
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
