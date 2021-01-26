@@ -9,7 +9,7 @@ Ao iniciar o aplicativo pela primeira vez, temos apenas a opção de cadastrar u
 ![alt text](https://github.com/carlostrevisan1/iot-generic-control/raw/master/imagens_read/tela_inicial.jpg "Logo Title Text 1")  ![alt text](https://github.com/carlostrevisan1/iot-generic-control/raw/master/imagens_read/add_device.jpg "Logo Title Text 1")
 
 
-após inserir as informações sobre o aplicativo e os dados necessários para efetuar a conexão MQTT podemos entrar em sua pagina e adicionar funcionalidades como botões, sliders, color pickers, togglebuttons e inputs de texto:
+Após inserir as informações sobre o aplicativo e os dados necessários para efetuar a conexão MQTT podemos entrar em sua pagina e adicionar funcionalidades como botões, sliders, color pickers, togglebuttons e inputs de texto:
 
 ![alt text](https://github.com/carlostrevisan1/iot-generic-control/raw/master/imagens_read/escolha_botoes.jpg "Logo Title Text 1")
 
