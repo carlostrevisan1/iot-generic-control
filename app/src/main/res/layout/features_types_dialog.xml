@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"
-        android:id="@+id/new_button"/>
+        android:text="@string/button"
+        android:id="@+id/new_button"
+        />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SeekBar"
-        android:id="@+id/new_slider"/>
+        android:text="@string/seekbar"
+        android:id="@+id/new_slider"
+        />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SwitchButton"
-        android:id="@+id/new_toggle"/>
+        android:text="@string/switch_button"
+        android:id="@+id/new_toggle"
+        />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Text Area"
-        android:id="@+id/new_send"/>
+        android:text="@string/text_area"
+        android:id="@+id/new_send"
+        />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Color Picker"
-        android:id="@+id/new_colorpicker"/>
+        android:text="@string/color_picker"
+        android:id="@+id/new_colorpicker"
+        />
 
 
 </LinearLayout>
