@@ -121,6 +121,12 @@ public class NewColorPickerFragment extends Fragment {
                 if(buttonName.isEmpty() || topicName.isEmpty()){
                     Toast.makeText(requireContext(),R.string.invalid_input, Toast.LENGTH_LONG).show();
                 }
+                else if(separatorr.contains(";")){
+                    Toast.makeText(requireContext(),"O separador \";\" não pode ser utilizado!", Toast.LENGTH_LONG).show();
+                }
+                else if(prefixx.contains(";") || suffixx.contains(";")){
+                    Toast.makeText(requireContext(),"\";\" não pode ser utilizado!", Toast.LENGTH_LONG).show();
+                }
                 else {
                     if(colorsys.equals("RGB") && separatorr.isEmpty()){
                         Toast.makeText(requireContext(),"Dado o tipo RGB, um separador para os valores é necessário!", Toast.LENGTH_LONG).show();

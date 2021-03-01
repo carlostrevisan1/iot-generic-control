@@ -113,6 +113,9 @@ public class NewSliderFragment extends Fragment {
                         || valueLast.isEmpty() || !isBigger(valueLast,valueStart)){
                     Toast.makeText(requireContext(),R.string.invalid_input, Toast.LENGTH_LONG).show();
                 }
+                else if(prefixx.contains(";") || suffixx.contains(";")){
+                    Toast.makeText(requireContext(),"\";\" não pode ser utilizado!", Toast.LENGTH_LONG).show();
+                }
                 else {
                     if (model.getEdit().getValue()) {
                         saveEditToDB(controlsList.get(position).getId(), buttonName, topicName, "slider", valueStart, valueLast, prefixx, suffixx);
