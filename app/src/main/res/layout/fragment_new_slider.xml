@@ -6,54 +6,102 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
     <androidx.appcompat.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimaryDark"/>
-    <EditText
-        android:layout_margin="2dp"
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name"
-        android:id="@+id/slider_name"/>
-    <EditText
-        android:layout_margin="2dp"
+        android:layout_margin="2dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
+            android:id="@+id/slider_name"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Initial range"
-        android:inputType="number"
-        android:id="@+id/slider_range1"/>
-    <EditText
-        android:layout_margin="2dp"
+        android:layout_margin="2dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/initial_range"
+            android:inputType="number"
+            android:id="@+id/slider_range1"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Final range"
-        android:id="@+id/slider_range2"/>
-    <EditText
-        android:layout_margin="2dp"
+        android:layout_margin="2dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="@string/final_range"
+            android:id="@+id/slider_range2"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Topic"
-        android:id="@+id/slider_topic"/>
-    <EditText
-        android:layout_margin="2dp"
+        android:layout_margin="2dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/topic"
+            android:id="@+id/slider_topic"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Prefix (not required)"
-        android:id="@+id/prefix"/>
-    <EditText
-        android:layout_margin="2dp"
+        android:layout_margin="2dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prefix"
+            android:id="@+id/prefix"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Sufix (not required)"
-        android:id="@+id/suffix"/>
+        android:layout_margin="2dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/suffix"
+            android:id="@+id/suffix"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
+        android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OK"
+        android:text="@string/add"
         android:id="@+id/slider_ok"/>
 </LinearLayout>

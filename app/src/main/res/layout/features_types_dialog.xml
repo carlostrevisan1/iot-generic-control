@@ -10,35 +10,30 @@
         android:layout_height="wrap_content"
         android:text="@string/button"
         android:id="@+id/new_button"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
         />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/seekbar"
         android:id="@+id/new_slider"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
         />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/switch_button"
         android:id="@+id/new_toggle"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
         />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/text_area"
         android:id="@+id/new_send"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
         />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/color_picker"
         android:id="@+id/new_colorpicker"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
         />
 
 
