@@ -2,5 +2,12 @@
     <string name="app_name">IoT Generic Control</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="invalid_input">Preencha todos os campos necessários!</string>
+    <string name="invalid_input">Fill all required fields!</string>
+    <string name="device_type_text">Type: %1$s</string>
+    <string name="device_topic_text">Topic: %1$s</string>
+    <string name="button">Button</string>
+    <string name="seekbar">Seekbar</string>
+    <string name="switch_button">SwitchButton</string>
+    <string name="text_area">Text Area</string>
+    <string name="color_picker">Color Picker</string>
 </resources>

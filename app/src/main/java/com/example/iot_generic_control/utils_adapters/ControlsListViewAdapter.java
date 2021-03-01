@@ -42,8 +42,8 @@ public class ControlsListViewAdapter extends ArrayAdapter {
             holder = new ViewHolder();
 
             holder.name = convertView.findViewById(R.id.device_name);
-            holder.type = convertView.findViewById(R.id.device_type1);
-            holder.topic = convertView.findViewById(R.id.device_topic1);
+            holder.type = convertView.findViewById(R.id.device_type);
+            holder.topic = convertView.findViewById(R.id.device_topic);
 
             convertView.setTag(holder);
         }
@@ -58,8 +58,8 @@ public class ControlsListViewAdapter extends ArrayAdapter {
         else{
             holder.name.setText(control_data.getName());
         }
-        holder.type.setText(control_data.getType());
-        holder.topic.setText(control_data.getTopic());
+        holder.type.setText(context.getString(R.string.device_type_text, control_data.getType()));
+        holder.topic.setText(context.getString(R.string.device_topic_text, control_data.getTopic()));
 
 
         return convertView;
