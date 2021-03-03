@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 
 //Classe utilizada para a atividade da Splash Screen, uma tela de carregamento antes da tela principal ao abrir o app.
 public class SplashScreen extends AppCompatActivity {
